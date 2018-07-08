@@ -28,13 +28,11 @@
 #include <graphene/chain/buyback.hpp>
 #include <graphene/chain/buyback_object.hpp>
 #include <graphene/chain/database.hpp>
-#include <graphene/chain/committee_member_object.hpp>
 #include <graphene/chain/exceptions.hpp>
 #include <graphene/chain/hardfork.hpp>
 #include <graphene/chain/internal_exceptions.hpp>
 #include <graphene/chain/special_authority.hpp>
 #include <graphene/chain/special_authority_object.hpp>
-#include <graphene/chain/witness_object.hpp>
 #include <graphene/chain/worker_object.hpp>
 
 #include <algorithm>
@@ -75,7 +73,7 @@ void verify_account_votes( const database& db, const account_options& options )
    bool has_worker_votes = false;
    for( auto id : options.votes )
    {
-      FC_ASSERT( id < max_vote_id, "Can not vote for ${id} which does not exist.", ("id",id) );
+      FC_ASSERT( id < max_vote_id );
       has_worker_votes |= (id.type() == vote_id_type::worker);
    }
 
@@ -86,35 +84,11 @@ void verify_account_votes( const database& db, const account_options& options )
       {
          if( id.type() == vote_id_type::worker )
          {
-            FC_ASSERT( against_worker_idx.find( id ) == against_worker_idx.end(),
-                       "Can no longer vote against a worker." );
+            FC_ASSERT( against_worker_idx.find( id ) == against_worker_idx.end() );
          }
       }
    }
-   if ( db.head_block_time() >= HARDFORK_CORE_143_TIME ) {
-      const auto& approve_worker_idx = db.get_index_type<worker_index>().indices().get<by_vote_for>();
-      const auto& committee_idx = db.get_index_type<committee_member_index>().indices().get<by_vote_id>();
-      const auto& witness_idx = db.get_index_type<witness_index>().indices().get<by_vote_id>();
-      for ( auto id : options.votes ) {
-         switch ( id.type() ) {
-            case vote_id_type::committee:
-               FC_ASSERT( committee_idx.find(id) != committee_idx.end(),
-                          "Can not vote for ${id} which does not exist.", ("id",id) );
-               break;
-            case vote_id_type::witness:
-               FC_ASSERT( witness_idx.find(id) != witness_idx.end(),
-                          "Can not vote for ${id} which does not exist.", ("id",id) );
-               break;
-            case vote_id_type::worker:
-               FC_ASSERT( approve_worker_idx.find( id ) != approve_worker_idx.end(),
-                          "Can not vote for ${id} which does not exist.", ("id",id) );
-               break;
-            default:
-               FC_THROW( "Invalid Vote Type: ${id}", ("id", id) );
-               break;
-         }
-      }
-   }
+
 }
 
 
@@ -158,8 +132,7 @@ void_result account_create_evaluator::do_evaluate( const account_create_operatio
    if( op.name.size() )
    {
       auto current_account_itr = acnt_indx.indices().get<by_name>().find( op.name );
-      FC_ASSERT( current_account_itr == acnt_indx.indices().get<by_name>().end(),
-                 "Account '${a}' already exists.", ("a",op.name) );
+      FC_ASSERT( current_account_itr == acnt_indx.indices().get<by_name>().end() );
    }
 
    return void_result();
@@ -215,7 +188,6 @@ object_id_type account_create_evaluator::do_apply( const account_create_operatio
          }
    });
 
-   /*
    if( has_small_percent )
    {
       wlog( "Account affected by #453 registered in block ${n}:  ${na} reg=${reg} ref=${ref}:${refp} ltr=${ltr}:${ltrp}",
@@ -224,7 +196,6 @@ object_id_type account_create_evaluator::do_apply( const account_create_operatio
          ("refp", new_acnt_object.referrer_rewards_percentage) ("ltrp", new_acnt_object.lifetime_referrer_fee_percentage) );
       wlog( "Affected account object is ${o}", ("o", new_acnt_object) );
    }
-   */
 
    const auto& dynamic_properties = db().get_dynamic_global_properties();
    db().modify(dynamic_properties, [](dynamic_global_property_object& p) {
@@ -332,14 +303,14 @@ void_result account_update_evaluator::do_apply( const account_update_operation& 
       sa_after = a.has_special_authority();
    });
 
-   if( sa_before && (!sa_after) )
+   if( sa_before & (!sa_after) )
    {
       const auto& sa_idx = d.get_index_type< special_authority_index >().indices().get<by_account>();
       auto sa_it = sa_idx.find( o.account );
       assert( sa_it != sa_idx.end() );
       d.remove( *sa_it );
    }
-   else if( (!sa_before) && sa_after )
+   else if( (!sa_before) & sa_after )
    {
       d.create< special_authority_object >( [&]( special_authority_object& sa )
       {
@@ -356,7 +327,7 @@ void_result account_whitelist_evaluator::do_evaluate(const account_whitelist_ope
 
    listed_account = &o.account_to_list(d);
    if( !d.get_global_properties().parameters.allow_non_member_whitelists )
-      FC_ASSERT( o.authorizing_account(d).is_lifetime_member(), "The authorizing account must be a lifetime member." );
+      FC_ASSERT(o.authorizing_account(d).is_lifetime_member());
 
    return void_result();
 } FC_CAPTURE_AND_RETHROW( (o) ) }
@@ -398,7 +369,8 @@ void_result account_upgrade_evaluator::do_evaluate(const account_upgrade_evaluat
    database& d = db();
 
    account = &d.get(o.account_to_upgrade);
-   FC_ASSERT(!account->is_lifetime_member());
+   //hanyang plan b
+   //FC_ASSERT(!account->is_lifetime_member());
 
    return {};
 //} FC_CAPTURE_AND_RETHROW( (o) ) }
@@ -406,9 +378,12 @@ void_result account_upgrade_evaluator::do_evaluate(const account_upgrade_evaluat
 
 void_result account_upgrade_evaluator::do_apply(const account_upgrade_evaluator::operation_type& o)
 { try {
-   database& d = db();
-
-   d.modify(*account, [&](account_object& a) {
+  database& d = db();
+  //hanyang plan b
+  account = &d.get(o.account_to_upgrade);
+  if(!o.policy_flag && !account->is_lifetime_member())
+  {
+      d.modify(*account, [&](account_object& a) {
       if( o.upgrade_to_lifetime_member )
       {
          // Upgrade to lifetime member. I don't care what the account was before.
@@ -431,6 +406,7 @@ void_result account_upgrade_evaluator::do_apply(const account_upgrade_evaluator:
          a.membership_expiration_date = d.head_block_time() + fc::days(365);
       }
    });
+  }
 
    return {};
 } FC_RETHROW_EXCEPTIONS( error, "Unable to upgrade account '${a}'", ("a",o.account_to_upgrade(db()).name) ) }

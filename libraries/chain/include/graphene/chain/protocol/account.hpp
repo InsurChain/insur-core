@@ -221,6 +221,8 @@ namespace graphene { namespace chain {
       struct fee_parameters_type { 
          uint64_t membership_annual_fee   =  2000 * GRAPHENE_BLOCKCHAIN_PRECISION;
          uint64_t membership_lifetime_fee = 10000 * GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to upgrade to a lifetime member
+         ////hanyang plan b
+         uint64_t policy_fee = 0;
       };
 
       asset             fee;
@@ -228,6 +230,11 @@ namespace graphene { namespace chain {
       account_id_type   account_to_upgrade;
       /// If true, the account will be upgraded to a lifetime member; otherwise, it will add a year to the subscription
       bool              upgrade_to_lifetime_member = false;
+
+      //hanyang plan b
+      bool              policy_flag = false;
+      string            policy_hash_code;
+      
       extensions_type   extensions;
 
       account_id_type fee_payer()const { return account_to_upgrade; }
@@ -264,6 +271,7 @@ namespace graphene { namespace chain {
 } } // graphene::chain
 
 FC_REFLECT(graphene::chain::account_options, (memo_key)(voting_account)(num_witness)(num_committee)(votes)(extensions))
+FC_REFLECT_TYPENAME( graphene::chain::account_whitelist_operation::account_listing)
 FC_REFLECT_ENUM( graphene::chain::account_whitelist_operation::account_listing,
                 (no_listing)(white_listed)(black_listed)(white_and_black_listed))
 
@@ -280,14 +288,14 @@ FC_REFLECT( graphene::chain::account_update_operation,
           )
 
 FC_REFLECT( graphene::chain::account_upgrade_operation,
-            (fee)(account_to_upgrade)(upgrade_to_lifetime_member)(extensions) )
+            (fee)(account_to_upgrade)(upgrade_to_lifetime_member)(policy_flag)(policy_hash_code)(extensions) )
 
 FC_REFLECT( graphene::chain::account_whitelist_operation, (fee)(authorizing_account)(account_to_list)(new_listing)(extensions))
 
 FC_REFLECT( graphene::chain::account_create_operation::fee_parameters_type, (basic_fee)(premium_fee)(price_per_kbyte) )
 FC_REFLECT( graphene::chain::account_whitelist_operation::fee_parameters_type, (fee) )
 FC_REFLECT( graphene::chain::account_update_operation::fee_parameters_type, (fee)(price_per_kbyte) )
-FC_REFLECT( graphene::chain::account_upgrade_operation::fee_parameters_type, (membership_annual_fee)(membership_lifetime_fee) )
+FC_REFLECT( graphene::chain::account_upgrade_operation::fee_parameters_type, (membership_annual_fee)(membership_lifetime_fee) (policy_fee))
 FC_REFLECT( graphene::chain::account_transfer_operation::fee_parameters_type, (fee) )
 
 FC_REFLECT( graphene::chain::account_transfer_operation, (fee)(account_id)(new_owner)(extensions) )

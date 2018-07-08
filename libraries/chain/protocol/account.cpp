@@ -56,20 +56,17 @@ namespace graphene { namespace chain {
  * - Length is between (inclusive) GRAPHENE_MIN_ACCOUNT_NAME_LENGTH and GRAPHENE_MAX_ACCOUNT_NAME_LENGTH
  */
 bool is_valid_name( const string& name )
-{ try {
-    const size_t len = name.size();
+{
+#if GRAPHENE_MIN_ACCOUNT_NAME_LENGTH < 3
+#error This is_valid_name implementation implicitly enforces minimum name length of 3.
+#endif
 
+    const size_t len = name.size();
     if( len < GRAPHENE_MIN_ACCOUNT_NAME_LENGTH )
-    {
-          ilog( ".");
         return false;
-    }
 
     if( len > GRAPHENE_MAX_ACCOUNT_NAME_LENGTH )
-    {
-          ilog( ".");
         return false;
-    }
 
     size_t begin = 0;
     while( true )
@@ -77,11 +74,8 @@ bool is_valid_name( const string& name )
        size_t end = name.find_first_of( '.', begin );
        if( end == std::string::npos )
           end = len;
-       if( (end - begin) < GRAPHENE_MIN_ACCOUNT_NAME_LENGTH )
-       {
-          idump( (name) (end)(len)(begin)(GRAPHENE_MAX_ACCOUNT_NAME_LENGTH) );
+       if( end - begin < 3 )
           return false;
-       }
        switch( name[begin] )
        {
           case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h':
@@ -90,7 +84,6 @@ bool is_valid_name( const string& name )
           case 'y': case 'z':
              break;
           default:
-          ilog( ".");
              return false;
        }
        switch( name[end-1] )
@@ -103,7 +96,6 @@ bool is_valid_name( const string& name )
           case '8': case '9':
              break;
           default:
-          ilog( ".");
              return false;
        }
        for( size_t i=begin+1; i<end-1; i++ )
@@ -119,7 +111,6 @@ bool is_valid_name( const string& name )
              case '-':
                 break;
              default:
-          ilog( ".");
                 return false;
           }
        }
@@ -128,7 +119,7 @@ bool is_valid_name( const string& name )
        begin = end+1;
     }
     return true;
-} FC_CAPTURE_AND_RETHROW( (name) ) }
+}
 
 bool is_cheap_name( const string& n )
 {
@@ -264,9 +255,17 @@ void account_update_operation::validate()const
 
 share_type account_upgrade_operation::calculate_fee(const fee_parameters_type& k) const
 {
+      //hanyang plan b
+   if(policy_flag)  
+   {
+      return k.policy_fee;
+   }
+   else
+   {
    if( upgrade_to_lifetime_member )
       return k.membership_lifetime_fee;
    return k.membership_annual_fee;
+   }
 }
 
 
