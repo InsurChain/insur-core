@@ -25,4 +25,3 @@ install( TARGETS
    LIBRARY DESTINATION lib
    ARCHIVE DESTINATION lib
 )
-install( FILES ${headers} DESTINATION "include/graphene/deterministic_openssl_rand" )

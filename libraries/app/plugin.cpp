@@ -43,11 +43,6 @@ std::string plugin::plugin_name()const
    return "<unknown plugin>";
 }
 
-std::string plugin::plugin_description()const
-{
-   return "<no description>";
-}
-
 void plugin::plugin_initialize( const boost::program_options::variables_map& options )
 {
    return;

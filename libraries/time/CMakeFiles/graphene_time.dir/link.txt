@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgraphene_time.a  CMakeFiles/graphene_time.dir/time.cpp.o
+/usr/bin/ranlib libgraphene_time.a

@@ -50,20 +50,17 @@ namespace graphene {
       std::vector<char> v;
       try
       {
-		     v = fc::from_base58( base58str.substr( prefix_len ) );
-      }
-      catch( const fc::parse_error_exception& e )
-      {
-        return false;
-      }
-
+		  v = fc::from_base58( base58str.substr( prefix_len ) );
+	  }
+	  catch( const fc::parse_error_exception& e )
+	  {
+		  return false;
+	  }
       if( v.size() != sizeof( fc::ripemd160 ) + 4 )
           return false;
-
       const fc::ripemd160 checksum = fc::ripemd160::hash( v.data(), v.size() - 4 );
       if( memcmp( v.data() + 20, (char*)checksum._hash, 4 ) != 0 )
           return false;
-
       return true;
    }
 
@@ -101,11 +98,11 @@ namespace graphene {
 
 namespace fc
 {
-    void to_variant( const graphene::chain::address& var,  variant& vo, uint32_t max_depth )
+    void to_variant( const graphene::chain::address& var,  variant& vo )
     {
         vo = std::string(var);
     }
-    void from_variant( const variant& var,  graphene::chain::address& vo, uint32_t max_depth )
+    void from_variant( const variant& var,  graphene::chain::address& vo )
     {
         vo = graphene::chain::address( var.as_string() );
     }

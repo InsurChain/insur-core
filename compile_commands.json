@@ -1,0 +1,1217 @@
+[
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/udt_client.dir/tests/udtc.cpp.o -c /graphene/libraries/fc/tests/udtc.cpp",
+  "file": "/graphene/libraries/fc/tests/udtc.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/udt_server.dir/tests/udts.cpp.o -c /graphene/libraries/fc/tests/udts.cpp",
+  "file": "/graphene/libraries/fc/tests/udts.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/api.dir/tests/api.cpp.o -c /graphene/libraries/fc/tests/api.cpp",
+  "file": "/graphene/libraries/fc/tests/api.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/hmac_test.dir/tests/hmac_test.cpp.o -c /graphene/libraries/fc/tests/hmac_test.cpp",
+  "file": "/graphene/libraries/fc/tests/hmac_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/all_tests.cpp.o -c /graphene/libraries/fc/tests/all_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/all_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/compress/compress.cpp.o -c /graphene/libraries/fc/tests/compress/compress.cpp",
+  "file": "/graphene/libraries/fc/tests/compress/compress.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/aes_test.cpp.o -c /graphene/libraries/fc/tests/crypto/aes_test.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/aes_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/base_n_tests.cpp.o -c /graphene/libraries/fc/tests/crypto/base_n_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/base_n_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/bigint_test.cpp.o -c /graphene/libraries/fc/tests/crypto/bigint_test.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/bigint_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/blind.cpp.o -c /graphene/libraries/fc/tests/crypto/blind.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/blind.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/blowfish_test.cpp.o -c /graphene/libraries/fc/tests/crypto/blowfish_test.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/blowfish_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/dh_test.cpp.o -c /graphene/libraries/fc/tests/crypto/dh_test.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/dh_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/rand_test.cpp.o -c /graphene/libraries/fc/tests/crypto/rand_test.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/rand_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/crypto/sha_tests.cpp.o -c /graphene/libraries/fc/tests/crypto/sha_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/sha_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/network/ntp_test.cpp.o -c /graphene/libraries/fc/tests/network/ntp_test.cpp",
+  "file": "/graphene/libraries/fc/tests/network/ntp_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/network/http/websocket_test.cpp.o -c /graphene/libraries/fc/tests/network/http/websocket_test.cpp",
+  "file": "/graphene/libraries/fc/tests/network/http/websocket_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/thread/task_cancel.cpp.o -c /graphene/libraries/fc/tests/thread/task_cancel.cpp",
+  "file": "/graphene/libraries/fc/tests/thread/task_cancel.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/bloom_test.cpp.o -c /graphene/libraries/fc/tests/bloom_test.cpp",
+  "file": "/graphene/libraries/fc/tests/bloom_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/real128_test.cpp.o -c /graphene/libraries/fc/tests/real128_test.cpp",
+  "file": "/graphene/libraries/fc/tests/real128_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/all_tests.dir/tests/utf8_test.cpp.o -c /graphene/libraries/fc/tests/utf8_test.cpp",
+  "file": "/graphene/libraries/fc/tests/utf8_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/uint128.cpp.o -c /graphene/libraries/fc/src/uint128.cpp",
+  "file": "/graphene/libraries/fc/src/uint128.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/real128.cpp.o -c /graphene/libraries/fc/src/real128.cpp",
+  "file": "/graphene/libraries/fc/src/real128.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/variant.cpp.o -c /graphene/libraries/fc/src/variant.cpp",
+  "file": "/graphene/libraries/fc/src/variant.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/exception.cpp.o -c /graphene/libraries/fc/src/exception.cpp",
+  "file": "/graphene/libraries/fc/src/exception.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/variant_object.cpp.o -c /graphene/libraries/fc/src/variant_object.cpp",
+  "file": "/graphene/libraries/fc/src/variant_object.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/thread.cpp.o -c /graphene/libraries/fc/src/thread/thread.cpp",
+  "file": "/graphene/libraries/fc/src/thread/thread.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/thread_specific.cpp.o -c /graphene/libraries/fc/src/thread/thread_specific.cpp",
+  "file": "/graphene/libraries/fc/src/thread/thread_specific.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/future.cpp.o -c /graphene/libraries/fc/src/thread/future.cpp",
+  "file": "/graphene/libraries/fc/src/thread/future.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/task.cpp.o -c /graphene/libraries/fc/src/thread/task.cpp",
+  "file": "/graphene/libraries/fc/src/thread/task.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/spin_lock.cpp.o -c /graphene/libraries/fc/src/thread/spin_lock.cpp",
+  "file": "/graphene/libraries/fc/src/thread/spin_lock.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/spin_yield_lock.cpp.o -c /graphene/libraries/fc/src/thread/spin_yield_lock.cpp",
+  "file": "/graphene/libraries/fc/src/thread/spin_yield_lock.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/mutex.cpp.o -c /graphene/libraries/fc/src/thread/mutex.cpp",
+  "file": "/graphene/libraries/fc/src/thread/mutex.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/thread/non_preemptable_scope_check.cpp.o -c /graphene/libraries/fc/src/thread/non_preemptable_scope_check.cpp",
+  "file": "/graphene/libraries/fc/src/thread/non_preemptable_scope_check.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/asio.cpp.o -c /graphene/libraries/fc/src/asio.cpp",
+  "file": "/graphene/libraries/fc/src/asio.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/string.cpp.o -c /graphene/libraries/fc/src/string.cpp",
+  "file": "/graphene/libraries/fc/src/string.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/shared_ptr.cpp.o -c /graphene/libraries/fc/src/shared_ptr.cpp",
+  "file": "/graphene/libraries/fc/src/shared_ptr.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/time.cpp.o -c /graphene/libraries/fc/src/time.cpp",
+  "file": "/graphene/libraries/fc/src/time.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/utf8.cpp.o -c /graphene/libraries/fc/src/utf8.cpp",
+  "file": "/graphene/libraries/fc/src/utf8.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/iostream.cpp.o -c /graphene/libraries/fc/src/io/iostream.cpp",
+  "file": "/graphene/libraries/fc/src/io/iostream.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/datastream.cpp.o -c /graphene/libraries/fc/src/io/datastream.cpp",
+  "file": "/graphene/libraries/fc/src/io/datastream.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/buffered_iostream.cpp.o -c /graphene/libraries/fc/src/io/buffered_iostream.cpp",
+  "file": "/graphene/libraries/fc/src/io/buffered_iostream.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/fstream.cpp.o -c /graphene/libraries/fc/src/io/fstream.cpp",
+  "file": "/graphene/libraries/fc/src/io/fstream.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/sstream.cpp.o -c /graphene/libraries/fc/src/io/sstream.cpp",
+  "file": "/graphene/libraries/fc/src/io/sstream.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/json.cpp.o -c /graphene/libraries/fc/src/io/json.cpp",
+  "file": "/graphene/libraries/fc/src/io/json.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/varint.cpp.o -c /graphene/libraries/fc/src/io/varint.cpp",
+  "file": "/graphene/libraries/fc/src/io/varint.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/io/console.cpp.o -c /graphene/libraries/fc/src/io/console.cpp",
+  "file": "/graphene/libraries/fc/src/io/console.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/filesystem.cpp.o -c /graphene/libraries/fc/src/filesystem.cpp",
+  "file": "/graphene/libraries/fc/src/filesystem.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/interprocess/process.cpp.o -c /graphene/libraries/fc/src/interprocess/process.cpp",
+  "file": "/graphene/libraries/fc/src/interprocess/process.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/interprocess/signals.cpp.o -c /graphene/libraries/fc/src/interprocess/signals.cpp",
+  "file": "/graphene/libraries/fc/src/interprocess/signals.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/interprocess/file_mapping.cpp.o -c /graphene/libraries/fc/src/interprocess/file_mapping.cpp",
+  "file": "/graphene/libraries/fc/src/interprocess/file_mapping.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/interprocess/mmap_struct.cpp.o -c /graphene/libraries/fc/src/interprocess/mmap_struct.cpp",
+  "file": "/graphene/libraries/fc/src/interprocess/mmap_struct.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/rpc/cli.cpp.o -c /graphene/libraries/fc/src/rpc/cli.cpp",
+  "file": "/graphene/libraries/fc/src/rpc/cli.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/rpc/http_api.cpp.o -c /graphene/libraries/fc/src/rpc/http_api.cpp",
+  "file": "/graphene/libraries/fc/src/rpc/http_api.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/rpc/json_connection.cpp.o -c /graphene/libraries/fc/src/rpc/json_connection.cpp",
+  "file": "/graphene/libraries/fc/src/rpc/json_connection.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/rpc/state.cpp.o -c /graphene/libraries/fc/src/rpc/state.cpp",
+  "file": "/graphene/libraries/fc/src/rpc/state.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/rpc/websocket_api.cpp.o -c /graphene/libraries/fc/src/rpc/websocket_api.cpp",
+  "file": "/graphene/libraries/fc/src/rpc/websocket_api.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/log_message.cpp.o -c /graphene/libraries/fc/src/log/log_message.cpp",
+  "file": "/graphene/libraries/fc/src/log/log_message.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/logger.cpp.o -c /graphene/libraries/fc/src/log/logger.cpp",
+  "file": "/graphene/libraries/fc/src/log/logger.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/appender.cpp.o -c /graphene/libraries/fc/src/log/appender.cpp",
+  "file": "/graphene/libraries/fc/src/log/appender.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/console_appender.cpp.o -c /graphene/libraries/fc/src/log/console_appender.cpp",
+  "file": "/graphene/libraries/fc/src/log/console_appender.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/file_appender.cpp.o -c /graphene/libraries/fc/src/log/file_appender.cpp",
+  "file": "/graphene/libraries/fc/src/log/file_appender.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/gelf_appender.cpp.o -c /graphene/libraries/fc/src/log/gelf_appender.cpp",
+  "file": "/graphene/libraries/fc/src/log/gelf_appender.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/log/logger_config.cpp.o -c /graphene/libraries/fc/src/log/logger_config.cpp",
+  "file": "/graphene/libraries/fc/src/log/logger_config.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/_digest_common.cpp.o -c /graphene/libraries/fc/src/crypto/_digest_common.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/_digest_common.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/openssl.cpp.o -c /graphene/libraries/fc/src/crypto/openssl.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/openssl.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/aes.cpp.o -c /graphene/libraries/fc/src/crypto/aes.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/aes.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/crc.cpp.o -c /graphene/libraries/fc/src/crypto/crc.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/crc.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/city.cpp.o -c /graphene/libraries/fc/src/crypto/city.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/city.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/base32.cpp.o -c /graphene/libraries/fc/src/crypto/base32.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/base32.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/base36.cpp.o -c /graphene/libraries/fc/src/crypto/base36.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/base36.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/base58.cpp.o -c /graphene/libraries/fc/src/crypto/base58.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/base58.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/base64.cpp.o -c /graphene/libraries/fc/src/crypto/base64.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/base64.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/bigint.cpp.o -c /graphene/libraries/fc/src/crypto/bigint.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/bigint.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/hex.cpp.o -c /graphene/libraries/fc/src/crypto/hex.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/hex.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/sha1.cpp.o -c /graphene/libraries/fc/src/crypto/sha1.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/sha1.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/ripemd160.cpp.o -c /graphene/libraries/fc/src/crypto/ripemd160.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/ripemd160.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/sha256.cpp.o -c /graphene/libraries/fc/src/crypto/sha256.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/sha256.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/sha224.cpp.o -c /graphene/libraries/fc/src/crypto/sha224.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/sha224.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/sha512.cpp.o -c /graphene/libraries/fc/src/crypto/sha512.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/sha512.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/dh.cpp.o -c /graphene/libraries/fc/src/crypto/dh.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/dh.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/blowfish.cpp.o -c /graphene/libraries/fc/src/crypto/blowfish.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/blowfish.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/elliptic_common.cpp.o -c /graphene/libraries/fc/src/crypto/elliptic_common.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/elliptic_common.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/elliptic_impl_priv.cpp.o -c /graphene/libraries/fc/src/crypto/elliptic_impl_priv.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/elliptic_impl_priv.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/elliptic_secp256k1.cpp.o -c /graphene/libraries/fc/src/crypto/elliptic_secp256k1.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/elliptic_secp256k1.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/crypto/rand.cpp.o -c /graphene/libraries/fc/src/crypto/rand.cpp",
+  "file": "/graphene/libraries/fc/src/crypto/rand.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/tcp_socket.cpp.o -c /graphene/libraries/fc/src/network/tcp_socket.cpp",
+  "file": "/graphene/libraries/fc/src/network/tcp_socket.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/udp_socket.cpp.o -c /graphene/libraries/fc/src/network/udp_socket.cpp",
+  "file": "/graphene/libraries/fc/src/network/udp_socket.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/udt_socket.cpp.o -c /graphene/libraries/fc/src/network/udt_socket.cpp",
+  "file": "/graphene/libraries/fc/src/network/udt_socket.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/http/http_connection.cpp.o -c /graphene/libraries/fc/src/network/http/http_connection.cpp",
+  "file": "/graphene/libraries/fc/src/network/http/http_connection.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/http/http_server.cpp.o -c /graphene/libraries/fc/src/network/http/http_server.cpp",
+  "file": "/graphene/libraries/fc/src/network/http/http_server.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/http/websocket.cpp.o -c /graphene/libraries/fc/src/network/http/websocket.cpp",
+  "file": "/graphene/libraries/fc/src/network/http/websocket.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/ntp.cpp.o -c /graphene/libraries/fc/src/network/ntp.cpp",
+  "file": "/graphene/libraries/fc/src/network/ntp.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/ip.cpp.o -c /graphene/libraries/fc/src/network/ip.cpp",
+  "file": "/graphene/libraries/fc/src/network/ip.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/rate_limiting.cpp.o -c /graphene/libraries/fc/src/network/rate_limiting.cpp",
+  "file": "/graphene/libraries/fc/src/network/rate_limiting.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/resolve.cpp.o -c /graphene/libraries/fc/src/network/resolve.cpp",
+  "file": "/graphene/libraries/fc/src/network/resolve.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/url.cpp.o -c /graphene/libraries/fc/src/network/url.cpp",
+  "file": "/graphene/libraries/fc/src/network/url.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/network/gntp.cpp.o -c /graphene/libraries/fc/src/network/gntp.cpp",
+  "file": "/graphene/libraries/fc/src/network/gntp.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/compress/smaz.cpp.o -c /graphene/libraries/fc/src/compress/smaz.cpp",
+  "file": "/graphene/libraries/fc/src/compress/smaz.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/src/compress/zlib.cpp.o -c /graphene/libraries/fc/src/compress/zlib.cpp",
+  "file": "/graphene/libraries/fc/src/compress/zlib.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/cc  -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c99 -Wall -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/vendor/cyoencode-1.0.2/src/CyoDecode.c.o   -c /graphene/libraries/fc/vendor/cyoencode-1.0.2/src/CyoDecode.c",
+  "file": "/graphene/libraries/fc/vendor/cyoencode-1.0.2/src/CyoDecode.c"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/cc  -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c99 -Wall -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/vendor/cyoencode-1.0.2/src/CyoEncode.c.o   -c /graphene/libraries/fc/vendor/cyoencode-1.0.2/src/CyoEncode.c",
+  "file": "/graphene/libraries/fc/vendor/cyoencode-1.0.2/src/CyoEncode.c"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++   -DHAVE_READLINE -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -I/graphene/libraries/fc -I/graphene/libraries/fc/vendor/boost_1.51/include -I/graphene/libraries/fc/vendor/cyoencode-1.0.2/src -I/graphene/libraries/fc/vendor/udt4/src -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/vendor/secp256k1-zkp -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/fc.dir/git_revision.cpp.o -c /graphene/libraries/fc/git_revision.cpp",
+  "file": "/graphene/libraries/fc/git_revision.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/blind.dir/tests/all_tests.cpp.o -c /graphene/libraries/fc/tests/all_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/all_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/blind.dir/tests/crypto/blind.cpp.o -c /graphene/libraries/fc/tests/crypto/blind.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/blind.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/blinding_test.dir/tests/blinding_test.cpp.o -c /graphene/libraries/fc/tests/blinding_test.cpp",
+  "file": "/graphene/libraries/fc/tests/blinding_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/ecc_test.dir/tests/crypto/ecc_test.cpp.o -c /graphene/libraries/fc/tests/crypto/ecc_test.cpp",
+  "file": "/graphene/libraries/fc/tests/crypto/ecc_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/ntp_test.dir/tests/all_tests.cpp.o -c /graphene/libraries/fc/tests/all_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/all_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/ntp_test.dir/tests/network/ntp_test.cpp.o -c /graphene/libraries/fc/tests/network/ntp_test.cpp",
+  "file": "/graphene/libraries/fc/tests/network/ntp_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/bloom_test.dir/tests/all_tests.cpp.o -c /graphene/libraries/fc/tests/all_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/all_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/bloom_test.dir/tests/bloom_test.cpp.o -c /graphene/libraries/fc/tests/bloom_test.cpp",
+  "file": "/graphene/libraries/fc/tests/bloom_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/task_cancel_test.dir/tests/all_tests.cpp.o -c /graphene/libraries/fc/tests/all_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/all_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/task_cancel_test.dir/tests/thread/task_cancel.cpp.o -c /graphene/libraries/fc/tests/thread/task_cancel.cpp",
+  "file": "/graphene/libraries/fc/tests/thread/task_cancel.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/real128_test.dir/tests/all_tests.cpp.o -c /graphene/libraries/fc/tests/all_tests.cpp",
+  "file": "/graphene/libraries/fc/tests/all_tests.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/vendor/websocketpp -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -std=c++11 -Wall -fnon-call-exceptions -DWEBSOCKETPP_STRICT_MASKING -DBOOST_ASIO_HAS_STD_CHRONO -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/real128_test.dir/tests/real128_test.cpp.o -c /graphene/libraries/fc/tests/real128_test.cpp",
+  "file": "/graphene/libraries/fc/tests/real128_test.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/api.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/api.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/api.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/buffer.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/buffer.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/buffer.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/cache.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/cache.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/cache.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/ccc.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/ccc.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/ccc.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/channel.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/channel.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/channel.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/common.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/common.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/common.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/core.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/core.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/core.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/epoll.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/epoll.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/epoll.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/list.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/list.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/list.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/md5.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/md5.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/md5.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/packet.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/packet.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/packet.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/queue.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/queue.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/queue.cpp"
+},
+{
+  "directory": "/graphene/libraries/fc/vendor/udt4",
+  "command": "/usr/bin/c++   -DLINUX   -std=c++11 -Wall -fno-builtin-memcmp -g   -o CMakeFiles/udt.dir/src/window.cpp.o -c /graphene/libraries/fc/vendor/udt4/src/window.cpp",
+  "file": "/graphene/libraries/fc/vendor/udt4/src/window.cpp"
+},
+{
+  "directory": "/graphene/libraries/db",
+  "command": "/usr/bin/c++    -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_db.dir/undo_database.cpp.o -c /graphene/libraries/db/undo_database.cpp",
+  "file": "/graphene/libraries/db/undo_database.cpp"
+},
+{
+  "directory": "/graphene/libraries/db",
+  "command": "/usr/bin/c++    -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_db.dir/index.cpp.o -c /graphene/libraries/db/index.cpp",
+  "file": "/graphene/libraries/db/index.cpp"
+},
+{
+  "directory": "/graphene/libraries/db",
+  "command": "/usr/bin/c++    -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_db.dir/object_database.cpp.o -c /graphene/libraries/db/object_database.cpp",
+  "file": "/graphene/libraries/db/object_database.cpp"
+},
+{
+  "directory": "/graphene/libraries/deterministic_openssl_rand",
+  "command": "/usr/bin/c++    -I/graphene/libraries/deterministic_openssl_rand/include -I/graphene/libraries/deterministic_openssl_rand/../blockchain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/deterministic_openssl_rand.dir/deterministic_openssl_rand.cpp.o -c /graphene/libraries/deterministic_openssl_rand/deterministic_openssl_rand.cpp",
+  "file": "/graphene/libraries/deterministic_openssl_rand/deterministic_openssl_rand.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/database.cpp.o -c /graphene/libraries/chain/database.cpp",
+  "file": "/graphene/libraries/chain/database.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/fork_database.cpp.o -c /graphene/libraries/chain/fork_database.cpp",
+  "file": "/graphene/libraries/chain/fork_database.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/types.cpp.o -c /graphene/libraries/chain/protocol/types.cpp",
+  "file": "/graphene/libraries/chain/protocol/types.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/address.cpp.o -c /graphene/libraries/chain/protocol/address.cpp",
+  "file": "/graphene/libraries/chain/protocol/address.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/authority.cpp.o -c /graphene/libraries/chain/protocol/authority.cpp",
+  "file": "/graphene/libraries/chain/protocol/authority.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/asset.cpp.o -c /graphene/libraries/chain/protocol/asset.cpp",
+  "file": "/graphene/libraries/chain/protocol/asset.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/assert.cpp.o -c /graphene/libraries/chain/protocol/assert.cpp",
+  "file": "/graphene/libraries/chain/protocol/assert.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/account.cpp.o -c /graphene/libraries/chain/protocol/account.cpp",
+  "file": "/graphene/libraries/chain/protocol/account.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/transfer.cpp.o -c /graphene/libraries/chain/protocol/transfer.cpp",
+  "file": "/graphene/libraries/chain/protocol/transfer.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/committee_member.cpp.o -c /graphene/libraries/chain/protocol/committee_member.cpp",
+  "file": "/graphene/libraries/chain/protocol/committee_member.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/witness.cpp.o -c /graphene/libraries/chain/protocol/witness.cpp",
+  "file": "/graphene/libraries/chain/protocol/witness.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/market.cpp.o -c /graphene/libraries/chain/protocol/market.cpp",
+  "file": "/graphene/libraries/chain/protocol/market.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/proposal.cpp.o -c /graphene/libraries/chain/protocol/proposal.cpp",
+  "file": "/graphene/libraries/chain/protocol/proposal.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/withdraw_permission.cpp.o -c /graphene/libraries/chain/protocol/withdraw_permission.cpp",
+  "file": "/graphene/libraries/chain/protocol/withdraw_permission.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/asset_ops.cpp.o -c /graphene/libraries/chain/protocol/asset_ops.cpp",
+  "file": "/graphene/libraries/chain/protocol/asset_ops.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/memo.cpp.o -c /graphene/libraries/chain/protocol/memo.cpp",
+  "file": "/graphene/libraries/chain/protocol/memo.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/worker.cpp.o -c /graphene/libraries/chain/protocol/worker.cpp",
+  "file": "/graphene/libraries/chain/protocol/worker.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/custom.cpp.o -c /graphene/libraries/chain/protocol/custom.cpp",
+  "file": "/graphene/libraries/chain/protocol/custom.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/operations.cpp.o -c /graphene/libraries/chain/protocol/operations.cpp",
+  "file": "/graphene/libraries/chain/protocol/operations.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/transaction.cpp.o -c /graphene/libraries/chain/protocol/transaction.cpp",
+  "file": "/graphene/libraries/chain/protocol/transaction.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/block.cpp.o -c /graphene/libraries/chain/protocol/block.cpp",
+  "file": "/graphene/libraries/chain/protocol/block.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/fee_schedule.cpp.o -c /graphene/libraries/chain/protocol/fee_schedule.cpp",
+  "file": "/graphene/libraries/chain/protocol/fee_schedule.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/confidential.cpp.o -c /graphene/libraries/chain/protocol/confidential.cpp",
+  "file": "/graphene/libraries/chain/protocol/confidential.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/protocol/vote.cpp.o -c /graphene/libraries/chain/protocol/vote.cpp",
+  "file": "/graphene/libraries/chain/protocol/vote.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/genesis_state.cpp.o -c /graphene/libraries/chain/genesis_state.cpp",
+  "file": "/graphene/libraries/chain/genesis_state.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/get_config.cpp.o -c /graphene/libraries/chain/get_config.cpp",
+  "file": "/graphene/libraries/chain/get_config.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/pts_address.cpp.o -c /graphene/libraries/chain/pts_address.cpp",
+  "file": "/graphene/libraries/chain/pts_address.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/evaluator.cpp.o -c /graphene/libraries/chain/evaluator.cpp",
+  "file": "/graphene/libraries/chain/evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/balance_evaluator.cpp.o -c /graphene/libraries/chain/balance_evaluator.cpp",
+  "file": "/graphene/libraries/chain/balance_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/account_evaluator.cpp.o -c /graphene/libraries/chain/account_evaluator.cpp",
+  "file": "/graphene/libraries/chain/account_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/assert_evaluator.cpp.o -c /graphene/libraries/chain/assert_evaluator.cpp",
+  "file": "/graphene/libraries/chain/assert_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/witness_evaluator.cpp.o -c /graphene/libraries/chain/witness_evaluator.cpp",
+  "file": "/graphene/libraries/chain/witness_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/committee_member_evaluator.cpp.o -c /graphene/libraries/chain/committee_member_evaluator.cpp",
+  "file": "/graphene/libraries/chain/committee_member_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/asset_evaluator.cpp.o -c /graphene/libraries/chain/asset_evaluator.cpp",
+  "file": "/graphene/libraries/chain/asset_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/transfer_evaluator.cpp.o -c /graphene/libraries/chain/transfer_evaluator.cpp",
+  "file": "/graphene/libraries/chain/transfer_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/proposal_evaluator.cpp.o -c /graphene/libraries/chain/proposal_evaluator.cpp",
+  "file": "/graphene/libraries/chain/proposal_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/market_evaluator.cpp.o -c /graphene/libraries/chain/market_evaluator.cpp",
+  "file": "/graphene/libraries/chain/market_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/vesting_balance_evaluator.cpp.o -c /graphene/libraries/chain/vesting_balance_evaluator.cpp",
+  "file": "/graphene/libraries/chain/vesting_balance_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/withdraw_permission_evaluator.cpp.o -c /graphene/libraries/chain/withdraw_permission_evaluator.cpp",
+  "file": "/graphene/libraries/chain/withdraw_permission_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/worker_evaluator.cpp.o -c /graphene/libraries/chain/worker_evaluator.cpp",
+  "file": "/graphene/libraries/chain/worker_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/confidential_evaluator.cpp.o -c /graphene/libraries/chain/confidential_evaluator.cpp",
+  "file": "/graphene/libraries/chain/confidential_evaluator.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/special_authority.cpp.o -c /graphene/libraries/chain/special_authority.cpp",
+  "file": "/graphene/libraries/chain/special_authority.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/buyback.cpp.o -c /graphene/libraries/chain/buyback.cpp",
+  "file": "/graphene/libraries/chain/buyback.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/account_object.cpp.o -c /graphene/libraries/chain/account_object.cpp",
+  "file": "/graphene/libraries/chain/account_object.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/asset_object.cpp.o -c /graphene/libraries/chain/asset_object.cpp",
+  "file": "/graphene/libraries/chain/asset_object.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/fba_object.cpp.o -c /graphene/libraries/chain/fba_object.cpp",
+  "file": "/graphene/libraries/chain/fba_object.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/proposal_object.cpp.o -c /graphene/libraries/chain/proposal_object.cpp",
+  "file": "/graphene/libraries/chain/proposal_object.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/vesting_balance_object.cpp.o -c /graphene/libraries/chain/vesting_balance_object.cpp",
+  "file": "/graphene/libraries/chain/vesting_balance_object.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/block_database.cpp.o -c /graphene/libraries/chain/block_database.cpp",
+  "file": "/graphene/libraries/chain/block_database.cpp"
+},
+{
+  "directory": "/graphene/libraries/chain",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_chain.dir/is_authorized_asset.cpp.o -c /graphene/libraries/chain/is_authorized_asset.cpp",
+  "file": "/graphene/libraries/chain/is_authorized_asset.cpp"
+},
+{
+  "directory": "/graphene/libraries/egenesis",
+  "command": "/usr/bin/c++    -I/graphene/libraries/egenesis/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_egenesis_none.dir/egenesis_none.cpp.o -c /graphene/libraries/egenesis/egenesis_none.cpp",
+  "file": "/graphene/libraries/egenesis/egenesis_none.cpp"
+},
+{
+  "directory": "/graphene/libraries/egenesis",
+  "command": "/usr/bin/c++    -I/graphene/libraries/egenesis/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_egenesis_full.dir/egenesis_full.cpp.o -c /graphene/libraries/egenesis/egenesis_full.cpp",
+  "file": "/graphene/libraries/egenesis/egenesis_full.cpp"
+},
+{
+  "directory": "/graphene/libraries/egenesis",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/embed_genesis.dir/embed_genesis.cpp.o -c /graphene/libraries/egenesis/embed_genesis.cpp",
+  "file": "/graphene/libraries/egenesis/embed_genesis.cpp"
+},
+{
+  "directory": "/graphene/libraries/egenesis",
+  "command": "/usr/bin/c++    -I/graphene/libraries/egenesis/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_egenesis_brief.dir/egenesis_brief.cpp.o -c /graphene/libraries/egenesis/egenesis_brief.cpp",
+  "file": "/graphene/libraries/egenesis/egenesis_brief.cpp"
+},
+{
+  "directory": "/graphene/libraries/net",
+  "command": "/usr/bin/c++    -I/graphene/libraries/net/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_net.dir/node.cpp.o -c /graphene/libraries/net/node.cpp",
+  "file": "/graphene/libraries/net/node.cpp"
+},
+{
+  "directory": "/graphene/libraries/net",
+  "command": "/usr/bin/c++    -I/graphene/libraries/net/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_net.dir/stcp_socket.cpp.o -c /graphene/libraries/net/stcp_socket.cpp",
+  "file": "/graphene/libraries/net/stcp_socket.cpp"
+},
+{
+  "directory": "/graphene/libraries/net",
+  "command": "/usr/bin/c++    -I/graphene/libraries/net/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_net.dir/core_messages.cpp.o -c /graphene/libraries/net/core_messages.cpp",
+  "file": "/graphene/libraries/net/core_messages.cpp"
+},
+{
+  "directory": "/graphene/libraries/net",
+  "command": "/usr/bin/c++    -I/graphene/libraries/net/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_net.dir/peer_database.cpp.o -c /graphene/libraries/net/peer_database.cpp",
+  "file": "/graphene/libraries/net/peer_database.cpp"
+},
+{
+  "directory": "/graphene/libraries/net",
+  "command": "/usr/bin/c++    -I/graphene/libraries/net/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_net.dir/peer_connection.cpp.o -c /graphene/libraries/net/peer_connection.cpp",
+  "file": "/graphene/libraries/net/peer_connection.cpp"
+},
+{
+  "directory": "/graphene/libraries/net",
+  "command": "/usr/bin/c++    -I/graphene/libraries/net/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_net.dir/message_oriented_connection.cpp.o -c /graphene/libraries/net/message_oriented_connection.cpp",
+  "file": "/graphene/libraries/net/message_oriented_connection.cpp"
+},
+{
+  "directory": "/graphene/libraries/time",
+  "command": "/usr/bin/c++    -I/graphene/libraries/time/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_time.dir/time.cpp.o -c /graphene/libraries/time/time.cpp",
+  "file": "/graphene/libraries/time/time.cpp"
+},
+{
+  "directory": "/graphene/libraries/utilities",
+  "command": "/usr/bin/c++    -I/graphene/libraries/utilities/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_utilities.dir/key_conversion.cpp.o -c /graphene/libraries/utilities/key_conversion.cpp",
+  "file": "/graphene/libraries/utilities/key_conversion.cpp"
+},
+{
+  "directory": "/graphene/libraries/utilities",
+  "command": "/usr/bin/c++    -I/graphene/libraries/utilities/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_utilities.dir/string_escape.cpp.o -c /graphene/libraries/utilities/string_escape.cpp",
+  "file": "/graphene/libraries/utilities/string_escape.cpp"
+},
+{
+  "directory": "/graphene/libraries/utilities",
+  "command": "/usr/bin/c++    -I/graphene/libraries/utilities/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_utilities.dir/tempdir.cpp.o -c /graphene/libraries/utilities/tempdir.cpp",
+  "file": "/graphene/libraries/utilities/tempdir.cpp"
+},
+{
+  "directory": "/graphene/libraries/utilities",
+  "command": "/usr/bin/c++    -I/graphene/libraries/utilities/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_utilities.dir/words.cpp.o -c /graphene/libraries/utilities/words.cpp",
+  "file": "/graphene/libraries/utilities/words.cpp"
+},
+{
+  "directory": "/graphene/libraries/utilities",
+  "command": "/usr/bin/c++    -I/graphene/libraries/utilities/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_utilities.dir/git_revision.cpp.o -c /graphene/libraries/utilities/git_revision.cpp",
+  "file": "/graphene/libraries/utilities/git_revision.cpp"
+},
+{
+  "directory": "/graphene/libraries/app",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_app.dir/api.cpp.o -c /graphene/libraries/app/api.cpp",
+  "file": "/graphene/libraries/app/api.cpp"
+},
+{
+  "directory": "/graphene/libraries/app",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_app.dir/application.cpp.o -c /graphene/libraries/app/application.cpp",
+  "file": "/graphene/libraries/app/application.cpp"
+},
+{
+  "directory": "/graphene/libraries/app",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_app.dir/database_api.cpp.o -c /graphene/libraries/app/database_api.cpp",
+  "file": "/graphene/libraries/app/database_api.cpp"
+},
+{
+  "directory": "/graphene/libraries/app",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_app.dir/impacted.cpp.o -c /graphene/libraries/app/impacted.cpp",
+  "file": "/graphene/libraries/app/impacted.cpp"
+},
+{
+  "directory": "/graphene/libraries/app",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_app.dir/plugin.cpp.o -c /graphene/libraries/app/plugin.cpp",
+  "file": "/graphene/libraries/app/plugin.cpp"
+},
+{
+  "directory": "/graphene/libraries/plugins/witness",
+  "command": "/usr/bin/c++    -I/graphene/libraries/plugins/witness/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_witness.dir/witness.cpp.o -c /graphene/libraries/plugins/witness/witness.cpp",
+  "file": "/graphene/libraries/plugins/witness/witness.cpp"
+},
+{
+  "directory": "/graphene/libraries/plugins/account_history",
+  "command": "/usr/bin/c++    -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_account_history.dir/account_history_plugin.cpp.o -c /graphene/libraries/plugins/account_history/account_history_plugin.cpp",
+  "file": "/graphene/libraries/plugins/account_history/account_history_plugin.cpp"
+},
+{
+  "directory": "/graphene/libraries/plugins/market_history",
+  "command": "/usr/bin/c++    -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_market_history.dir/market_history_plugin.cpp.o -c /graphene/libraries/plugins/market_history/market_history_plugin.cpp",
+  "file": "/graphene/libraries/plugins/market_history/market_history_plugin.cpp"
+},
+{
+  "directory": "/graphene/libraries/plugins/delayed_node",
+  "command": "/usr/bin/c++    -I/graphene/libraries/plugins/delayed_node/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_delayed_node.dir/delayed_node_plugin.cpp.o -c /graphene/libraries/plugins/delayed_node/delayed_node_plugin.cpp",
+  "file": "/graphene/libraries/plugins/delayed_node/delayed_node_plugin.cpp"
+},
+{
+  "directory": "/graphene/libraries/plugins/debug_witness",
+  "command": "/usr/bin/c++    -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_debug_witness.dir/debug_api.cpp.o -c /graphene/libraries/plugins/debug_witness/debug_api.cpp",
+  "file": "/graphene/libraries/plugins/debug_witness/debug_api.cpp"
+},
+{
+  "directory": "/graphene/libraries/plugins/debug_witness",
+  "command": "/usr/bin/c++    -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_debug_witness.dir/debug_witness.cpp.o -c /graphene/libraries/plugins/debug_witness/debug_witness.cpp",
+  "file": "/graphene/libraries/plugins/debug_witness/debug_witness.cpp"
+},
+{
+  "directory": "/graphene/libraries/wallet",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_wallet.dir/wallet.cpp.o -c /graphene/libraries/wallet/wallet.cpp",
+  "file": "/graphene/libraries/wallet/wallet.cpp"
+},
+{
+  "directory": "/graphene/libraries/wallet",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/graphene_wallet.dir/api_documentation.cpp.o -c /graphene/libraries/wallet/api_documentation.cpp",
+  "file": "/graphene/libraries/wallet/api_documentation.cpp"
+},
+{
+  "directory": "/graphene/programs/build_helpers",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/cat-parts.dir/cat-parts.cpp.o -c /graphene/programs/build_helpers/cat-parts.cpp",
+  "file": "/graphene/programs/build_helpers/cat-parts.cpp"
+},
+{
+  "directory": "/graphene/programs/build_helpers",
+  "command": "/usr/bin/c++    -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/member_enumerator.dir/member_enumerator.cpp.o -c /graphene/programs/build_helpers/member_enumerator.cpp",
+  "file": "/graphene/programs/build_helpers/member_enumerator.cpp"
+},
+{
+  "directory": "/graphene/programs/cli_wallet",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/cli_wallet.dir/main.cpp.o -c /graphene/programs/cli_wallet/main.cpp",
+  "file": "/graphene/programs/cli_wallet/main.cpp"
+},
+{
+  "directory": "/graphene/programs/genesis_util",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/genesis_update.dir/genesis_update.cpp.o -c /graphene/programs/genesis_util/genesis_update.cpp",
+  "file": "/graphene/programs/genesis_util/genesis_update.cpp"
+},
+{
+  "directory": "/graphene/programs/genesis_util",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/get_dev_key.dir/get_dev_key.cpp.o -c /graphene/programs/genesis_util/get_dev_key.cpp",
+  "file": "/graphene/programs/genesis_util/get_dev_key.cpp"
+},
+{
+  "directory": "/graphene/programs/genesis_util",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/convert_address.dir/convert_address.cpp.o -c /graphene/programs/genesis_util/convert_address.cpp",
+  "file": "/graphene/programs/genesis_util/convert_address.cpp"
+},
+{
+  "directory": "/graphene/programs/witness_node",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/plugins/witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/witness_node.dir/main.cpp.o -c /graphene/programs/witness_node/main.cpp",
+  "file": "/graphene/programs/witness_node/main.cpp"
+},
+{
+  "directory": "/graphene/programs/debug_node",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/plugins/witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/debug_node.dir/main.cpp.o -c /graphene/programs/debug_node/main.cpp",
+  "file": "/graphene/programs/debug_node/main.cpp"
+},
+{
+  "directory": "/graphene/programs/delayed_node",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/plugins/delayed_node/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/delayed_node.dir/main.cpp.o -c /graphene/programs/delayed_node/main.cpp",
+  "file": "/graphene/programs/delayed_node/main.cpp"
+},
+{
+  "directory": "/graphene/programs/js_operation_serializer",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/js_operation_serializer.dir/main.cpp.o -c /graphene/programs/js_operation_serializer/main.cpp",
+  "file": "/graphene/programs/js_operation_serializer/main.cpp"
+},
+{
+  "directory": "/graphene/programs/size_checker",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/size_checker.dir/main.cpp.o -c /graphene/programs/size_checker/main.cpp",
+  "file": "/graphene/programs/size_checker/main.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/app_test.dir/app/main.cpp.o -c /graphene/tests/app/main.cpp",
+  "file": "/graphene/tests/app/main.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/performance_test.dir/performance/performance_tests.cpp.o -c /graphene/tests/performance/performance_tests.cpp",
+  "file": "/graphene/tests/performance/performance_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/performance_test.dir/common/database_fixture.cpp.o -c /graphene/tests/common/database_fixture.cpp",
+  "file": "/graphene/tests/common/database_fixture.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_bench.dir/benchmarks/genesis_allocation.cpp.o -c /graphene/tests/benchmarks/genesis_allocation.cpp",
+  "file": "/graphene/tests/benchmarks/genesis_allocation.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_bench.dir/benchmarks/main.cpp.o -c /graphene/tests/benchmarks/main.cpp",
+  "file": "/graphene/tests/benchmarks/main.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_bench.dir/common/database_fixture.cpp.o -c /graphene/tests/common/database_fixture.cpp",
+  "file": "/graphene/tests/common/database_fixture.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/basic_tests.cpp.o -c /graphene/tests/tests/basic_tests.cpp",
+  "file": "/graphene/tests/tests/basic_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/operation_tests.cpp.o -c /graphene/tests/tests/operation_tests.cpp",
+  "file": "/graphene/tests/tests/operation_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/serialization_tests.cpp.o -c /graphene/tests/tests/serialization_tests.cpp",
+  "file": "/graphene/tests/tests/serialization_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/authority_tests.cpp.o -c /graphene/tests/tests/authority_tests.cpp",
+  "file": "/graphene/tests/tests/authority_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/fee_tests.cpp.o -c /graphene/tests/tests/fee_tests.cpp",
+  "file": "/graphene/tests/tests/fee_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/uia_tests.cpp.o -c /graphene/tests/tests/uia_tests.cpp",
+  "file": "/graphene/tests/tests/uia_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/block_tests.cpp.o -c /graphene/tests/tests/block_tests.cpp",
+  "file": "/graphene/tests/tests/block_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/database_tests.cpp.o -c /graphene/tests/tests/database_tests.cpp",
+  "file": "/graphene/tests/tests/database_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/main.cpp.o -c /graphene/tests/tests/main.cpp",
+  "file": "/graphene/tests/tests/main.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/operation_tests2.cpp.o -c /graphene/tests/tests/operation_tests2.cpp",
+  "file": "/graphene/tests/tests/operation_tests2.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/tests/confidential_tests.cpp.o -c /graphene/tests/tests/confidential_tests.cpp",
+  "file": "/graphene/tests/tests/confidential_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/chain_test.dir/common/database_fixture.cpp.o -c /graphene/tests/common/database_fixture.cpp",
+  "file": "/graphene/tests/common/database_fixture.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/intense_test.dir/intense/block_tests.cpp.o -c /graphene/tests/intense/block_tests.cpp",
+  "file": "/graphene/tests/intense/block_tests.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/intense_test.dir/intense/main.cpp.o -c /graphene/tests/intense/main.cpp",
+  "file": "/graphene/tests/intense/main.cpp"
+},
+{
+  "directory": "/graphene/tests",
+  "command": "/usr/bin/c++    -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/intense_test.dir/common/database_fixture.cpp.o -c /graphene/tests/common/database_fixture.cpp",
+  "file": "/graphene/tests/common/database_fixture.cpp"
+},
+{
+  "directory": "/graphene/tests/generate_empty_blocks",
+  "command": "/usr/bin/c++    -I/graphene/libraries/app/include -I/graphene/libraries/app/../egenesis/include -I/graphene/libraries/plugins/market_history/include -I/graphene/libraries/chain/include -I/graphene/libraries/fc/include -I/opt/boost_1_57_0/include -isystem /graphene/libraries/fc/vendor/secp256k1-zkp/include -I/graphene/libraries/db/include -I/graphene/libraries/wallet/include -I/graphene/libraries/plugins/account_history/include -I/graphene/libraries/net/include -I/graphene/libraries/time/include -I/graphene/libraries/utilities/include -I/graphene/libraries/plugins/debug_witness/include -I/graphene/libraries/egenesis/include   -std=c++11 -Wall -fno-builtin-memcmp -g   -std=c++11 -Wall -fnon-call-exceptions -o CMakeFiles/generate_empty_blocks.dir/main.cpp.o -c /graphene/tests/generate_empty_blocks/main.cpp",
+  "file": "/graphene/tests/generate_empty_blocks/main.cpp"
+}
+]
