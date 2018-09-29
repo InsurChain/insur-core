@@ -1,1 +1,0 @@
-cmd='/graphene/libraries/fc/vendor/secp256k1-zkp/configure;--prefix=/graphene/libraries/fc/vendor/secp256k1-zkp;--with-bignum=no'
