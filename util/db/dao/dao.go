@@ -22,3 +22,30 @@ type BasicNodeDao interface {
 	UpdateSelfItem(model.DBInterface) error
 }
 
+//RepeaterNodeDao RepeaterNodeDao
+type RepeaterNodeDao interface {
+	Dao
+	AddOneRepeater(nodeID string) error
+}
+
+//BandWidthProviderDao provider sort by bandwidth
+type BandWidthProviderDao interface {
+	Dao
+	AddOneBandProvider(bn *model.BasicNode) error
+	GetOneSuitableProvider() map[string]*model.BasicNode
+}
+
+//CPUProviderDao cpu provider
+type CPUProviderDao interface {
+	Dao
+} 
+
+//GPUProviderDao gpu provider
+type GPUProviderDao interface {
+	Dao
+}
+
+//StoreProviderDao store provider
+type StoreProviderDao interface {
+	Dao
+}
