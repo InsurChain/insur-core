@@ -2,6 +2,7 @@ package dao
 
 import (
 	"github.com/Sirupsen/logrus"
+	"github.com/errors"
 	"pnt/db/cache/funcs"
 	"pnt/db/model"
 	"pnt/utils"
@@ -58,13 +59,13 @@ func (b *RepeaterNodeImpl) GetItem(nodeID ...string) (mb map[string]*model.Basic
 			b.log.Errorln("repeater get item error: ", err.Error())
 			return
 		}
-		for e := rList.Data().(*model.Repeaters).NodeList.Front(); e != nil; e.Next() {
+		for e := rList.Data().(*model.Repeaters).NodeList.Front(); e != nil; e = e.Next() {
 			bp, err := b.cache.CacheTable(new(model.BasicNode).ModelName()).Value(e.Value)
 			if err != nil {
 				b.log.Errorln("repeater get basicnode item error: ", err.Error())
 				continue
 			}
-			mb[e.Value.(string)] = bp.Data().(*model.BasicNode)
+			mb[bp.Data().(*model.BasicNode).NodeInfo.NodeID] = bp.Data().(*model.BasicNode)
 		}
 	}
 	b.log.Debugln("Get repeater items: ", mb)
@@ -86,6 +87,9 @@ func (b *RepeaterNodeImpl) DelItem(nodeID string) error {
 
 //AddOneRepeater AddOneRepeater
 func (b *RepeaterNodeImpl) AddOneRepeater(nodeID string) error {
+	if nodeID == "" {
+		return errors.New("nodeId is empty")
+	}
 	rl, err := b.cache.CacheTable(new(model.Repeaters).ModelName()).Value(SELFNODE)
 	if err != nil {
 		if err == funcs.ErrKeyNotFound {
@@ -96,9 +100,16 @@ func (b *RepeaterNodeImpl) AddOneRepeater(nodeID string) error {
 			return err
 		}
 	}
-	rl, err = b.cache.CacheTable(new(model.Repeaters).ModelName()).Value(SELFNODE)
 	// push back
 	id := rl.Data().(*model.Repeaters).NodeList.PushBack(nodeID).Value.(string)
 	b.log.Infof("<AddOneRepeater>:::add repeater %s success.", id)
+	return nil
+}
+
+func (b *RepeaterNodeImpl) InitServerRepeater() error {
+	b.CreateTable(new(model.Repeaters))
+	if err := b.AddOneRepeater(SELFNODE); err != nil {
+		return err
+	}
 	return nil
 }
