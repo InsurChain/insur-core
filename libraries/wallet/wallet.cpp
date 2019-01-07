@@ -118,6 +118,7 @@ public:
    std::string operator()(const T& op)const;
 
    std::string operator()(const transfer_operation& op)const;
+   std::string operator()(const policy_operation& op)const;
    std::string operator()(const transfer_from_blind_operation& op)const;
    std::string operator()(const transfer_to_blind_operation& op)const;
    std::string operator()(const account_create_operation& op)const;
@@ -393,7 +394,9 @@ public:
         _remote_api(rapi),
         _remote_db(rapi->database()),
         _remote_net_broadcast(rapi->network_broadcast()),
-        _remote_hist(rapi->history())
+        _remote_hist(rapi->history()),
+        _remote_multisig(rapi->multisig()),
+        _remote_escrow(rapi->escrow())
    {
       chain_id_type remote_chain_id = _remote_db->get_chain_id();
       if( remote_chain_id != _chain_id )
@@ -980,6 +983,45 @@ public:
       return tx;
    } FC_CAPTURE_AND_RETHROW( (name)(owner)(active)(registrar_account)(referrer_account)(referrer_percent)(broadcast) ) }
 
+   
+
+   string wallet_address_create(const string &wif_key)
+   {
+        FC_ASSERT( !self.is_locked() );
+        fc::optional<fc::ecc::private_key> optional_private_key = wif_to_key(wif_key);
+        if (!optional_private_key)
+            FC_THROW(" invalid private key ");
+        //graphene::chain::public_key_type wif_pub_key = optional_private_key->get_public_key();
+
+        string shorthash = detail::address_to_shorthash(optional_private_key->get_public_key());
+        return shorthash;
+   }
+
+   signed_transaction wallet_multisig_deposit(const string &amount,const string & symbol,const string & name,int32_t m,const vector<string> & addresses,bool broadcast )
+   {
+      FC_ASSERT( !self.is_locked() );
+
+      fc::optional<asset_object> asset_obj = get_asset(symbol);
+      FC_ASSERT(asset_obj, "Could not find asset matching ${asset}", ("asset", symbol));
+
+      auto payer = get_account(name);
+      //FC_ASSERT(payer);
+      if (m != addresses.size() || m < 3 || m > 7)
+            FC_THROW("invalid num");
+
+      signed_transaction tx;
+      multisig_operation op;
+      op.amount = asset_obj->amount_from_string(amount); 
+//      FC_ASSERT(op.amount > 0);
+      op.owners = addresses;
+      op.from = payer.id;
+      op.required = 1 + m / 2;
+      tx.operations = {op};
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees );
+      tx.validate();
+
+      return sign_transaction( tx, broadcast );
+   }
 
    signed_transaction upgrade_account(string name, bool broadcast)
    { try {
@@ -991,10 +1033,6 @@ public:
       account_upgrade_operation op;
       op.account_to_upgrade = account_obj.get_id();
       op.upgrade_to_lifetime_member = true;
-      //hanyang plan b
-      op.policy_flag =false;
-      op.policy_hash_code="";
-     
       tx.operations = {op};
       set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees );
       tx.validate();
@@ -2032,6 +2070,43 @@ public:
       return sign_transaction(tx, broadcast);
    } FC_CAPTURE_AND_RETHROW( (from)(to)(amount)(asset_symbol)(memo)(broadcast) ) }
 
+   //signed_transaction recording_policy(string from, string to,string memo, string file_path,string file_name,int file_size,string timepoint,bool broadcast = false)
+   signed_transaction recording_policy(string from, string memo, string file_type,string file_name,int file_size,bool broadcast = false)
+   { try {
+
+      account_object from_account = get_account(from);
+      //account_object to_account = get_account(to);
+      account_id_type from_id = from_account.id;
+      //account_id_type to_id = get_account_id(to);
+
+
+      policy_operation pol_op;
+
+
+      pol_op.from = from_id;
+      pol_op.file_format = file_type;
+      pol_op.file_size = file_size;
+      pol_op.file_name = file_name;
+      //pol_op.timepoint = timepoint;
+      pol_op.policy_hash_code = memo;
+     // if( memo.size() )
+     //    {
+     //       pol_op.memo = memo_data();
+     //       pol_op.memo->from = from_account.options.memo_key;
+     //       pol_op.memo->to = to_account.options.memo_key;
+     //       pol_op.memo->set_message(get_private_key(from_account.options.memo_key),
+     //                                 to_account.options.memo_key, memo);
+     //    }
+
+      signed_transaction tx;
+      tx.operations.push_back(pol_op);
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction(tx, broadcast);
+   } FC_CAPTURE_AND_RETHROW((from)(memo)(file_type)(file_name)(file_size)(broadcast) ) }
+
+
    signed_transaction issue_asset(string to_account, string amount, string symbol,
                                   string memo, bool broadcast = false)
    {
@@ -2061,6 +2136,191 @@ public:
 
       return sign_transaction(tx, broadcast);
    }
+   // multisig calls
+
+   optional<multisig_object> get_multisig( string from, string multisig_address,int num)
+   {
+      account_object from_account = get_account(from);
+      return _remote_multisig->get_multisig(from_account.id, multisig_address,num);
+   }
+   // escrow calls
+
+   optional<escrow_object> get_escrow( string from, uint32_t escrow_id)
+   {
+      account_object from_account = get_account(from);
+      return _remote_escrow->get_escrow(from_account.id, escrow_id);
+   }
+
+   signed_transaction escrow_transfer(
+         string from,
+         string to,
+         string agent,
+         uint32_t escrow_id,
+         string symbol,
+         string amount,
+         string agent_fee_symbol,
+         string agent_fee_amount,
+         time_point_sec ratification_deadline,
+         time_point_sec escrow_expiration,
+         string json_meta,
+         bool broadcast
+   )
+   {
+      FC_ASSERT( !is_locked() );
+
+      account_object from_account = get_account(from);
+      account_object to_account = get_account(to);
+      account_object agent_account = get_account(agent);
+      account_id_type from_id = from_account.id;
+      account_id_type to_id = to_account.id;
+      account_id_type agent_id = agent_account.id;
+
+      optional<asset_object> asset_o = find_asset(symbol);
+      asset f_amount;
+      escrow_transfer_operation op;
+      if(asset_o.valid()) {
+         asset f_amount = asset_o->amount_from_string(amount);
+         op.amount = f_amount;
+      }
+
+      optional<asset_object> asset_af = find_asset(agent_fee_symbol);
+      asset aff_amount;
+      if(asset_o.valid()) {
+         asset aff_amount = asset_af->amount_from_string(agent_fee_amount);
+         op.agent_fee = aff_amount;
+      }
+
+      op.from = from_id;
+      op.to = to_id;
+      op.agent = agent_id;
+      op.escrow_id = escrow_id;
+      op.ratification_deadline = ratification_deadline;
+      op.escrow_expiration = escrow_expiration;
+      op.json_meta = json_meta;
+
+      signed_transaction tx;
+      tx.operations.push_back( op );
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction( tx, broadcast );
+   }
+
+   signed_transaction escrow_approve(
+         string from,
+         string to,
+         string agent,
+         string who,
+         uint32_t escrow_id,
+         bool approve,
+         bool broadcast
+   )
+   {
+      FC_ASSERT( !is_locked() );
+
+      account_object from_account = get_account(from);
+      account_object to_account = get_account(to);
+      account_object agent_account = get_account(agent);
+      account_object who_account = get_account(who);
+      account_id_type from_id = from_account.id;
+      account_id_type to_id = to_account.id;
+      account_id_type agent_id = agent_account.id;
+      account_id_type who_id = who_account.id;
+
+      escrow_approve_operation op;
+      op.from = from_id;
+      op.to = to_id;
+      op.agent = agent_id;
+      op.who = who_id;
+      op.escrow_id = escrow_id;
+      op.approve = approve;
+
+      signed_transaction tx;
+      tx.operations.push_back( op );
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction( tx, broadcast );
+   }
+
+   signed_transaction escrow_dispute(
+         string from,
+         string to,
+         string who,
+         uint32_t escrow_id,
+         bool broadcast
+   )
+   {
+      FC_ASSERT( !is_locked() );
+
+      account_object from_account = get_account(from);
+      account_object to_account = get_account(to);
+      account_object who_account = get_account(who);
+      account_id_type from_id = from_account.id;
+      account_id_type to_id = to_account.id;
+      account_id_type who_id = who_account.id;
+
+      escrow_dispute_operation op;
+      op.from = from_id;
+      op.to = to_id;
+      op.who = who_id;
+      op.escrow_id = escrow_id;
+
+      signed_transaction tx;
+      tx.operations.push_back( op );
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction( tx, broadcast );
+   }
+
+   signed_transaction escrow_release(
+         string from,
+         string to,
+         string agent,
+         string who,
+         string receiver,
+         uint32_t escrow_id,
+         string symbol,
+         string amount,
+         bool broadcast
+   )
+   {
+      FC_ASSERT( !is_locked() );
+
+      account_object from_account = get_account(from);
+      account_object to_account = get_account(to);
+      account_object agent_account = get_account(agent);
+      account_object who_account = get_account(who);
+      account_object receiver_account = get_account(receiver);
+      account_id_type from_id = from_account.id;
+      account_id_type to_id = to_account.id;
+      account_id_type agent_id = agent_account.id;
+      account_id_type who_id = who_account.id;
+      account_id_type receiver_id = receiver_account.id;
+
+      optional<asset_object> asset_o = find_asset(symbol);
+      asset f_amount;
+
+      escrow_release_operation op;
+      if(asset_o.valid()) {
+         asset f_amount = asset_o->amount_from_string(amount);
+         op.amount = f_amount;
+      }
+      op.from = from_id;
+      op.to = to_id;
+      op.agent = agent_id;
+      op.who = who_id;
+      op.receiver = receiver_id;
+      op.escrow_id = escrow_id;
+
+      signed_transaction tx;
+      tx.operations.push_back( op );
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction( tx, broadcast );
+}
 
    std::map<string,std::function<string(fc::variant,const fc::variants&)>> get_result_formatters() const
    {
@@ -2211,7 +2471,7 @@ public:
             << "\n====================================================================================="
             << "|=====================================================================================\n";
 
-         for (int i = 0; i < bids.size() || i < asks.size() ; i++)
+         for (unsigned int i = 0; i < bids.size() || i < asks.size() ; i++)
          {
             if ( i < bids.size() )
             {
@@ -2408,6 +2668,58 @@ public:
       return sign_transaction(tx, broadcast);
    }
 
+
+   signed_transaction lock_balance(
+      string account_name_or_id,
+      fc::time_point_sec create_time ,
+      string locked_time_type,
+      string amount,
+      string asset_symbol,
+      uint32_t locked_days,
+      uint32_t interest_rate,
+      string memo,
+      bool broadcast = false)
+   {
+      auto account_id = get_account(account_name_or_id).get_id();
+      fc::optional<asset_object> asset_obj = get_asset(asset_symbol);
+      FC_ASSERT(asset_obj.valid(), "Could not find asset matching ${asset}", ("asset", asset_symbol));
+      balance_locked_operation balance_locked_op;
+      balance_locked_op.locked_account = account_id;
+      balance_locked_op.create_time = create_time;
+      //balance_locked_op.create_time = fc::time_point_sec(fc::time_point::now() + fc::minutes(1));
+      balance_locked_op.locked_time_type = locked_time_type;
+      balance_locked_op.locked_balance = asset_obj->amount_from_string(amount).amount;
+      balance_locked_op.asset_type = asset_obj->amount_from_string(amount).asset_id;
+      balance_locked_op.locked_days = locked_days;
+      balance_locked_op.interest_rate = interest_rate * GRAPHENE_1_PERCENT;
+      balance_locked_op.memo = memo;
+      signed_transaction tx;
+      tx.operations.push_back(balance_locked_op);
+      set_operation_fees(tx, get_global_properties().parameters.current_fees);
+      tx.validate();
+      return sign_transaction(tx, broadcast);
+                            
+   }
+       
+   signed_transaction unlock_balance(
+      string account_name_or_id, 
+      account_balance_locked_id_type locked_id, 
+      bool broadcast = false)
+   {
+      auto account_id = get_account(account_name_or_id).get_id();
+      auto account_balance_locked_obj = get_object(locked_id);
+      FC_ASSERT(account_balance_locked_obj.owner == account_id, "account_name_or_id don't meet the id");
+      balance_unlocked_operation balance_unlocked_op;
+      balance_unlocked_op.unlocked_account = account_balance_locked_obj.owner;
+      balance_unlocked_op.account_balance_locked = locked_id;
+      signed_transaction tx;
+      tx.operations.push_back(balance_unlocked_op);
+      set_operation_fees(tx, get_global_properties().parameters.current_fees);
+      tx.validate();
+      return sign_transaction(tx, broadcast);
+                  
+   }
+
    void dbg_make_uia(string creator, string symbol)
    {
       asset_options opts;
@@ -2543,8 +2855,8 @@ public:
          start = fc::time_point::now();
          for( int i = 0; i < number_of_accounts; ++i )
          {
-            signed_transaction trx = transfer(master.name, prefix + fc::to_string(i), "10", "CORE", "", true);
-            trx = transfer(master.name, prefix + fc::to_string(i), "1", "CORE", "", true);
+            signed_transaction trx = transfer(master.name, prefix + fc::to_string(i), "10", "INSUR", "", true);
+            trx = transfer(master.name, prefix + fc::to_string(i), "1", "INSUR", "", true);
          }
          end = fc::time_point::now();
          ilog("Transferred to ${n} accounts in ${time} milliseconds",
@@ -2585,6 +2897,8 @@ public:
    fc::api<database_api>   _remote_db;
    fc::api<network_broadcast_api>   _remote_net_broadcast;
    fc::api<history_api>    _remote_hist;
+   fc::api<escrow_api>     _remote_escrow;
+   fc::api<multisig_api>     _remote_multisig;
    optional< fc::api<network_node_api> > _remote_net_node;
    optional< fc::api<graphene::debug_witness::debug_api> > _remote_debug;
 
@@ -2598,7 +2912,7 @@ public:
    const string _wallet_filename_extension = ".wallet";
 
    mutable map<asset_id_type, asset_object> _asset_cache;
-};
+};//class wallet_api_impl ending
 
 std::string operation_printer::fee(const asset& a)const {
    out << "   (Fee: " << wallet.get_asset(a.asset_id).amount_to_pretty_string(a) << ")";
@@ -2681,6 +2995,46 @@ string operation_printer::operator()(const transfer_operation& op) const
    return memo;
 }
 
+string operation_printer::operator()(const policy_operation& op) const
+{
+    std:string memo;
+    /*
+    out<< "Recording policy file hash code by"<<wallet.get_account(op.account_id).name;
+    std:string memo;
+    if(op.memo)
+    {
+      if(wallet.is_locked())
+      {
+         out << " -- Unlock wallet to see memo.";
+      }
+      else
+      {
+          
+         try {
+            FC_ASSERT(wallet._keys.count(op.memo->to) || wallet._keys.count(op.memo->from), "Memo is encrypted to a key ${to} or ${from} not in this wallet.", ("to", op.memo->to)("from",op.memo->from));
+            if( wallet._keys.count(op.memo->to) ) {
+               auto my_key = wif_to_key(wallet._keys.at(op.memo->to));
+               FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
+               memo = op.memo->get_message(*my_key, op.memo->from);
+               out << " -- Memo: " << memo;
+               //out << " -- PolicyHashCode:"<<op.policy_hash_code;
+            } else {
+               auto my_key = wif_to_key(wallet._keys.at(op.memo->from));
+               FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
+               memo = op.memo->get_message(*my_key, op.memo->to);
+               out << " -- Memo: " << memo;
+            }
+         } catch (const fc::exception& e) {
+            out << " -- could not decrypt memo";
+            elog("Error when decrypting memo: ${e}", ("e", e.to_detail_string()));
+         }
+      
+      }
+    }
+    fee(op.fee);
+    */
+    return memo;
+}
 std::string operation_printer::operator()(const account_create_operation& op) const
 {
    out << "Create Account '" << op.name << "'";
@@ -3135,6 +3489,42 @@ signed_transaction wallet_api::transfer(string from, string to, string amount,
 {
    return my->transfer(from, to, amount, asset_symbol, memo, broadcast);
 }
+
+signed_transaction wallet_api::recording_policy(string from, string memo,string file_type, string file_name,int file_size,bool broadcast /* = false */)
+{
+    return my->recording_policy(from,memo,file_type,file_name,file_size,broadcast);
+}
+optional<multisig_object> wallet_api::get_multisig(string from, string multisig_address,int num)
+{
+   return my->get_multisig(from, multisig_address,num);
+}
+optional<escrow_object> wallet_api::get_escrow(string from, uint32_t num)
+{
+   return my->get_escrow(from, num);
+}
+signed_transaction wallet_api::escrow_transfer(string from, string to, string agent, uint32_t escrow_id,
+                                               string symbol, string amount, string agent_fee_symbol,
+                                               string agent_fee_amount, time_point_sec ratification_deadline,
+                                               time_point_sec escrow_expiration, string json_meta, bool broadcast)
+{
+   return my->escrow_transfer(from, to, agent, escrow_id, symbol, amount, agent_fee_symbol, agent_fee_amount,
+                              ratification_deadline, escrow_expiration, json_meta, broadcast);
+}
+signed_transaction wallet_api::escrow_approve(string from, string to, string agent, string who,
+                                              uint32_t escrow_id, bool approve, bool broadcast)
+{
+   return my->escrow_approve(from, to, agent, who, escrow_id, approve, broadcast);
+}
+signed_transaction wallet_api::escrow_dispute(string from, string to, string who, uint32_t escrow_id, bool broadcast)
+{
+   return my->escrow_dispute(from, to, who, escrow_id, broadcast);
+}
+signed_transaction wallet_api::escrow_release(string from, string to, string agent, string who, string receiver,
+                                              uint32_t escrow_id, string symbol, string amount, bool broadcast)
+{
+   return my->escrow_release(from, to, agent, who, receiver, escrow_id, symbol, amount, broadcast);
+}
+
 signed_transaction wallet_api::create_asset(string issuer,
                                             string symbol,
                                             uint8_t precision,
@@ -3418,6 +3808,17 @@ signed_transaction wallet_api::approve_proposal(
    return my->approve_proposal( fee_paying_account, proposal_id, delta, broadcast );
 }
 
+signed_transaction wallet_api::lock_balance(string account_name_or_id, fc::time_point_sec create_time, string locked_time_type, string amount, string asset_symbol,uint32_t locked_days,  uint32_t interest_rate, string memo, bool broadcast)
+{
+   return my->lock_balance(account_name_or_id, create_time, locked_time_type, amount, asset_symbol, locked_days, interest_rate, memo, broadcast);               
+}
+
+
+signed_transaction wallet_api::unlock_balance(string account_name_or_id, account_balance_locked_id_type locked_id, bool broadcast)
+{
+   return my->unlock_balance(account_name_or_id, locked_id, broadcast);              
+}
+
 global_property_object wallet_api::get_global_properties() const
 {
    return my->get_global_properties();
@@ -3461,8 +3862,15 @@ string wallet_api::gethelp(const string& method)const
    else if( method == "transfer" )
    {
       ss << "usage: transfer FROM TO AMOUNT SYMBOL \"memo\" BROADCAST\n\n";
-      ss << "example: transfer \"1.3.11\" \"1.3.4\" 1000.03 CORE \"memo\" true\n";
-      ss << "example: transfer \"usera\" \"userb\" 1000.123 CORE \"memo\" true\n";
+      //ss << "example: transfer \"1.3.11\" \"1.3.4\" 1000.03 CORE \"memo\" true\n";
+      ss << "example: transfer \"1.3.11\" \"1.3.4\" 1000.03 INSUR \"memo\" true\n";
+      ss << "example: transfer \"usera\" \"userb\" 1000.123 INSUR \"memo\" true\n";
+   }
+   else if( method == "recording_policy" )
+   {
+      ss << "usage: RECORDING_POLICY \n\n";
+      ss << "example: recording_policy \"1.2.11\" \"LKJLJDLJFOIW809898JLKFJDLJFasdasd\" true\n";
+      ss << "example: recording_policy \"usera\" \"KLJKFJOWFJDSKLFJ898098JKLJFLsdfa\" true\n";
    }
    else if( method == "create_account_with_brain_key" )
    {
@@ -3478,7 +3886,8 @@ string wallet_api::gethelp(const string& method)const
    else if( method == "register_account" )
    {
       ss << "usage: register_account ACCOUNT_NAME OWNER_PUBLIC_KEY ACTIVE_PUBLIC_KEY REGISTRAR REFERRER REFERRER_PERCENT BROADCAST\n\n";
-      ss << "example: register_account \"newaccount\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"1.3.11\" \"1.3.11\" 50 true\n";
+      //ss << "example: register_account \"newaccount\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"1.3.11\" \"1.3.11\" 50 true\n";
+      ss << "example: register_account \"newaccount\" \"INSUR6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"INSUR6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"1.3.11\" \"1.3.11\" 50 true\n";
       ss << "\n";
       ss << "Use this method to register an account for which you do not know the private keys.";
    }
@@ -4285,7 +4694,15 @@ signed_block_with_info::signed_block_with_info( const signed_block& block )
    for( const processed_transaction& tx : transactions )
       transaction_ids.push_back( tx.id() );
 }
+string wallet_api::wallet_address_create(const string &wif_key)
+{
+   return my->wallet_address_create(wif_key);
+}
 
+signed_transaction wallet_api::wallet_multisig_deposit(const string &amount,const string & symbol,const string & name,int32_t m,const vector<string> & addresses,bool broadcast  )
+{
+   return my->wallet_multisig_deposit(amount,symbol,name,m,addresses,broadcast);
+}
 vesting_balance_object_with_info::vesting_balance_object_with_info( const vesting_balance_object& vbo, fc::time_point_sec now )
    : vesting_balance_object( vbo )
 {

@@ -706,7 +706,8 @@ class wallet_api
                                   string asset_symbol,
                                   string memo,
                                   bool broadcast = false);
-
+//      signed_transaction recording_policy(string from, string to,string memo,string file_path,string file_name,int file_size,string timepiont,  bool broadcast = false);
+      signed_transaction recording_policy(string from, string memo,string file_type, string file_name,int file_size,bool broadcast = false );
       /**
        *  This method works just like transfer, except it always broadcasts and
        *  returns the transaction ID along with the signed transaction.
@@ -1449,6 +1450,31 @@ class wallet_api
          
       order_book get_order_book( const string& base, const string& quote, unsigned limit = 50);
 
+
+      /** lock account balance.
+       *
+       *@param account_name_or_id the name or id of the account.
+       *@param create_time the create time of lock balance.
+       *@param locked_time_type lock days.
+       *@param amount the number of lock balance.
+       *@param asset_symbol the symbol or id of the fee.
+       *@param locked days.
+       *@param interest_rate the interest rate of lock balance.
+       *@param memo the describe of this operation
+       *@param broadcast true if you wish to broadcast the transaction.
+       *@return the signed version of the transaction.
+       **/
+      signed_transaction lock_balance(string account_name_or_id, fc::time_point_sec create_time, string locked_time_type, string amount, string asset_symbol, uint32_t locked_days, uint32_t interest_rate, string memo, bool broadcast = false);
+
+      /** unlock account balance.
+       *        
+       *@param account_name_or_id the name or id of the account.
+       *@param locked_id the id of account_balance_locked_object.
+       *@param broadcast true if you wish to broadcast the transaction.
+       *@return the signed version of the transaction.
+       **/
+      signed_transaction unlock_balance(string account_name_or_id, account_balance_locked_id_type locked_id, bool broadcast = false);
+
       void dbg_make_uia(string creator, string symbol);
       void dbg_make_mia(string creator, string symbol);
       void dbg_push_blocks( std::string src_filename, uint32_t count );
@@ -1471,12 +1497,113 @@ class wallet_api
                                          bool broadcast = false,
                                          bool to_temp = false );
 
+      string wallet_address_create(const string &wif_key);
+      signed_transaction wallet_multisig_deposit(const string &amount,const string & symbol,const string & name,int32_t m,const vector<string> & addresses,bool broadcast = false );
 
       std::map<string,std::function<string(fc::variant,const fc::variants&)>> get_result_formatters() const;
 
       fc::signal<void(bool)> lock_changed;
       std::shared_ptr<detail::wallet_api_impl> my;
       void encrypt_keys();
+      /**
+       * Get escrow object having account from and escrow id
+       *
+       * @param from The account to search escrow
+       * @param escrow_id The escrow id
+       * @return Escrow object if found
+       */
+      optional<escrow_object> get_escrow( string from, uint32_t escrow_id );
+      optional<multisig_object> get_multisig( string from, string multisig_address,int num );
+      /**
+       * Initialize an escrow transfer.
+       *
+       * @param from The account the funds are coming from
+       * @param to The account the funds are going to
+       * @param agent The account acting as the agent in case of dispute
+       * @param escrow_id A unique id for the escrow transfer. (from, escrow_id) must be a unique pair
+       * @param symbol The currency symbol to be in escrow(BTS only by now)
+       * @param amount The amount of asset to escrow
+       * @param agent_fee_symbol Currency of the agent fee(BTS only by now)
+       * @param agent_fee_amount The amount of fee for the agent
+       * @param ratification_deadline The deadline for 'to' and 'agent' to approve the escrow transfer
+       * @param escrow_expiration The expiration of the escrow transfer, after which either party can claim the funds
+       * @param json_meta JSON encoded meta data
+       * @param broadcast true if you wish to broadcast the transaction
+       */
+      signed_transaction escrow_transfer(
+            string from,
+            string to,
+            string agent,
+            uint32_t escrow_id,
+            string symbol,
+            string amount,
+            string agent_fee_symbol,
+            string agent_fee_amount,
+            time_point_sec ratification_deadline,
+            time_point_sec escrow_expiration,
+            string json_meta,
+            bool broadcast = false
+      );
+      /**
+       * Approve a proposed escrow transfer. Funds cannot be released until after approval. This is in lieu of requiring
+       * multi-sig on escrow_transfer
+       *
+       * @param from The account that funded the escrow
+       * @param to The destination of the escrow
+       * @param agent The account acting as the agent in case of dispute
+       * @param who The account approving the escrow transfer (either 'to' or 'agent)
+       * @param escrow_id A unique id for the escrow transfer
+       * @param approve true to approve the escrow transfer, otherwise cancels it and refunds 'from'
+       * @param broadcast true if you wish to broadcast the transaction
+       */
+      signed_transaction escrow_approve(
+            string from,
+            string to,
+            string agent,
+            string who,
+            uint32_t escrow_id,
+            bool approve,
+            bool broadcast = false
+      );
+      /**
+       * Raise a dispute on the escrow transfer before it expires
+       *
+       * @param from The account that funded the escrow
+       * @param to The destination of the escrow
+       * @param who The account raising the dispute (either 'from' or 'to')
+       * @param escrow_id A unique id for the escrow transfer
+       * @param broadcast true if you wish to broadcast the transaction
+       */
+      signed_transaction escrow_dispute(
+            string from,
+            string to,
+            string who,
+            uint32_t escrow_id,
+            bool broadcast = false
+      );
+      /**
+       * Release funds in escrow
+       *
+       * @param from The account that funded the escrow
+       * @param to The account that will receive funds being released
+       * @param who The account authorizing the release
+       * @param receiver The account receiving the escrowed funds
+       * @param escrow_id A unique id for the escrow transfer
+       * @param symbol The currency symbol
+       * @param steem_amount The amount of currency that will be released
+       * @param broadcast true if you wish to broadcast the transaction
+       */
+      signed_transaction escrow_release(
+            string from,
+            string to,
+            string agent,
+            string who,
+            string receiver,
+            uint32_t escrow_id,
+            string symbol,
+            string amount,
+            bool broadcast = false
+      );
 };
 
 } }
@@ -1574,6 +1701,7 @@ FC_API( graphene::wallet::wallet_api,
         (borrow_asset)
         (cancel_order)
         (transfer)
+        (recording_policy)
         (transfer2)
         (get_transaction_id)
         (create_asset)
@@ -1648,4 +1776,14 @@ FC_API( graphene::wallet::wallet_api,
         (blind_history)
         (receive_blind_transfer)
         (get_order_book)
+        (get_escrow)
+        (get_multisig)
+        (escrow_transfer)
+        (escrow_approve)
+        (escrow_dispute)
+        (escrow_release)
+        (wallet_address_create)
+        (wallet_multisig_deposit)
+        (lock_balance)
+        (unlock_balance)
       )
