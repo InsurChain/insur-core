@@ -61,6 +61,7 @@
 #include <graphene/chain/withdraw_permission_evaluator.hpp>
 #include <graphene/chain/witness_evaluator.hpp>
 #include <graphene/chain/worker_evaluator.hpp>
+#include <graphene/chain/pnt_transfer_evaluator.hpp>
 
 #include <graphene/chain/protocol/fee_schedule.hpp>
 
@@ -166,6 +167,7 @@ void database::initialize_evaluators()
    register_evaluator<withdraw_permission_update_evaluator>();
    register_evaluator<withdraw_permission_delete_evaluator>();
    register_evaluator<worker_create_evaluator>();
+   register_evaluator<pnt_transfer_evaluator>();
    register_evaluator<balance_claim_evaluator>();
    register_evaluator<transfer_to_blind_evaluator>();
    register_evaluator<transfer_from_blind_evaluator>();

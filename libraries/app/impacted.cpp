@@ -202,6 +202,10 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account_id );
    }
+   void operator()( const pnt_transfer_operation& op )
+   {
+      _impacted.insert( op.to );
+   }
 
 };
 
@@ -216,5 +220,6 @@ void transaction_get_impacted_accounts( const transaction& tx, flat_set<account_
    for( const auto& op : tx.operations )
       operation_get_impacted_accounts( op, result );
 }
+
 
 } }
