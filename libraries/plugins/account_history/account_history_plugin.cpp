@@ -96,13 +96,27 @@ void account_history_plugin_impl::update_account_histories( const signed_block& 
       // get the set of accounts this operation applies to
       flat_set<account_id_type> impacted;
       vector<authority> other;
+      vector<authority> other_tmp;
       operation_get_required_authorities( op.op, impacted, impacted, other );
+      operation_get_required_authorities( op.op, impacted, impacted, other_tmp );
 
       if( op.op.which() == operation::tag< account_create_operation >::value )
          impacted.insert( oho.result.get<object_id_type>() );
       else
          graphene::app::operation_get_impacted_accounts( op.op, impacted );
 
+      //for protected log info
+      for( auto& tmp : other_tmp )
+      {
+          for( auto& temp_item : tmp.account_auths )
+          {
+              if(!temp_item.first)
+              {
+                  ilog("account auth doesn't exit");
+                  break;
+              }
+          }
+      }
       for( auto& a : other )
          for( auto& item : a.account_auths )
             impacted.insert( item.first );
@@ -200,4 +214,3 @@ flat_set<account_id_type> account_history_plugin::tracked_accounts() const
 }
 
 } }
-   
