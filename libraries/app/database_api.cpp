@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
+/*
+ *database_api.cpp
+ * */
 #include <graphene/app/database_api.hpp>
 #include <graphene/chain/get_config.hpp>
 
@@ -1918,4 +1920,3 @@ void database_api_impl::on_applied_block()
 }
 
 } } // graphene::app
-   

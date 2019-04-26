@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
+/*
+ *impacted.cpp
+ * */
 #include <graphene/chain/protocol/authority.hpp>
 #include <graphene/app/impacted.hpp>
 
@@ -30,7 +32,6 @@ namespace graphene { namespace app {
 using namespace fc;
 using namespace graphene::chain;
 
-// TODO:  Review all of these, especially no-ops
 struct get_impacted_account_visitor
 {
    flat_set<account_id_type>& _impacted;
@@ -223,4 +224,3 @@ void transaction_get_impacted_accounts( const transaction& tx, flat_set<account_
 
 
 } }
-   
