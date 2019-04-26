@@ -14,7 +14,7 @@ import (
 */
 const (
 	CONSUMER = 1 << iota
-	PROVIDER  	//2
+	PROVIDER	//2
 	REPEATERS	//4
 	MINER		//8
 )
@@ -33,7 +33,7 @@ type DBInterface interface {
 
 //Repeaters Repeaters
 type Repeaters struct {
-	NodeList 		*list.List		`json:"node_list"`
+	NodeList		*list.List		`json:"node_list"`
 }
 
 //NewRepeaters new repeaters list
@@ -50,12 +50,12 @@ func (r *Repeaters) ModelName() string {
 
 //BandWidthProvider BandWidthProvider
 type BandWidthProvider struct {
-	NodeList 		*list.List 		`json:"node_list"`
+	NodeList		*list.List		`json:"node_list"`
 }
 
 //BandWidthItem BandWidthItem
 type BandWidthItem struct {
-	nodeID		string 
+	nodeID		string
 	bandWidth	float64
 }
 
@@ -87,4 +87,4 @@ func NewBandWidthProvider() *BandWidthProvider {
 //ModelName return bandwidth provider model name
 func (r *BandWidthProvider) ModelName() string {
 	return "bandWidth_provider"
-}   
+}

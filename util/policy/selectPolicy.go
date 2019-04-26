@@ -17,7 +17,7 @@ const (
 	//PROXYKEEP 会话保持
 	PROXYKEEP
 	//PROXYMIX 单会话混杂节点
-	PROXYMIX 
+	PROXYMIX
 )
 
 //NodeSelected NodeSelected
@@ -52,4 +52,3 @@ func (n *NodeSelected) GetSuitableNode() map[string]*model.BasicNode {
 		return db.GetManager().BandWidthProviderDao().GetOneSuitableProvider()
 	}
 }
-   

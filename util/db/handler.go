@@ -13,7 +13,7 @@ type Manager interface {
 	// dao.BasicNodeInfoDao
 }
 
-var defaultManager Manager 
+var defaultManager Manager
 var singleInstance sync.Mutex
 
 //CreateManager create db manager
@@ -41,7 +41,3 @@ func GetManager() Manager {
 	return defaultManager
 }
 
-
-
-
-   

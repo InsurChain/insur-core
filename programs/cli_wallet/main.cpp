@@ -235,6 +235,8 @@ int main( int argc, char** argv )
          ilog( "Listening for incoming TLS RPC requests on ${p}", ("p", options.at("rpc-tls-endpoint").as<string>() ));
          _websocket_tls_server->listen( fc::ip::endpoint::from_string(options.at("rpc-tls-endpoint").as<string>()) );
          _websocket_tls_server->start_accept();
+         //mark for successful
+         ilog( "Successful",("p", options.at("rpc-tls-endpoint").as<string>() ));
       }
 
       auto _http_server = std::make_shared<fc::http::server>();
@@ -253,6 +255,8 @@ int main( int argc, char** argv )
                conn->register_api( wapi );
                conn->on_request( req, resp );
             } );
+         //mark for Successful
+         ilog( "Successful",("p", options.at("rpc-tls-endpoint").as<string>() ));
       }
 
       if( !options.count( "daemon" ) )

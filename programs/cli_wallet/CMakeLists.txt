@@ -1,3 +1,4 @@
+#CMakeLists.txt for cli_wallet
 add_executable( cli_wallet main.cpp )
 if( UNIX AND NOT APPLE )
   set(rt_library rt )
