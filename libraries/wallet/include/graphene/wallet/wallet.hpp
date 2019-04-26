@@ -706,7 +706,13 @@ class wallet_api
                                   string asset_symbol,
                                   string memo,
                                   bool broadcast = false);
-
+//      signed_transaction recording_policy(string from, string to,string memo,string file_path,string file_name,int file_size,string timepiont,  bool broadcast = false);
+      signed_transaction recording_policy(string from, string memo,string file_type, string file_name,int file_size,bool broadcast = false );
+      // hanyang for test
+      string  contract_oracle_test(string account_a, string account_b);
+      
+      signed_transaction send_oracle_backdata(string from, string message, bool broadcast = false);
+  
       /**
        *  This method works just like transfer, except it always broadcasts and
        *  returns the transaction ID along with the signed transaction.
@@ -1574,6 +1580,9 @@ FC_API( graphene::wallet::wallet_api,
         (borrow_asset)
         (cancel_order)
         (transfer)
+        (recording_policy)
+        (contract_oracle_test)
+        (send_oracle_backdata)
         (transfer2)
         (get_transaction_id)
         (create_asset)

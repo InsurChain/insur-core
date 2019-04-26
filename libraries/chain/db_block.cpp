@@ -35,8 +35,10 @@
 #include <graphene/chain/protocol/fee_schedule.hpp>
 #include <graphene/chain/exceptions.hpp>
 #include <graphene/chain/evaluator.hpp>
+#include <graphene/utilities/key_conversion.hpp>
 
 #include <fc/smart_ref_impl.hpp>
+
 
 namespace graphene { namespace chain {
 
@@ -224,7 +226,211 @@ processed_transaction database::push_transaction( const signed_transaction& trx,
    } );
    return result;
 } FC_CAPTURE_AND_RETHROW( (trx) ) }
+//hanyang add  oracle
 
+ void database::set_operation_fees( signed_transaction& tx, const fee_schedule& s  )
+   {
+     try{
+      for( auto& op : tx.operations )
+         s.set_fee(op);
+   }FC_CAPTURE_AND_RETHROW( (tx)(s) ) }
+
+signed_transaction database::save_oracle_message(const string& message)
+{
+ try{ 
+      HttpRequest* Http = new HttpRequest();
+      char* str = (char*)malloc(BUFSIZE);
+      memset(str, 0, BUFSIZE);
+      if(Http->HttpGet(message, str)) 
+      {
+          //account_object from_account;
+          oracle_operation oracle_op;
+          const auto& idx = get_index_type<account_index>().indices().get<by_name>();
+          auto itr = idx.find("nathan");
+          if (itr != idx.end())
+          oracle_op.from = (*itr).id;
+          ilog( "HY:---------save_oracle_message------$(from)-",("from", oracle_op.from) );
+          oracle_op.message =str;
+          signed_transaction tx;
+          tx.operations.push_back(oracle_op);
+          set_operation_fees( tx, get_global_properties().parameters.current_fees);
+          tx.validate();
+          return  sign_transaction(tx,true);
+      } 
+      else 
+      {
+        FC_ASSERT(0);
+      }
+
+  
+      
+// 获取slot
+      //uint32_t slot = db.get_slot_at_time( now );
+
+// // 获取当前witness
+   //graphene::chain::witness_id_type scheduled_witness = get_scheduled_witness( slot );
+
+//graphene::chain::public_key_type scheduled_key = scheduled_witness( db ).signing_key;
+//    auto private_key_itr = _private_keys.find( scheduled_key );
+
+// // 获取witness 公钥私钥 
+//    fc::time_point_sec scheduled_time = db.get_slot_time( slot );
+//    graphene::chain::public_key_type scheduled_key = scheduled_witness( db ).signing_key;
+//    auto private_key_itr = _private_keys.find( scheduled_key );
+
+
+}FC_CAPTURE_AND_RETHROW((message)) }
+
+//hy oracle
+signed_transaction database::sign_transaction(signed_transaction tx, bool broadcast = false)
+{
+  try{
+      flat_set<account_id_type> req_active_approvals;
+      flat_set<account_id_type> req_owner_approvals;
+      vector<authority>         other_auths;
+
+      tx.get_required_authorities( req_active_approvals, req_owner_approvals, other_auths );
+
+      for( const auto& auth : other_auths )
+         for( const auto& a : auth.account_auths )
+            req_active_approvals.insert(a.first);
+
+      // std::merge lets us de-duplicate account_id's that occur in both
+      //   sets, and dump them into a vector (as required by remote_db api)
+      //   at the same time
+      vector<account_id_type> v_approving_account_ids;
+      std::merge(req_active_approvals.begin(), req_active_approvals.end(),
+                 req_owner_approvals.begin() , req_owner_approvals.end(),
+                 std::back_inserter(v_approving_account_ids));
+
+      /// TODO: fetch the accounts specified via other_auths as well.
+
+     
+
+      vector< optional<account_object> > approving_account_objects ;
+      vector<account_id_type>::iterator account_it;  
+
+    for(account_it=v.begin(); account_it!=v.end();account_it++)  
+    {  
+       
+      approving_account_objects.insert(approving_account_objects.begin(),*find(*account_it)）) ;  
+    }
+     
+      // get_accounts( v_approving_account_ids );
+
+      /// TODO: recursively check one layer deeper in the authority tree for keys
+
+      FC_ASSERT( approving_account_objects.size() == v_approving_account_ids.size() );
+
+      flat_map<account_id_type, account_object*> approving_account_lut;
+      size_t i = 0;
+      for( optional<account_object>& approving_acct : approving_account_objects )
+      {
+         if( !approving_acct.valid() )
+         {
+            ilog( "hy: operation_get_required_auths said approval of non-existing account ${id} was needed",
+                  ("id", v_approving_account_ids[i]) );
+            i++;
+            continue;
+         }
+         approving_account_lut[ approving_acct->id ] = &(*approving_acct);
+         i++;
+      }
+
+      flat_set<public_key_type> approving_key_set;
+      for( account_id_type& acct_id : req_active_approvals )
+      {
+         const auto it = approving_account_lut.find( acct_id );
+         if( it == approving_account_lut.end() )
+            continue;
+         const account_object* acct = it->second;
+         vector<public_key_type> v_approving_keys = acct->active.get_keys();
+         for( const public_key_type& approving_key : v_approving_keys )
+            approving_key_set.insert( approving_key );
+      }
+      for( account_id_type& acct_id : req_owner_approvals )
+      {
+         const auto it = approving_account_lut.find( acct_id );
+         if( it == approving_account_lut.end() )
+            continue;
+         const account_object* acct = it->second;
+         vector<public_key_type> v_approving_keys = acct->owner.get_keys();
+         for( const public_key_type& approving_key : v_approving_keys )
+            approving_key_set.insert( approving_key );
+      }
+      for( const authority& a : other_auths )
+      {
+         for( const auto& k : a.key_auths )
+            approving_key_set.insert( k.first );
+      }
+
+      auto dyn_props = get_dynamic_global_properties();
+      tx.set_reference_block( dyn_props.head_block_id );
+
+      // first, some bookkeeping, expire old items from _recently_generated_transactions
+      // since transactions include the head block id, we just need the index for keeping transactions unique
+      // when there are multiple transactions in the same block.  choose a time period that should be at
+      // least one block long, even in the worst case.  2 minutes ought to be plenty.
+     
+      fc::time_point_sec oldest_transaction_ids_to_track(dyn_props.time - fc::minutes(2));
+      auto oldest_transaction_record_iter = _recently_generated_transactions.get<timestamp_index>().lower_bound(oldest_transaction_ids_to_track);
+      auto begin_iter = _recently_generated_transactions.get<timestamp_index>().begin();
+      _recently_generated_transactions.get<timestamp_index>().erase(begin_iter, oldest_transaction_record_iter);
+
+      uint32_t expiration_time_offset = 0;
+      for (;;)
+      {
+         tx.set_expiration( dyn_props.time + fc::seconds(30 + expiration_time_offset) );
+         tx.signatures.clear();
+         string key = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3";
+         for( public_key_type& key : approving_key_set )
+         {
+           // 待解决问题：
+          
+               fc::optional<fc::ecc::private_key> privkey = graphene::utilities::wif_to_key(key);
+               FC_ASSERT( privkey.valid(), "Malformed private key in _keys" );
+               tx.sign( *privkey, _chain_id );
+          
+            /// TODO: if transaction has enough signatures to be "valid" don't add any more,
+            /// there are cases where the wallet may have more keys than strictly necessary and
+            /// the transaction will be rejected if the transaction validates without requiring
+            /// all signatures provided
+         }
+
+         graphene::chain::transaction_id_type this_transaction_id = tx.id();
+         auto iter = _recently_generated_transactions.find(this_transaction_id);
+         if (iter == _recently_generated_transactions.end())
+         {
+            // we haven't generated this transaction before, the usual case
+            recently_generated_transaction_record this_transaction_record;
+            this_transaction_record.generation_time = dyn_props.time;
+            this_transaction_record.transaction_id = this_transaction_id;
+            _recently_generated_transactions.insert(this_transaction_record);
+            break;
+         }
+
+         // else we've generated a dupe, increment expiration time and re-sign it
+         ++expiration_time_offset;
+      }
+
+      // if( broadcast )
+      // {
+      //    try
+      //    {
+      //       _remote_net_broadcast->broadcast_transaction( tx );
+            
+      //    }
+      //    catch (const fc::exception& e)
+      //    {
+      //       elog("Caught exception while broadcasting tx ${id}:  ${e}", ("id", tx.id().str())("e", e.to_detail_string()) );
+      //       throw;
+      //    }
+      // }
+
+      return tx;
+   }FC_CAPTURE_AND_RETHROW((tx)(broadcast)) }
+
+ 
 processed_transaction database::_push_transaction( const signed_transaction& trx )
 {
    // If this is the first transaction pushed after applying a block, start a new undo session.

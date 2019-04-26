@@ -202,6 +202,16 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account_id );
    }
+   //dong
+   void operator()( const policy_operation& op )
+   {
+      _impacted.insert( op.from );
+   }
+     //hanyang add oracle
+   void operator()( const oracle_operation& op )
+   {
+      _impacted.insert( op.from );
+   }
 
 };
 

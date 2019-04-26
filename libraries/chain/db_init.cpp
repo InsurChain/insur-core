@@ -54,6 +54,7 @@
 #include <graphene/chain/committee_member_evaluator.hpp>
 #include <graphene/chain/confidential_evaluator.hpp>
 #include <graphene/chain/custom_evaluator.hpp>
+#include <graphene/chain/policy_evaluator.hpp>
 #include <graphene/chain/market_evaluator.hpp>
 #include <graphene/chain/proposal_evaluator.hpp>
 #include <graphene/chain/transfer_evaluator.hpp>
@@ -61,7 +62,7 @@
 #include <graphene/chain/withdraw_permission_evaluator.hpp>
 #include <graphene/chain/witness_evaluator.hpp>
 #include <graphene/chain/worker_evaluator.hpp>
-
+#include <graphene/chain/policy_evaluator.hpp>
 #include <graphene/chain/protocol/fee_schedule.hpp>
 
 #include <fc/smart_ref_impl.hpp>
@@ -138,6 +139,7 @@ void database::initialize_evaluators()
    register_evaluator<committee_member_update_evaluator>();
    register_evaluator<committee_member_update_global_parameters_evaluator>();
    register_evaluator<custom_evaluator>();
+   register_evaluator<policy_evaluator>();
    register_evaluator<asset_create_evaluator>();
    register_evaluator<asset_issue_evaluator>();
    register_evaluator<asset_reserve_evaluator>();
@@ -171,6 +173,10 @@ void database::initialize_evaluators()
    register_evaluator<transfer_from_blind_evaluator>();
    register_evaluator<blind_transfer_evaluator>();
    register_evaluator<asset_claim_fees_evaluator>();
+   //hanyang add oracle
+    register_evaluator<policy_evaluator>();
+     register_evaluator<oracle_evaluator>();
+
 }
 
 void database::initialize_indexes()

@@ -87,7 +87,8 @@ namespace graphene { namespace net {
           *          safe to broadcast on.
           */
          virtual void handle_transaction( const graphene::net::trx_message& trx_msg ) = 0;
-
+//hanyang add oracle
+virtual void handle_oracle( const graphene::net::oracle_message& oracle_message ) = 0;
          /**
           *  @brief Called when a new message comes in from the network other than a
           *         block or a transaction.  Currently there are no other possible 
@@ -262,6 +263,7 @@ namespace graphene { namespace net {
         virtual void  broadcast( const message& item_to_broadcast );
         virtual void  broadcast_transaction( const signed_transaction& trx )
         {
+  
            broadcast( trx_message(trx) );
         }
 

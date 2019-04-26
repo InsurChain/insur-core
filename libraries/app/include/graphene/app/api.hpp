@@ -145,6 +145,9 @@ namespace graphene { namespace app {
           */
          void broadcast_transaction(const signed_transaction& trx);
 
+        //hanyang add oracle 
+         void broadcast_oracle_message(const string& message);
+    
          /** this version of broadcast transaction registers a callback method that will be called when the transaction is
           * included into a block.  The callback method includes the transaction id, block number, and transaction number in the
           * block.
@@ -319,6 +322,7 @@ FC_API(graphene::app::history_api,
      )
 FC_API(graphene::app::network_broadcast_api,
        (broadcast_transaction)
+        (broadcast_oracle_message)
        (broadcast_transaction_with_callback)
        (broadcast_block)
      )
@@ -350,3 +354,4 @@ FC_API(graphene::app::login_api,
        (crypto)
        (debug)
      )
+   

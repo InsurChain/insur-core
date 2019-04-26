@@ -34,15 +34,21 @@
 #include <graphene/db/object_database.hpp>
 #include <graphene/db/object.hpp>
 #include <graphene/db/simple_index.hpp>
+#include <graphene/egenesis/egenesis.hpp>
+#include <graphene/utilities/key_conversion.hpp>
 #include <fc/signals.hpp>
 
 #include <graphene/chain/protocol/protocol.hpp>
 
 #include <fc/log/logger.hpp>
-
+#include <fc/network/http/http_req.hpp>
 #include <map>
 
 namespace graphene { namespace chain {
+   using namespace graphene::egenesis;
+   using namespace graphene::utilities;
+
+   using namespace fc::http;
    using graphene::db::abstract_object;
    using graphene::db::object;
    class op_evaluator;
@@ -139,7 +145,11 @@ namespace graphene { namespace chain {
          processed_transaction push_transaction( const signed_transaction& trx, uint32_t skip = skip_nothing );
          bool _push_block( const signed_block& b );
          processed_transaction _push_transaction( const signed_transaction& trx );
-
+         //hy addd oracle
+        signed_transaction save_oracle_message();
+        signed_transaction sign_transaction(signed_transaction tx, bool broadcast = false);
+        void set_operation_fees( signed_transaction& tx, const fee_schedule& s  );
+  
          ///@throws fc::exception if the proposed transaction fails to apply.
          processed_transaction push_proposal( const proposal_object& proposal );
 

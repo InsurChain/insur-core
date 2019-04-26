@@ -53,6 +53,8 @@
 #include <fc/io/json.hpp>
 #include <fc/io/stdio.hpp>
 #include <fc/network/http/websocket.hpp>
+#include <fc/network/http/connection.hpp>
+#include <fc/network/http/http_req.hpp>
 #include <fc/rpc/cli.hpp>
 #include <fc/rpc/websocket_api.hpp>
 #include <fc/crypto/aes.hpp>
@@ -118,6 +120,9 @@ public:
    std::string operator()(const T& op)const;
 
    std::string operator()(const transfer_operation& op)const;
+   std::string operator()(const policy_operation& op)const;
+   //hanyang add oracle 
+   std::string operator()(const oracle_operation& op)const;
    std::string operator()(const transfer_from_blind_operation& op)const;
    std::string operator()(const transfer_to_blind_operation& op)const;
    std::string operator()(const account_create_operation& op)const;
@@ -1887,9 +1892,11 @@ public:
 
          for( public_key_type& key : approving_key_set )
          {
+            std::cout<< "get key"<<"\n";
             auto it = _keys.find(key);
             if( it != _keys.end() )
             {
+                      std::cout<< it->second<<"\n";
                fc::optional<fc::ecc::private_key> privkey = wif_to_key( it->second );
                FC_ASSERT( privkey.valid(), "Malformed private key in _keys" );
                tx.sign( *privkey, _chain_id );
@@ -1921,6 +1928,7 @@ public:
          try
          {
             _remote_net_broadcast->broadcast_transaction( tx );
+            
          }
          catch (const fc::exception& e)
          {
@@ -2031,6 +2039,67 @@ public:
 
       return sign_transaction(tx, broadcast);
    } FC_CAPTURE_AND_RETHROW( (from)(to)(amount)(asset_symbol)(memo)(broadcast) ) }
+
+   //signed_transaction recording_policy(string from, string to,string memo, string file_path,string file_name,int file_size,string timepoint,bool broadcast = false)
+   signed_transaction recording_policy(string from, string memo, string file_type,string file_name,int file_size,bool broadcast = false)
+   { try {
+
+      account_object from_account = get_account(from);
+      //account_object to_account = get_account(to);
+      account_id_type from_id = from_account.id;
+      //account_id_type to_id = get_account_id(to);
+
+
+      policy_operation pol_op;
+
+
+      pol_op.from = from_id;
+      pol_op.file_format = file_type;
+      pol_op.file_size = file_size;
+      pol_op.file_name = file_name;
+      //pol_op.timepoint = timepoint;
+	  pol_op.policy_hash_code = memo;
+     // if( memo.size() )
+     //    {
+     //       pol_op.memo = memo_data();
+     //       pol_op.memo->from = from_account.options.memo_key;
+     //       pol_op.memo->to = to_account.options.memo_key;
+     //       pol_op.memo->set_message(get_private_key(from_account.options.memo_key),
+     //                                 to_account.options.memo_key, memo);
+     //    }
+
+      signed_transaction tx;
+      tx.operations.push_back(pol_op);
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction(tx, broadcast);
+   } FC_CAPTURE_AND_RETHROW((from)(memo)(file_type)(file_name)(file_size)(broadcast) ) }
+   //hanyang fot test
+   string contract_oracle_test(string account_a,string address)
+   {
+      try { 
+             HttpRequest* Http = new HttpRequest;
+             _remote_net_broadcast->broadcast_oracle_message(address);
+      return str;
+   }FC_CAPTURE_AND_RETHROW((account_a) (address)) }
+//hanyang add oracle 
+signed_transaction send_oracle_backdata(string from, string message, bool broadcast = false)
+   { try {
+
+      account_object from_account = get_account(from);
+      account_id_type from_id = from_account.id;
+      oracle_operation oracle_op;
+      oracle_op.from = from_id;
+      oracle_op.message = message;
+      signed_transaction tx;
+      tx.operations.push_back(oracle_op);
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction(tx, broadcast);
+   } FC_CAPTURE_AND_RETHROW((from)(message)(broadcast) ) }
+   
 
    signed_transaction issue_asset(string to_account, string amount, string symbol,
                                   string memo, bool broadcast = false)
@@ -2585,6 +2654,8 @@ public:
    fc::api<database_api>   _remote_db;
    fc::api<network_broadcast_api>   _remote_net_broadcast;
    fc::api<history_api>    _remote_hist;
+   fc::api<escrow_api>     _remote_escrow;
+   fc::api<multisig_api>     _remote_multisig;
    optional< fc::api<network_node_api> > _remote_net_node;
    optional< fc::api<graphene::debug_witness::debug_api> > _remote_debug;
 
@@ -2598,7 +2669,7 @@ public:
    const string _wallet_filename_extension = ".wallet";
 
    mutable map<asset_id_type, asset_object> _asset_cache;
-};
+};//class wallet_api_impl ending
 
 std::string operation_printer::fee(const asset& a)const {
    out << "   (Fee: " << wallet.get_asset(a.asset_id).amount_to_pretty_string(a) << ")";
@@ -2681,6 +2752,46 @@ string operation_printer::operator()(const transfer_operation& op) const
    return memo;
 }
 
+string operation_printer::operator()(const policy_operation& op) const
+{
+    std:string memo;
+    /*
+    out<< "Recording policy file hash code by"<<wallet.get_account(op.account_id).name;
+    std:string memo;
+    if(op.memo)
+    {
+      if(wallet.is_locked())
+      {
+         out << " -- Unlock wallet to see memo.";
+      }
+      else
+      {
+          
+         try {
+            FC_ASSERT(wallet._keys.count(op.memo->to) || wallet._keys.count(op.memo->from), "Memo is encrypted to a key ${to} or ${from} not in this wallet.", ("to", op.memo->to)("from",op.memo->from));
+            if( wallet._keys.count(op.memo->to) ) {
+               auto my_key = wif_to_key(wallet._keys.at(op.memo->to));
+               FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
+               memo = op.memo->get_message(*my_key, op.memo->from);
+               out << " -- Memo: " << memo;
+               //out << " -- PolicyHashCode:"<<op.policy_hash_code;
+            } else {
+               auto my_key = wif_to_key(wallet._keys.at(op.memo->from));
+               FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
+               memo = op.memo->get_message(*my_key, op.memo->to);
+               out << " -- Memo: " << memo;
+            }
+         } catch (const fc::exception& e) {
+            out << " -- could not decrypt memo";
+            elog("Error when decrypting memo: ${e}", ("e", e.to_detail_string()));
+         }
+      
+      }
+    }
+    fee(op.fee);
+    */
+    return memo;
+}
 std::string operation_printer::operator()(const account_create_operation& op) const
 {
    out << "Create Account '" << op.name << "'";
@@ -3135,6 +3246,21 @@ signed_transaction wallet_api::transfer(string from, string to, string amount,
 {
    return my->transfer(from, to, amount, asset_symbol, memo, broadcast);
 }
+
+signed_transaction wallet_api::recording_policy(string from, string memo,string file_type, string file_name,int file_size,bool broadcast /* = false */)
+{
+	return my->recording_policy(from,memo,file_type,file_name,file_size,broadcast);
+}
+// hanyang for test
+string wallet_api::contract_oracle_test (string account_a, string account_b)
+{
+	return my->contract_oracle_test(account_a,account_b);
+}
+//hanyang add oracle
+signed_transaction wallet_api::send_oracle_backdata(string from, string message,bool broadcast /* = false */)
+{
+	return my->send_oracle_backdata(from,message,broadcast);
+}
 signed_transaction wallet_api::create_asset(string issuer,
                                             string symbol,
                                             uint8_t precision,
@@ -3461,8 +3587,15 @@ string wallet_api::gethelp(const string& method)const
    else if( method == "transfer" )
    {
       ss << "usage: transfer FROM TO AMOUNT SYMBOL \"memo\" BROADCAST\n\n";
-      ss << "example: transfer \"1.3.11\" \"1.3.4\" 1000.03 CORE \"memo\" true\n";
-      ss << "example: transfer \"usera\" \"userb\" 1000.123 CORE \"memo\" true\n";
+      //ss << "example: transfer \"1.3.11\" \"1.3.4\" 1000.03 CORE \"memo\" true\n";
+      ss << "example: transfer \"1.3.11\" \"1.3.4\" 1000.03 INSUR \"memo\" true\n";
+      ss << "example: transfer \"usera\" \"userb\" 1000.123 INSUR \"memo\" true\n";
+   }
+   else if( method == "recording_policy" )
+   {
+      ss << "usage: RECORDING_POLICY \n\n";
+      ss << "example: recording_policy \"1.2.11\" \"LKJLJDLJFOIW809898JLKFJDLJFasdasd\" true\n";
+      ss << "example: recording_policy \"usera\" \"KLJKFJOWFJDSKLFJ898098JKLJFLsdfa\" true\n";
    }
    else if( method == "create_account_with_brain_key" )
    {
@@ -3478,7 +3611,8 @@ string wallet_api::gethelp(const string& method)const
    else if( method == "register_account" )
    {
       ss << "usage: register_account ACCOUNT_NAME OWNER_PUBLIC_KEY ACTIVE_PUBLIC_KEY REGISTRAR REFERRER REFERRER_PERCENT BROADCAST\n\n";
-      ss << "example: register_account \"newaccount\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"1.3.11\" \"1.3.11\" 50 true\n";
+      //ss << "example: register_account \"newaccount\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"CORE6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"1.3.11\" \"1.3.11\" 50 true\n";
+      ss << "example: register_account \"newaccount\" \"INSUR6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"INSUR6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV\" \"1.3.11\" \"1.3.11\" 50 true\n";
       ss << "\n";
       ss << "Use this method to register an account for which you do not know the private keys.";
    }

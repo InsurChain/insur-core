@@ -39,7 +39,9 @@
 
 #include <fc/crypto/hex.hpp>
 #include <fc/smart_ref_impl.hpp>
-
+#include <fc/log/file_appender.hpp>
+#include <fc/log/logger.hpp>
+#include <fc/log/logger_config.hpp>
 namespace graphene { namespace app {
 
     login_api::login_api(application& a)
@@ -134,6 +136,17 @@ namespace graphene { namespace app {
     {
        trx.validate();
        _app.chain_database()->push_transaction(trx);
+       _app.p2p_node()->broadcast_transaction(trx);
+    }
+    //hanyang add oracle 
+     void network_broadcast_api::broadcast_oracle_message(const string& message)
+    {
+        ilog("broadcast_oracle_message--start-----");
+        //hy add oracle
+       signed_transaction trx = _app.chain_database()->save_oracle_message(message);
+       
+       _app.p2p_node()->broadcast(net::oracle_message(message));
+        ilog("broadcast_oracle_message--send trx ----");
        _app.p2p_node()->broadcast_transaction(trx);
     }
 

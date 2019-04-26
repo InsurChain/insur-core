@@ -289,6 +289,7 @@ namespace graphene { namespace net { namespace detail {
                                    (handle_message) \
                                    (handle_block) \
                                    (handle_transaction) \
+                                   (handle_oracle)\
                                    (get_block_ids) \
                                    (get_item) \
                                    (get_chain_id) \
@@ -385,6 +386,8 @@ namespace graphene { namespace net { namespace detail {
       void handle_message( const message& ) override;
       bool handle_block( const graphene::net::block_message& block_message, bool sync_mode, std::vector<fc::uint160_t>& contained_transaction_message_ids ) override;
       void handle_transaction( const graphene::net::trx_message& transaction_message ) override;
+      //hanyang add oracle
+      void handle_oracle( const graphene::net::oracle_message& oracle_message ) override;
       std::vector<item_hash_t> get_block_ids(const std::vector<item_hash_t>& blockchain_synopsis,
                                              uint32_t& remaining_item_count,
                                              uint32_t limit = 2000) override;
@@ -1165,7 +1168,9 @@ namespace graphene { namespace net { namespace detail {
               if (peer_iter->item_ids.size() < GRAPHENE_NET_MAX_ITEMS_PER_PEER_DURING_NORMAL_OPERATION &&
                   peer->inventory_peer_advertised_to_us.find(item_iter->item) != peer->inventory_peer_advertised_to_us.end())
               {
-                if (item_iter->item.item_type == graphene::net::trx_message_type && peer->is_transaction_fetching_inhibited())
+                if (item_iter->item.item_type == graphene::net::
+                
+                 && peer->is_transaction_fetching_inhibited())
                   next_peer_unblocked_time = std::min(peer->transaction_fetching_inhibited_until, next_peer_unblocked_time);
                 else
                 {
@@ -1751,7 +1756,7 @@ namespace graphene { namespace net { namespace detail {
     {
       VERIFY_CORRECT_THREAD();
       message_hash_type message_hash = received_message.id();
-      dlog("handling message ${type} ${hash} size ${size} from peer ${endpoint}",
+      dlog("*********************handling message ${type} ${hash} size ${size} from peer ${endpoint}",
            ("type", graphene::net::core_message_type_enum(received_message.msg_type))("hash", message_hash)
            ("size", received_message.size)
            ("endpoint", originating_peer->get_remote_endpoint()));
@@ -1810,7 +1815,7 @@ namespace graphene { namespace net { namespace detail {
         break;
       case core_message_type_enum::get_current_connections_reply_message_type:
         on_get_current_connections_reply_message(originating_peer, received_message.as<get_current_connections_reply_message>());
-        break;
+        break;  
 
       default:
         // ignore any message in between core_message_type_first and _last that we don't handle above
@@ -2421,7 +2426,7 @@ namespace graphene { namespace net { namespace detail {
         std::vector<item_hash_t> blockchain_synopsis = create_blockchain_synopsis_for_peer( peer );
       
         item_hash_t last_item_seen = blockchain_synopsis.empty() ? item_hash_t() : blockchain_synopsis.back();
-        dlog( "sync: sending a request for the next items after ${last_item_seen} to peer ${peer}, (full request is ${blockchain_synopsis})",
+        dlog( "sync: :: a request for the next items after ${last_item_seen} to peer ${peer}, (full request is ${blockchain_synopsis})",
              ( "last_item_seen", last_item_seen )
              ( "peer", peer->get_remote_endpoint() )
              ( "blockchain_synopsis", blockchain_synopsis ) );
@@ -3812,6 +3817,13 @@ namespace graphene { namespace net { namespace detail {
             dlog("passing message containing transaction ${trx} to client", ("trx", transaction_message_to_process.trx.id()));
             _delegate->handle_transaction(transaction_message_to_process);
           }
+          //hanyang add oracle
+          else if(message_to_process.msg_type == oracle_get_data_message_type)
+          {
+            oracle_message oracle_message_to_process = message_to_process.as<oracle_message>();
+            dlog("******** oracle ${url} to client", ("url", oracle_message_to_process.data_url));
+            _delegate->handle_oracle(oracle_message_to_process);
+          }
           else
             _delegate->handle_message( message_to_process );
           message_validated_time = fc::time_point::now();
@@ -4867,7 +4879,15 @@ namespace graphene { namespace net { namespace detail {
       {
         graphene::net::trx_message transaction_message_to_broadcast = item_to_broadcast.as<graphene::net::trx_message>();
         hash_of_message_contents = transaction_message_to_broadcast.trx.id(); // for debugging
-        dlog( "broadcasting trx: ${trx}", ("trx", transaction_message_to_broadcast) );
+        ilog( "broadcasting trx: ${trx}", ("trx", transaction_message_to_broadcast) );
+      }
+      //hanyang oracle 
+      else if(item_to_broadcast.msg_type == graphene::net::oracle_get_data_message_type)
+      {  
+         graphene::net::oracle_message oracle_message_to_broadcast = item_to_broadcast.as<graphene::net::oracle_message>();
+       
+        ilog( "hy--&****8----broadcasting oracle ------: ${trx}", ("trx", transaction_message_to_broadcast) );
+
       }
       message_hash_type hash_of_item_to_broadcast = item_to_broadcast.id();
 
@@ -4879,6 +4899,7 @@ namespace graphene { namespace net { namespace detail {
     void node_impl::broadcast( const message& item_to_broadcast )
     {
       VERIFY_CORRECT_THREAD();
+       ilog( "hy:----broadcasting oracle ----*****--");
       // this version is called directly from the client
       message_propagation_data propagation_data{fc::time_point::now(), fc::time_point::now(), _node_id};
       broadcast( item_to_broadcast, propagation_data );
@@ -5141,7 +5162,10 @@ namespace graphene { namespace net { namespace detail {
   }
 
   void node::broadcast( const message& msg )
-  {
+  { 
+    ilog( "hy:5166 ----node -broadcast");
+      
+    
     INVOKE_IN_IMPL(broadcast, msg);
   }
 
@@ -5250,12 +5274,20 @@ namespace graphene { namespace net { namespace detail {
       try
       {
         const message& message_to_deliver = destination_node->messages_to_deliver.front();
+        dlog("message_sender-------msg——type -----***** ${e}", ("e", message_to_deliver.msg_type));
         if (message_to_deliver.msg_type == trx_message_type)
           destination_node->delegate->handle_transaction(message_to_deliver.as<trx_message>());
         else if (message_to_deliver.msg_type == block_message_type)
         {
           std::vector<fc::uint160_t> contained_transaction_message_ids;
           destination_node->delegate->handle_block(message_to_deliver.as<block_message>(), false, contained_transaction_message_ids);
+        }
+        //hanyang add oracle
+        else if(message_to_deliver.msg_type == oracle_get_data_message_type)
+        {
+          
+          ilog("-----------oracle_message--=------node.cpp-----s");
+          destination_node->delegate->handle_oracle(message_to_deliver.as<oracle_message>());
         }
         else
           destination_node->delegate->handle_message(message_to_deliver);
@@ -5270,6 +5302,7 @@ namespace graphene { namespace net { namespace detail {
 
   void simulated_network::broadcast( const message& item_to_broadcast  )
   {
+     ilog("-----------node.cpp broadcast------start");
     for (node_info* network_node_info : network_nodes)
     {
       network_node_info->messages_to_deliver.emplace(item_to_broadcast);
@@ -5401,6 +5434,12 @@ namespace graphene { namespace net { namespace detail {
     void statistics_gathering_node_delegate_wrapper::handle_transaction( const graphene::net::trx_message& transaction_message )
     {
       INVOKE_AND_COLLECT_STATISTICS(handle_transaction, transaction_message);
+    }
+    //hanyang add oracle
+    void statistics_gathering_node_delegate_wrapper::handle_oracle( const graphene::net::oracle_message& oracle_message )
+    {
+           dlog("-----------oracle_message--=------handle_oracle *****-----s");
+      INVOKE_AND_COLLECT_STATISTICS(handle_oracle, oracle_message);
     }
 
     std::vector<item_hash_t> statistics_gathering_node_delegate_wrapper::get_block_ids(const std::vector<item_hash_t>& blockchain_synopsis,
