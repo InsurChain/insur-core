@@ -1075,6 +1075,25 @@ bool _push_block( database& db, const signed_block& b, uint32_t skip_flags /* = 
    return db.push_block( b, skip_flags);
 }
 
+void print_call_account(const account_object& user)const
+{
+    
+  cout << std::fixed;
+  cout.precision(5);
+
+  for( const call_order_object& o : db.get_index_type<call_order_index>().indices() )
+  {
+     std::cout << "\n";
+     cout << std::setw( 16 ) << std::right  << o.call_price.to_real() << " ";
+     cout << std::setw( 16 ) << std::right  << pretty( o.get_collateral() ) << " ";
+     cout << std::setw( 16 ) << std::right  << pretty( o.get_debt() ) << " ";
+     cout << std::setw( 10 ) << std::left   << o.borrower(db).name << " ";
+  }
+}
+void upgrade_to_forever_member(account_id_type user)
+{
+   upgrade_to_lifetime_member(account(user));
+}
 processed_transaction _push_transaction( database& db, const signed_transaction& tx, uint32_t skip_flags /* = 0 */ )
 { try {
    auto pt = db.push_transaction( tx, skip_flags );

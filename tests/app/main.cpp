@@ -152,4 +152,3 @@ BOOST_AUTO_TEST_CASE( two_node_network )
       throw;
    }
 }
-   

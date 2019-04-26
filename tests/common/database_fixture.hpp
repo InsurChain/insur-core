@@ -273,10 +273,12 @@ struct database_fixture {
    void upgrade_to_lifetime_member( const account_object& account );
    void upgrade_to_annual_member( account_id_type account );
    void upgrade_to_annual_member( const account_object& account );
+   void upgrade_to_forever_member(account_id_type user);
    void print_market( const string& syma, const string& symb )const;
    string pretty( const asset& a )const;
    void print_limit_order( const limit_order_object& cur )const;
    void print_call_orders( )const;
+   void print_call_account(const account_object& user)const;
    void print_joint_market( const string& syma, const string& symb )const;
    int64_t get_balance( account_id_type account, asset_id_type a )const;
    int64_t get_balance( const account_object& account, const asset_object& a )const;
@@ -292,4 +294,3 @@ processed_transaction _push_transaction( database& db, const signed_transaction&
 }
 
 } }
-   
