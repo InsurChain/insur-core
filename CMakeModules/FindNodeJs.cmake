@@ -1,3 +1,4 @@
+#FindNodeJs.cmake cmake info
 find_program(NODEJS_EXECUTABLE node)
 
 include(FindPackageHandleStandardArgs)

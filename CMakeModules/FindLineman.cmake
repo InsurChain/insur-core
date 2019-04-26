@@ -1,3 +1,4 @@
+# Insur Chain FindLineman.cmake camke build info
 find_program(NPM_EXECUTABLE npm)
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args("NPM" DEFAULT_MSG NPM_EXECUTABLE)
