@@ -65,6 +65,8 @@ using net::item_id;
 using net::message;
 using net::block_message;
 using net::trx_message;
+//hanyang add oracle
+using net::oracle_message;
 
 using chain::block_header;
 using chain::signed_block_header;
@@ -526,12 +528,21 @@ namespace detail {
             last_call = now;
             trx_count = 0;
          }
-
+      ilog("hy: handle_transaction:----*****#############################-----");
          _chain_db->push_transaction( transaction_message.trx );
       } FC_CAPTURE_AND_RETHROW( (transaction_message) ) }
+      //hanyang add oracle 
+      virtual void handle_oracle(const graphene::net::oracle_message& oracle_message) override
+      { try {
+
+          ilog("hy: handle_message:----*****##############################-----");
+          ilog("our applicatian  get message oracle  message ${message}", ("message", oracle_message.data_url));
+         _chain_db->save_oracle_message( oracle_message.handle_url );
+      } FC_CAPTURE_AND_RETHROW( (oracle_message) ) }
 
       virtual void handle_message(const message& message_to_process) override
       {
+          ilog("hy: handle_message:----*****############*********-----");
          // not a transaction, not a block
          FC_THROW( "Invalid Message Type" );
       }

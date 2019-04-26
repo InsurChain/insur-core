@@ -67,6 +67,8 @@ class database_api_impl : public std::enable_shared_from_this<database_api_impl>
       optional<block_header> get_block_header(uint32_t block_num)const;
       optional<signed_block> get_block(uint32_t block_num)const;
       processed_transaction get_transaction( uint32_t block_num, uint32_t trx_in_block )const;
+     //dong
+	  vector<operation> get_operations( uint32_t block_num, uint32_t trx_in_block )const;
 
       // Globals
       chain_property_object get_chain_properties()const;
@@ -347,6 +349,10 @@ processed_transaction database_api::get_transaction( uint32_t block_num, uint32_
 {
    return my->get_transaction( block_num, trx_in_block );
 }
+vector<operation> database_api::get_operations( uint32_t block_num, uint32_t trx_in_block )const
+{
+	return my->get_operations(block_num,trx_in_block);
+}
 
 optional<signed_transaction> database_api::get_recent_transaction_by_id( const transaction_id_type& id )const
 {
@@ -363,6 +369,17 @@ processed_transaction database_api_impl::get_transaction(uint32_t block_num, uin
    FC_ASSERT( opt_block );
    FC_ASSERT( opt_block->transactions.size() > trx_num );
    return opt_block->transactions[trx_num];
+}
+//dong
+vector<operation> database_api_impl::get_operations( uint32_t block_num, uint32_t trx_in_block )const
+{
+	processed_transaction ptx;
+	ptx = get_transaction(block_num,trx_in_block);
+	vector<operation> result;
+    result.reserve( ptx.operations.size() );
+    for( auto obj : ptx.operations )
+       result.push_back( obj );
+    return result;
 }
 
 //////////////////////////////////////////////////////////////////////

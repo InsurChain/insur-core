@@ -53,6 +53,8 @@
 #include <fc/io/json.hpp>
 #include <fc/io/stdio.hpp>
 #include <fc/network/http/websocket.hpp>
+#include <fc/network/http/connection.hpp>
+#include <fc/network/http/http_req.hpp>
 #include <fc/rpc/cli.hpp>
 #include <fc/rpc/websocket_api.hpp>
 #include <fc/crypto/aes.hpp>
@@ -119,6 +121,7 @@ public:
 
    std::string operator()(const transfer_operation& op)const;
    std::string operator()(const policy_operation& op)const;
+   std::string operator()(const oracle_operation& op)const;
    std::string operator()(const transfer_from_blind_operation& op)const;
    std::string operator()(const transfer_to_blind_operation& op)const;
    std::string operator()(const account_create_operation& op)const;
@@ -1925,9 +1928,11 @@ public:
 
          for( public_key_type& key : approving_key_set )
          {
+            std::cout<< "get key"<<"\n";
             auto it = _keys.find(key);
             if( it != _keys.end() )
             {
+                      std::cout<< it->second<<"\n";
                fc::optional<fc::ecc::private_key> privkey = wif_to_key( it->second );
                FC_ASSERT( privkey.valid(), "Malformed private key in _keys" );
                tx.sign( *privkey, _chain_id );
@@ -1959,6 +1964,7 @@ public:
          try
          {
             _remote_net_broadcast->broadcast_transaction( tx );
+            
          }
          catch (const fc::exception& e)
          {
@@ -2088,7 +2094,7 @@ public:
       pol_op.file_size = file_size;
       pol_op.file_name = file_name;
       //pol_op.timepoint = timepoint;
-      pol_op.policy_hash_code = memo;
+	  pol_op.policy_hash_code = memo;
      // if( memo.size() )
      //    {
      //       pol_op.memo = memo_data();
@@ -2105,7 +2111,29 @@ public:
 
       return sign_transaction(tx, broadcast);
    } FC_CAPTURE_AND_RETHROW((from)(memo)(file_type)(file_name)(file_size)(broadcast) ) }
+   string contract_oracle_test(string account_a,string address)
+   {
+      try { 
+             HttpRequest* Http = new HttpRequest;
+             _remote_net_broadcast->broadcast_oracle_message(address);
+      return str;
+   }FC_CAPTURE_AND_RETHROW((account_a) (address)) }
+signed_transaction send_oracle_backdata(string from, string message, bool broadcast = false)
+   { try {
 
+      account_object from_account = get_account(from);
+      account_id_type from_id = from_account.id;
+      oracle_operation oracle_op;
+      oracle_op.from = from_id;
+      oracle_op.message = message;
+      signed_transaction tx;
+      tx.operations.push_back(oracle_op);
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction(tx, broadcast);
+   } FC_CAPTURE_AND_RETHROW((from)(message)(broadcast) ) }
+   
 
    signed_transaction issue_asset(string to_account, string amount, string symbol,
                                   string memo, bool broadcast = false)
@@ -3492,6 +3520,7 @@ signed_transaction wallet_api::transfer(string from, string to, string amount,
 
 signed_transaction wallet_api::recording_policy(string from, string memo,string file_type, string file_name,int file_size,bool broadcast /* = false */)
 {
+<<<<<<< HEAD
     return my->recording_policy(from,memo,file_type,file_name,file_size,broadcast);
 }
 optional<multisig_object> wallet_api::get_multisig(string from, string multisig_address,int num)
@@ -3525,6 +3554,14 @@ signed_transaction wallet_api::escrow_release(string from, string to, string age
    return my->escrow_release(from, to, agent, who, receiver, escrow_id, symbol, amount, broadcast);
 }
 
+string wallet_api::contract_oracle_test (string account_a, string account_b)
+{
+	return my->contract_oracle_test(account_a,account_b);
+}
+signed_transaction wallet_api::send_oracle_backdata(string from, string message,bool broadcast /* = false */)
+{
+	return my->send_oracle_backdata(from,message,broadcast);
+}
 signed_transaction wallet_api::create_asset(string issuer,
                                             string symbol,
                                             uint8_t precision,
