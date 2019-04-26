@@ -39,4 +39,3 @@
       "asset_symbol": "CORE",
       "amount": 100000000000
     },{
-   

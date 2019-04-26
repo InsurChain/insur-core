@@ -1,4 +1,2 @@
 ## insur-core
-info
-
-   
+## 

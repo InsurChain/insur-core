@@ -1,4 +1,5 @@
 # Defines Graphene library target.
+# Build for INSUR BLOCKCHAIN
 project( Graphene )
 cmake_minimum_required( VERSION 2.8.12 )
 

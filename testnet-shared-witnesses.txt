@@ -302,4 +302,3 @@
       "owner_name": "init100",
       "block_signing_key": "GPH6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"
     },{
-   
