@@ -280,3 +280,4 @@ optional<block_id_type> block_database::last_id()const
 
 
 } }
+   

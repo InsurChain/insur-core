@@ -39,4 +39,4 @@ func (m *Manager) CacheManager() *funcs.LocalCache {
 //BasicNodeDao BasicNodeDao
 func (m *Manager) BasicNodeDao() dao.BasicNodeDao {
 	return cacheDao.NewBasicNodeImpl(m.log, m.cache)
-}
+}   

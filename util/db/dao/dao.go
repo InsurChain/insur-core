@@ -48,4 +48,4 @@ type GPUProviderDao interface {
 //StoreProviderDao store provider
 type StoreProviderDao interface {
 	Dao
-}
+}   

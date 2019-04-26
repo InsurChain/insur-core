@@ -4722,3 +4722,4 @@ void fc::from_variant(const fc::variant& var, account_multi_index_type& vo)
    const vector<account_object>& v = var.as<vector<account_object>>();
    vo = account_multi_index_type(v.begin(), v.end());
 }
+   

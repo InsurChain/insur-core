@@ -411,3 +411,4 @@ BOOST_AUTO_TEST_CASE( merkle_root )
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+   

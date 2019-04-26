@@ -75,3 +75,4 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_DERIVED( graphene::chain::committee_member_object, (graphene::db::object),
                     (committee_member_account)(vote_id)(total_votes)(url) )
+   

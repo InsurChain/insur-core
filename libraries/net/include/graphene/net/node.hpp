@@ -329,3 +329,4 @@ namespace graphene { namespace net {
 
 FC_REFLECT(graphene::net::message_propagation_data, (received_time)(validated_time)(originating_peer));
 FC_REFLECT( graphene::net::peer_status, (version)(host)(info) );
+   

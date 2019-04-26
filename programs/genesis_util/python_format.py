@@ -12,3 +12,4 @@ with open(sys.argv[1], "r") as infile:
     genesis = json.load(infile)
 with open(sys.argv[2], "w") as outfile:
     json.dump(genesis, outfile, indent=2, sort_keys=True)
+   

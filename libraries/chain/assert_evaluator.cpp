@@ -76,3 +76,4 @@ void_result assert_evaluator::do_apply( const assert_operation& o )
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
 } } // graphene::chain
+   

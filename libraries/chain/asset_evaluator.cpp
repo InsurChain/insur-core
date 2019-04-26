@@ -572,3 +572,4 @@ void_result asset_claim_fees_evaluator::do_apply( const asset_claim_fees_operati
 
 
 } } // graphene::chain
+   

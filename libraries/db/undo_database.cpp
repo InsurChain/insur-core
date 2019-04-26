@@ -288,3 +288,4 @@ const undo_state& undo_database::head()const
 }
 
 } } // graphene::db
+   

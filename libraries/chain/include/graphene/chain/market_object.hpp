@@ -210,3 +210,4 @@ FC_REFLECT_DERIVED( graphene::chain::force_settlement_object,
                     (graphene::db::object),
                     (owner)(balance)(settlement_date)
                   )
+   

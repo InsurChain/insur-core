@@ -98,3 +98,4 @@ namespace fc
         vo = graphene::chain::pts_address( var.as_string() );
    }
 }
+   

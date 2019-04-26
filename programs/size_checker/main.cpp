@@ -112,3 +112,4 @@ int main( int argc, char** argv )
    idump((fc::raw::pack_size(signed_block())));
    return 0;
 }
+   

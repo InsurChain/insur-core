@@ -44,3 +44,4 @@ namespace graphene { namespace time {
    void                         advance_time( int32_t delta_seconds );
 
 } } // graphene::time
+   

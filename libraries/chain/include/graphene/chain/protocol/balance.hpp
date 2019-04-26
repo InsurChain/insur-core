@@ -110,3 +110,4 @@ FC_REFLECT( graphene::chain::balance_locked_operation,
 FC_REFLECT( graphene::chain::balance_unlocked_operation::fee_parameters_type,   )
 FC_REFLECT( graphene::chain::balance_unlocked_operation,
                     (fee)(unlocked_account)(account_balance_locked)(extensions) )
+   

@@ -122,3 +122,4 @@ namespace graphene { namespace chain {
          shared_ptr<fork_item>    _head;
    };
 } } // graphene::chain
+   

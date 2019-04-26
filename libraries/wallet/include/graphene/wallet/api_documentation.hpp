@@ -75,3 +75,4 @@ namespace graphene { namespace wallet {
    };
 
 } } // end namespace graphene::wallet
+   

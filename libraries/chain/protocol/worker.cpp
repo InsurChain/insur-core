@@ -36,3 +36,4 @@ void worker_create_operation::validate() const
 }
 
 } }
+   

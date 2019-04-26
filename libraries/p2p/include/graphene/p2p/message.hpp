@@ -181,3 +181,4 @@ FC_REFLECT_ENUM( graphene::p2p::core_message_type_enum,
        (peer_message_type)
        (error_message_type)
 )
+   

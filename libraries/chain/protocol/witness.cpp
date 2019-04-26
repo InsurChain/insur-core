@@ -39,3 +39,4 @@ void witness_update_operation::validate() const
 }
 
 } } // graphene::chain
+   

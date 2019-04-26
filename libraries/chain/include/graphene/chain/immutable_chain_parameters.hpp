@@ -47,3 +47,4 @@ FC_REFLECT( graphene::chain::immutable_chain_parameters,
    (num_special_accounts)
    (num_special_assets)
 )
+   

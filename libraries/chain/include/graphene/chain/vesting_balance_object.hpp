@@ -208,3 +208,4 @@ FC_REFLECT_DERIVED(graphene::chain::vesting_balance_object, (graphene::db::objec
                    (balance)
                    (policy)
                   )
+   

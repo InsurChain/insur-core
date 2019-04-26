@@ -122,3 +122,4 @@ void_result override_transfer_evaluator::do_apply( const override_transfer_opera
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 #endif 
 } } // graphene::chain
+   

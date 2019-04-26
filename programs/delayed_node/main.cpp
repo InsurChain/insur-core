@@ -290,3 +290,4 @@ fc::optional<fc::logging_config> load_logging_config_from_ini_file(const fc::pat
    }
    FC_RETHROW_EXCEPTIONS(warn, "")
 }
+   

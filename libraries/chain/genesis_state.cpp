@@ -36,3 +36,4 @@ chain_id_type genesis_state_type::compute_chain_id() const
 }
 
 } } // graphene::chain
+   

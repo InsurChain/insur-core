@@ -74,3 +74,4 @@ void_result witness_update_evaluator::do_apply( const witness_update_operation& 
 } FC_CAPTURE_AND_RETHROW( (op) ) }
 
 } } // graphene::chain
+   

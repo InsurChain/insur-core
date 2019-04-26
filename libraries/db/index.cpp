@@ -41,3 +41,4 @@ namespace graphene { namespace db {
    void base_primary_index::on_modify( const object& obj )
    {for( auto ob : _observers ) ob->on_modify(  obj ); }
 } } // graphene::chain
+   

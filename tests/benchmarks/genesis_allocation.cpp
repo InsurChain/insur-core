@@ -130,3 +130,4 @@ BOOST_AUTO_TEST_CASE( genesis_and_persistence_bench )
       throw;
    }
 }
+   

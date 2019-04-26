@@ -145,3 +145,4 @@ void_result withdraw_permission_delete_evaluator::do_apply(const withdraw_permis
 } FC_CAPTURE_AND_RETHROW( (op) ) }
 
 } } // graphene::chain
+   

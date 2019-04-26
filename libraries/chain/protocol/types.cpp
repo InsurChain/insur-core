@@ -255,3 +255,4 @@ namespace fc
        vo = graphene::chain::extended_private_key_type( var.as_string() );
     }
 } // fc
+   

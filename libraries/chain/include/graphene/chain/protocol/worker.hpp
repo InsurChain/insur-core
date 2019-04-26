@@ -104,3 +104,4 @@ FC_REFLECT( graphene::chain::worker_create_operation::fee_parameters_type, (fee)
 FC_REFLECT( graphene::chain::worker_create_operation,
             (fee)(owner)(work_begin_date)(work_end_date)(daily_pay)(name)(url)(initializer) )
 
+   

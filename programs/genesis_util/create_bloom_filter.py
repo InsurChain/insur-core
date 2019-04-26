@@ -70,3 +70,4 @@ p=(float(w) / float(opts.size))**opts.num,
 
 if __name__ == "__main__":
     main()
+   

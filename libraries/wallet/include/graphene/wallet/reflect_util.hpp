@@ -118,3 +118,4 @@ static_variant_map create_static_variant_map()
 }
 
 } } // namespace graphene::wallet
+   

@@ -87,4 +87,4 @@ func NewBandWidthProvider() *BandWidthProvider {
 //ModelName return bandwidth provider model name
 func (r *BandWidthProvider) ModelName() string {
 	return "bandWidth_provider"
-}
+}   

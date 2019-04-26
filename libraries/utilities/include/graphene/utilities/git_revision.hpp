@@ -31,3 +31,4 @@ extern const uint32_t git_revision_unix_timestamp;
 extern const char* const git_revision_description;
 
 } } // end namespace graphene::utilities
+   

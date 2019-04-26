@@ -62,3 +62,4 @@ namespace graphene { namespace chain {
          void_result do_apply( const escrow_release_operation& o );
       };
 } } // graphene::chain
+   

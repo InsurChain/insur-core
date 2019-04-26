@@ -272,3 +272,4 @@ FC_REFLECT_DERIVED( graphene::chain::asset_object, (graphene::db::object),
                     (bitasset_data_id)
                     (buyback_account)
                   )
+   

@@ -1040,3 +1040,4 @@ void application::startup_plugins()
 
 // namespace detail
 } }
+   

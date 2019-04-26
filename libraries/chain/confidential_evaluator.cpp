@@ -179,3 +179,4 @@ void blind_transfer_evaluator::pay_fee()
 }
 
 } } // graphene::chain
+   

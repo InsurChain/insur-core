@@ -384,3 +384,4 @@ void signed_transaction::verify_authority(
 } FC_CAPTURE_AND_RETHROW( (*this) ) }
 
 } } // graphene::chain
+   

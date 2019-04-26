@@ -140,3 +140,4 @@ namespace graphene { namespace db {
 FC_REFLECT_TYPENAME( graphene::db::annotation_map )
 FC_REFLECT( graphene::db::object, (id) )
 FC_REFLECT_DERIVED_TEMPLATE( (typename Derived), graphene::db::annotated_object<Derived>, (graphene::db::object), (annotations) )
+   

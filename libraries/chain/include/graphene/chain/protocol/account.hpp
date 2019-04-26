@@ -299,3 +299,4 @@ FC_REFLECT( graphene::chain::account_upgrade_operation::fee_parameters_type, (me
 FC_REFLECT( graphene::chain::account_transfer_operation::fee_parameters_type, (fee) )
 
 FC_REFLECT( graphene::chain::account_transfer_operation, (fee)(account_id)(new_owner)(extensions) )
+   

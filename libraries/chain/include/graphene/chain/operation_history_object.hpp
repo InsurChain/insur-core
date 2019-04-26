@@ -131,3 +131,4 @@ FC_REFLECT_DERIVED( graphene::chain::operation_history_object, (graphene::chain:
 
 FC_REFLECT_DERIVED( graphene::chain::account_transaction_history_object, (graphene::chain::object),
                     (account)(operation_id)(sequence)(next) )
+   

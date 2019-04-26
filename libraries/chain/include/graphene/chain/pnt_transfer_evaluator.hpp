@@ -47,3 +47,4 @@ namespace graphene { namespace chain {
    };
 #endif
 } } // graphene::chain
+   

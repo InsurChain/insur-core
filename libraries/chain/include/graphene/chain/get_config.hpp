@@ -30,3 +30,4 @@ namespace graphene { namespace chain {
 fc::variant_object get_config();
 
 } } // graphene::chain
+   

@@ -50,3 +50,4 @@ struct buyback_account_options
 } }
 
 FC_REFLECT( graphene::chain::buyback_account_options, (asset_to_buy)(asset_to_buy_issuer)(markets) );
+   

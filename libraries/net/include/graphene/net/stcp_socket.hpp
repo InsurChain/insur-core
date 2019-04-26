@@ -77,3 +77,4 @@ class stcp_socket : public virtual fc::iostream
 typedef std::shared_ptr<stcp_socket> stcp_socket_ptr;
 
 } } // graphene::net
+   

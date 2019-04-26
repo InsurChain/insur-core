@@ -199,3 +199,4 @@ void database::debug_update( const fc::variant_object& update )
 }
 
 } }
+   

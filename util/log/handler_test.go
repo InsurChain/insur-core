@@ -57,3 +57,4 @@ func TestLog(t *testing.T) {
 	log.Info("666")
 
 }
+   

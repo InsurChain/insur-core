@@ -37,3 +37,4 @@ namespace graphene { namespace chain {
          void_result do_apply( const custom_operation& o ){ return void_result(); }
    };
 } }
+   

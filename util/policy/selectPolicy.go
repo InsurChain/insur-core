@@ -52,3 +52,4 @@ func (n *NodeSelected) GetSuitableNode() map[string]*model.BasicNode {
 		return db.GetManager().BandWidthProviderDao().GetOneSuitableProvider()
 	}
 }
+   

@@ -49,3 +49,4 @@ class vesting_balance_withdraw_evaluator : public evaluator<vesting_balance_with
 };
 
 } } // graphene::chain
+   

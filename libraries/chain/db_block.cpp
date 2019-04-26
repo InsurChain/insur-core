@@ -704,3 +704,4 @@ bool database::before_last_checkpoint()const
 }
 
 } }
+   

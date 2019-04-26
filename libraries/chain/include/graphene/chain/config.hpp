@@ -170,3 +170,4 @@
 
 // hack for unit test
 #define GRAPHENE_FBA_STEALTH_DESIGNATED_ASSET (asset_id_type(1))
+   

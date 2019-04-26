@@ -68,3 +68,4 @@ void withdraw_permission_delete_operation::validate() const
 
 } } // graphene::chain
 
+   

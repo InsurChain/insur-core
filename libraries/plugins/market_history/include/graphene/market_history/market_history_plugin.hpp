@@ -173,3 +173,4 @@ FC_REFLECT_DERIVED( graphene::market_history::bucket_object, (graphene::db::obje
                     (close_base)(close_quote)
                     (base_volume)(quote_volume) )
 
+   

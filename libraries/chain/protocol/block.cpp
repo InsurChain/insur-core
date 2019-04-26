@@ -90,3 +90,4 @@ namespace graphene { namespace chain {
    }
 
 } }
+   

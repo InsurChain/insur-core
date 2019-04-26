@@ -32,3 +32,4 @@ add_executable( convert_address convert_address.cpp )
 
 target_link_libraries( convert_address
                        PRIVATE graphene_chain fc ${CMAKE_DL_LIBS} ${PLATFORM_SPECIFIC_LIBS} )
+   

@@ -209,3 +209,4 @@ void_result proposal_delete_evaluator::do_apply(const proposal_delete_operation&
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
 } } // graphene::chain
+   

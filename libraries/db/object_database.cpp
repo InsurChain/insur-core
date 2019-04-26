@@ -123,3 +123,4 @@ void object_database::save_undo_remove(const object& obj)
 }
 
 } } // namespace graphene::db
+   

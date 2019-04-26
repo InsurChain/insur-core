@@ -202,3 +202,4 @@ const int64_t scaled_precision_lut[19] =
 };
 
 } } // graphene::chain
+   

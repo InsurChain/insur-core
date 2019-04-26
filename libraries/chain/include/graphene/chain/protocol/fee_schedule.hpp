@@ -85,3 +85,4 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_TYPENAME( graphene::chain::fee_parameters )
 FC_REFLECT( graphene::chain::fee_schedule, (parameters)(scale) )
+   

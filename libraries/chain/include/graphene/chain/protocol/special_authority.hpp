@@ -48,3 +48,4 @@ void validate_special_authority( const special_authority& auth );
 FC_REFLECT( graphene::chain::no_special_authority, )
 FC_REFLECT( graphene::chain::top_holders_special_authority, (asset)(num_top_holders) )
 FC_REFLECT_TYPENAME( graphene::chain::special_authority )
+   

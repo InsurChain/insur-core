@@ -885,3 +885,4 @@ void database::perform_chain_maintenance(const signed_block& next_block, const g
 }
 
 } }
+   

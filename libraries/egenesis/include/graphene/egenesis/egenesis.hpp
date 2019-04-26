@@ -49,3 +49,4 @@ void compute_egenesis_json( std::string& result );
 fc::sha256 get_egenesis_json_hash();
 
 } } // graphene::egenesis
+   

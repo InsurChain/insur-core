@@ -61,3 +61,4 @@ void override_transfer_operation::validate()const
 }
 
 } } // graphene::chain
+   

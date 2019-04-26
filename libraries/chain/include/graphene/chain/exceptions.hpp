@@ -253,3 +253,4 @@ namespace graphene { namespace chain {
       { throw( effect_type( e.what(), e.get_log() ) ); }
 
 } } // graphene::chain
+   

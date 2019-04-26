@@ -193,3 +193,4 @@ namespace graphene { namespace p2p {
 // not sent over the wire, just reflected for logging
 FC_REFLECT_ENUM(graphene::p2p::peer_connection::connection_state, (connecting)(syncing)(synced) )
 FC_REFLECT_ENUM(graphene::p2p::peer_connection::direction_type, (inbound)(outbound) )
+   

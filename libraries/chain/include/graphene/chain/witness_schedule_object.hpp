@@ -46,3 +46,4 @@ FC_REFLECT_DERIVED(
    (graphene::db::object),
    (current_shuffled_witnesses)
 )
+   

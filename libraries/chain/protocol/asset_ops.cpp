@@ -232,3 +232,4 @@ void asset_claim_fees_operation::validate()const {
 }
 
 } } // namespace graphene::chain
+   

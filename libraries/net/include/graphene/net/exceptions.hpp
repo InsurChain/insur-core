@@ -36,3 +36,4 @@ namespace graphene { namespace net {
    FC_DECLARE_DERIVED_EXCEPTION( unlinkable_block_exception,            graphene::net::net_exception, 90006, "unlinkable block" )
 
 } }
+   

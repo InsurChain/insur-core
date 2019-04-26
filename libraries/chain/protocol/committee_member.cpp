@@ -45,3 +45,4 @@ void committee_member_update_global_parameters_operation::validate() const
 }
 
 } } // graphene::chain
+   

@@ -179,3 +179,4 @@ FC_REFLECT( graphene::chain::withdraw_permission_update_operation, (fee)(withdra
 FC_REFLECT( graphene::chain::withdraw_permission_claim_operation, (fee)(withdraw_permission)(withdraw_from_account)(withdraw_to_account)(amount_to_withdraw)(memo) );
 FC_REFLECT( graphene::chain::withdraw_permission_delete_operation, (fee)(withdraw_from_account)(authorized_account)
             (withdrawal_permission) )
+   

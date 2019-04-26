@@ -432,3 +432,4 @@ FC_REFLECT_ENUM( graphene::chain::asset_issuer_permission_flags,
    (witness_fed_asset)
    (committee_fed_asset)
    )
+   

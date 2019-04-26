@@ -90,3 +90,4 @@ void_result committee_member_update_global_parameters_evaluator::do_apply(const 
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
 } } // graphene::chain
+   

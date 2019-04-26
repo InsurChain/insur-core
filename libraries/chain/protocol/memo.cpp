@@ -88,3 +88,4 @@ memo_message memo_message::deserialize(const string& serial)
 }
 
 } } // graphene::chain
+   

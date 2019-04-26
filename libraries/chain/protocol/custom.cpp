@@ -35,3 +35,4 @@ share_type custom_operation::calculate_fee(const fee_parameters_type& k)const
 }
 
 } }
+   

@@ -72,3 +72,4 @@ object_id_type multisig_evaluator::do_apply( const multisig_operation& o )
    return mul.id;
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 } } // graphene::chain
+   

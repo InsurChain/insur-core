@@ -113,3 +113,4 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_DERIVED( graphene::chain::multisig_object, (graphene::db::object),
 (from)(amount)(first)(second)(third)(fourth)(fifth)(sixth)(seventh ));
+   

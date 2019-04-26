@@ -38,3 +38,4 @@ boost::unit_test::test_suite* init_unit_test_suite(int argc, char* argv[]) {
    std::cout << "GRAPHENE_TESTING_GENESIS_TIMESTAMP is " << GRAPHENE_TESTING_GENESIS_TIMESTAMP << std::endl;
    return nullptr;
 }
+   

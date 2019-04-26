@@ -597,3 +597,4 @@ asset database::pay_market_fees( const asset_object& recv_asset, const asset& re
 }
 
 } }
+   

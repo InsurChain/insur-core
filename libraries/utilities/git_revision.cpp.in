@@ -12,3 +12,4 @@ const uint32_t git_revision_unix_timestamp = GRAPHENE_GIT_REVISION_UNIX_TIMESTAM
 const char* const git_revision_description = GRAPHENE_GIT_REVISION_DESCRIPTION;
 
 } } // end namespace graphene::utilities
+   

@@ -93,3 +93,4 @@ const object*transaction_index::get(object_id_type id) const
 }
 
 } } // graphene::chain
+   

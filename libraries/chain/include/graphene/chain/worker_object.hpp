@@ -175,3 +175,4 @@ FC_REFLECT_DERIVED( graphene::chain::worker_object, (graphene::db::object),
                     (name)
                     (url)
                   )
+   

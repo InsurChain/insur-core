@@ -187,3 +187,4 @@ void database::deposit_witness_pay(const witness_object& wit, share_type amount)
 }
 
 } }
+   

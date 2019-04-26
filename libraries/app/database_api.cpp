@@ -1918,3 +1918,4 @@ void database_api_impl::on_applied_block()
 }
 
 } } // graphene::app
+   

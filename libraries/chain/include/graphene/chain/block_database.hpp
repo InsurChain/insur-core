@@ -48,3 +48,4 @@ namespace graphene { namespace chain {
          mutable std::fstream _block_num_to_pos;
    };
 } }
+   

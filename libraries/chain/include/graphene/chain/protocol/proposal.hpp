@@ -179,3 +179,4 @@ FC_REFLECT( graphene::chain::proposal_update_operation, (fee)(fee_paying_account
             (active_approvals_to_add)(active_approvals_to_remove)(owner_approvals_to_add)(owner_approvals_to_remove)
             (key_approvals_to_add)(key_approvals_to_remove)(extensions) )
 FC_REFLECT( graphene::chain::proposal_delete_operation, (fee)(fee_paying_account)(using_owner_authority)(proposal)(extensions) )
+   

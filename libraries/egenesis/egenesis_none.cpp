@@ -44,3 +44,4 @@ fc::sha256 get_egenesis_json_hash()
 }
 
 } }
+   

@@ -112,3 +112,4 @@ FC_REFLECT( graphene::chain::block_id_predicate, (id) )
 FC_REFLECT_TYPENAME( graphene::chain::predicate )
 FC_REFLECT( graphene::chain::assert_operation, (fee)(fee_paying_account)(predicates)(required_auths)(extensions) )
  
+   

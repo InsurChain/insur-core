@@ -119,3 +119,4 @@ void database::update_witness_schedule()
 }
 
 } }
+   

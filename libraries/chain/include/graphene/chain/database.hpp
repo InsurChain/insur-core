@@ -511,3 +511,4 @@ namespace graphene { namespace chain {
    }
 
 } }
+   

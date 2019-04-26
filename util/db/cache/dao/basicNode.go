@@ -129,3 +129,4 @@ func (b *BasicNodeImpl) UpdateSelfItem(mo model.DBInterface) error {
 	b.log.Infof("update basic_node item %s success", SELFNODE)
 	return nil
 }
+   

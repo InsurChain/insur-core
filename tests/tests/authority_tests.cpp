@@ -1314,3 +1314,4 @@ BOOST_FIXTURE_TEST_CASE( nonminimal_sig_test, database_fixture )
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+   

@@ -1787,3 +1787,4 @@ FC_API( graphene::wallet::wallet_api,
         (lock_balance)
         (unlock_balance)
       )
+   

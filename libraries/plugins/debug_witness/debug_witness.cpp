@@ -171,3 +171,4 @@ void debug_witness_plugin::plugin_shutdown()
    }
    return;
 }
+   

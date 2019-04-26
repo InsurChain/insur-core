@@ -126,3 +126,4 @@ void burn_worker_type::pay_worker(share_type pay, database& db)
 }
 
 } } // graphene::chain
+   

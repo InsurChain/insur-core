@@ -64,3 +64,4 @@ class blind_transfer_evaluator : public evaluator<blind_transfer_evaluator>
 };
 
 } } // namespace graphene::chain
+   

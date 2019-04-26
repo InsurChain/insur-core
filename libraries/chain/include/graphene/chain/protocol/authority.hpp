@@ -134,3 +134,4 @@ void add_authority_accounts(
 FC_REFLECT( graphene::chain::authority, (weight_threshold)(account_auths)(key_auths)(address_auths) )
 FC_REFLECT_TYPENAME( graphene::chain::authority::classification )
 FC_REFLECT_ENUM( graphene::chain::authority::classification, (owner)(active)(key) )
+   

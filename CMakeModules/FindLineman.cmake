@@ -6,3 +6,4 @@ find_program(LINEMAN_EXECUTABLE lineman)
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args("Lineman" DEFAULT_MSG LINEMAN_EXECUTABLE)
 
+   

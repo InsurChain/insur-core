@@ -268,3 +268,4 @@ void account_referrer_index::object_modified( const object& after  )
 }
 
 } } // graphene::chain
+   

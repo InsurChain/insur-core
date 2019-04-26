@@ -46,3 +46,4 @@ void call_order_update_operation::validate()const
 } FC_CAPTURE_AND_RETHROW((*this)) }
 
 } } // graphene::chain
+   

@@ -68,3 +68,4 @@ bool _is_authorized_asset(
 } // detail
 
 } } // graphene::chain
+   

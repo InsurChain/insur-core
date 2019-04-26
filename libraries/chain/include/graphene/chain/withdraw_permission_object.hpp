@@ -114,3 +114,4 @@ FC_REFLECT_DERIVED( graphene::chain::withdraw_permission_object, (graphene::db::
                     (expiration)
                     (claimed_this_period)
                  )
+   

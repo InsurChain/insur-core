@@ -93,3 +93,4 @@ void required_approval_index::object_removed( const object& obj )
 }
 
 } } // graphene::chain
+   

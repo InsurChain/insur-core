@@ -1085,3 +1085,4 @@ processed_transaction _push_transaction( database& db, const signed_transaction&
 } // graphene::chain::test
 
 } } // graphene::chain
+   

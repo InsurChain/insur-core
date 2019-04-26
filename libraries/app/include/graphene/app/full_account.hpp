@@ -62,3 +62,4 @@ FC_REFLECT( graphene::app::full_account,
             (call_orders)
             (proposals) 
           )
+   

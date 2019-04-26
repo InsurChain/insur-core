@@ -1818,3 +1818,4 @@ BOOST_AUTO_TEST_CASE( vesting_balance_withdraw_test )
 // TODO:  Write linear VBO tests
 
 BOOST_AUTO_TEST_SUITE_END()
+   

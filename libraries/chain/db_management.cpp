@@ -184,3 +184,4 @@ void database::close(bool rewind)
 }
 
 } }
+   

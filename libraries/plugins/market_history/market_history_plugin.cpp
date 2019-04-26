@@ -292,3 +292,4 @@ uint32_t market_history_plugin::max_history()const
 }
 
 } }
+   

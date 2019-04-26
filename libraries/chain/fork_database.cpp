@@ -251,3 +251,4 @@ void fork_database::remove(block_id_type id)
 }
 
 } } // graphene::chain
+   

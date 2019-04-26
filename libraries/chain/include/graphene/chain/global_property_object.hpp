@@ -147,3 +147,4 @@ FC_REFLECT_DERIVED( graphene::chain::global_property_object, (graphene::db::obje
                     (active_committee_members)
                     (active_witnesses)
                   )
+   

@@ -238,3 +238,4 @@ asset vesting_balance_object::get_allowed_withdraw(const time_point_sec& now)con
 }
 
 } } // graphene::chain
+   

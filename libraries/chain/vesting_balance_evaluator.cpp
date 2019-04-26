@@ -137,3 +137,4 @@ void_result vesting_balance_withdraw_evaluator::do_apply( const vesting_balance_
 } FC_CAPTURE_AND_RETHROW( (op) ) }
 
 } } // graphene::chain
+   

@@ -210,3 +210,4 @@ void to_variant( const graphene::chain::extension<T>& value, fc::variant& var )
 }
 
 } // fc
+   

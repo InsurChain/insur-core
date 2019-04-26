@@ -48,3 +48,4 @@ namespace graphene { namespace chain {
 } }
 
 FC_REFLECT_DERIVED( graphene::chain::block_summary_object, (graphene::db::object), (block_id) )
+   

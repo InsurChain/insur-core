@@ -147,3 +147,4 @@ namespace graphene { namespace db {
    };
 
 } } // graphene::db
+   

@@ -81,3 +81,4 @@ FC_REFLECT( graphene::chain::witness_create_operation, (fee)(witness_account)(ur
 
 FC_REFLECT( graphene::chain::witness_update_operation::fee_parameters_type, (fee) )
 FC_REFLECT( graphene::chain::witness_update_operation, (fee)(witness)(witness_account)(new_url)(new_signing_key) )
+   

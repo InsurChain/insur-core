@@ -49,3 +49,4 @@ void from_variant(const variant& var, graphene::chain::vote_id_type& vo)
 }
 
 } // fc
+   

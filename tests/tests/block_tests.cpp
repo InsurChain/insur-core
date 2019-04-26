@@ -1258,3 +1258,4 @@ BOOST_FIXTURE_TEST_CASE( miss_many_blocks, database_fixture )
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+   

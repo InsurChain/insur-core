@@ -76,3 +76,4 @@ namespace fc
    void to_variant( const graphene::chain::pts_address& var,  fc::variant& vo );
    void from_variant( const fc::variant& var,  graphene::chain::pts_address& vo );
 }
+   

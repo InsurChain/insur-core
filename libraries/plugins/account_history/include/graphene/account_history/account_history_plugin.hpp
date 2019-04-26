@@ -107,3 +107,4 @@ typedef boost::multi_index_container<
 
 typedef graphene::account_history::generic_index<graphene::chain::account_transaction_history_object, account_transaction_history_multi_index_type> account_transaction_history_index;
 */
+   

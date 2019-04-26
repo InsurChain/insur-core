@@ -122,3 +122,4 @@ namespace graphene { namespace chain {
 FC_REFLECT_TYPENAME( graphene::chain::operation_result )
 FC_REFLECT_TYPENAME( graphene::chain::future_extensions )
 FC_REFLECT( graphene::chain::void_result, )
+   

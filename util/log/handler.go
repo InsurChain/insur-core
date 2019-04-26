@@ -309,3 +309,4 @@ func (kw *KerriLogWriter) CreateLogFile() (*os.File, error) {
 	fd, err := os.OpenFile(kw.FilePath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0660)
 	return fd, err
 }
+   

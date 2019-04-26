@@ -97,3 +97,4 @@ namespace std
 
 #include <fc/reflect/reflect.hpp>
 FC_REFLECT( graphene::chain::address, (addr) )
+   

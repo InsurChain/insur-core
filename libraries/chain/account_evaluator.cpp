@@ -412,3 +412,4 @@ void_result account_upgrade_evaluator::do_apply(const account_upgrade_evaluator:
 } FC_RETHROW_EXCEPTIONS( error, "Unable to upgrade account '${a}'", ("a",o.account_to_upgrade(db()).name) ) }
 
 } } // graphene::chain
+   

@@ -275,3 +275,4 @@ void_result call_order_update_evaluator::do_apply(const call_order_update_operat
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
 } } // graphene::chain
+   

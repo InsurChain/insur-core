@@ -36,3 +36,4 @@ void add_authority_accounts(
 }
 
 } } // graphene::chain
+   

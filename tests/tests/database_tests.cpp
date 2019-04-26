@@ -59,3 +59,4 @@ BOOST_AUTO_TEST_CASE( undo_test )
       throw;
    }
 }
+   

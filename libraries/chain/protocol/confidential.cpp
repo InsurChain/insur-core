@@ -161,3 +161,4 @@ stealth_confirmation::stealth_confirmation( const std::string& base58 )
 
 
 } } // graphene::chain
+   

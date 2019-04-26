@@ -153,3 +153,4 @@ FC_REFLECT(graphene::chain::genesis_state_type,
            (initial_committee_candidates)(initial_worker_candidates)
            (initial_chain_id)
            (immutable_parameters))
+   

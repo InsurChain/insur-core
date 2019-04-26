@@ -291,3 +291,4 @@ block_production_condition::block_production_condition_enum witness_plugin::mayb
 
    return block_production_condition::produced;
 }
+   

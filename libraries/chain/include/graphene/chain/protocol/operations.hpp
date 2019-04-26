@@ -125,3 +125,4 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_TYPENAME( graphene::chain::operation )
 FC_REFLECT( graphene::chain::op_wrapper, (op) )
+   

@@ -32,3 +32,4 @@ namespace graphene { namespace utilities {
 fc::path temp_directory_path();
 
 } } // graphene::utilities
+   

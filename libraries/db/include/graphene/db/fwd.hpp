@@ -33,3 +33,4 @@ namespace graphene { namespace db {
      typedef std::shared_ptr<peer_ram> peer_ram_ptr;
 
 }} // namespace graphene::db 
+   

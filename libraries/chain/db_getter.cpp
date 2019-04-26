@@ -99,3 +99,4 @@ uint32_t database::last_non_undoable_block_num() const
 
 
 } }
+   

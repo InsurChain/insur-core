@@ -73,3 +73,4 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_DERIVED( graphene::chain::balance_object, (graphene::db::object),
                     (owner)(balance)(vesting_policy)(last_claim_date) )
+   
