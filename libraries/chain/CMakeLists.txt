@@ -41,8 +41,8 @@ add_library( graphene_chain
              protocol/assert.cpp
              protocol/account.cpp
              protocol/transfer.cpp
-             protocol/committee_member.cpp
              protocol/pnt_transfer.cpp
+             protocol/committee_member.cpp
              protocol/witness.cpp
              protocol/market.cpp
              protocol/proposal.cpp
@@ -57,6 +57,7 @@ add_library( graphene_chain
              protocol/fee_schedule.cpp
              protocol/confidential.cpp
              protocol/vote.cpp
+             protocol/escrow.cpp
 
              genesis_state.cpp
              get_config.cpp
@@ -71,12 +72,14 @@ add_library( graphene_chain
              committee_member_evaluator.cpp
              asset_evaluator.cpp
              transfer_evaluator.cpp
+             pnt_transfer_evaluator.cpp
              proposal_evaluator.cpp
              market_evaluator.cpp
-             pnt_transfer_evaluator.cpp
              vesting_balance_evaluator.cpp
              withdraw_permission_evaluator.cpp
              worker_evaluator.cpp
+             escrow_evaluator.cpp
+             multisig_evaluator.cpp
              confidential_evaluator.cpp
              special_authority.cpp
              buyback.cpp
@@ -111,4 +114,3 @@ INSTALL( TARGETS
    LIBRARY DESTINATION lib
    ARCHIVE DESTINATION lib
 )
-   
