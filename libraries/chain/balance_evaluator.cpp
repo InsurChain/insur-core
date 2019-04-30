@@ -167,4 +167,3 @@ void_result balance_unlocked_evaluator::do_apply(const balance_unlocked_operatio
 
 }
 } } // namespace graphene::chain
-   

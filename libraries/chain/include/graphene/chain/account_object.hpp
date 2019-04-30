@@ -444,4 +444,3 @@ FC_REFLECT_DERIVED( graphene::chain::account_statistics_object,
                     (pending_fees)(pending_vested_fees)
                   )
 
-   

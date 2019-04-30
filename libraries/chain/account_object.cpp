@@ -102,6 +102,11 @@ void account_statistics_object::process_fees(const account_object& a, database& 
    }
 }
 
+void account_balance_locked_object::adjust_locked_balance(const asset& delta)
+{
+   assert(delta.asset_id == asset_type);
+   locked_balance += delta.amount;
+}
 void account_statistics_object::pay_fee( share_type core_fee, share_type cashback_vesting_threshold )
 {
    if( core_fee > cashback_vesting_threshold )
@@ -268,4 +273,3 @@ void account_referrer_index::object_modified( const object& after  )
 }
 
 } } // graphene::chain
-   
