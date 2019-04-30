@@ -21,34 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include <graphene/chain/multisig_evaluator.hpp>
-#include <graphene/chain/account_object.hpp>
-#include <graphene/chain/exceptions.hpp>
-#include <graphene/chain/hardfork.hpp>
-#include <graphene/chain/is_authorized_asset.hpp>
-#include <graphene/chain/multisig_evaluator.hpp>
-#include <graphene/chain/multisig_object.hpp>
+#pragma once
+#include <graphene/chain/protocol/base.hpp>
+#include <graphene/chain/protocol/memo.hpp>
 
 namespace graphene { namespace chain {
-void_result multisig_evaluator::do_evaluate( const multisig_operation& op ){
-        return void_result();
-}
-object_id_type multisig_evaluator::do_apply( const multisig_operation& o )
-{ try {
-    int size = o.owners.size();
-    const multisig_object&mul = db().create<multisig_object>([&](multisig_object&mul){
-        mul.from                = o.from;
-        mul.first               = o.owners[0];
-        mul.second              = o.owners[1];
-        mul.third               = o.owners[2];
-        mul.fourth              = o.owners[3];
-        mul.fifth               = o.owners[4];
-        mul.sixth               = o.owners[5];
-        mul.seventh             = o.owners[6];
-        mul.amount              = o.amount;
-    });
-   db().adjust_balance( o.to, o.amount );
-   return mul.id;
-} FC_CAPTURE_AND_RETHROW( (o) ) }
-} } // graphene::chain
-   
+
+struct multisig_operation : public base_operation
+{
+   struct fee_parameters_type {uint64_t fee = 0;};
+
+   asset fee;   
+   account_id_type from;
+
+   asset amount;
+   vector<string> owners;
+   uint32_t  required;
+      
+   extensions_type   extensions;
+   account_id_type fee_payer()const { return from; }
+   void validate()const{
+   }
+   share_type calculate_fee(const fee_parameters_type& k)const { return k.fee; }
+};
+
+} }
+
+FC_REFLECT( graphene::chain::multisig_operation::fee_parameters_type,(fee)  )
+
+FC_REFLECT( graphene::chain::multisig_operation,(fee)(from)(amount)(owners)(required) )

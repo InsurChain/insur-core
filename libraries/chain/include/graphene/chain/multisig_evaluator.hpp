@@ -37,6 +37,5 @@ namespace graphene { namespace chain {
          object_id_type do_apply( const multisig_operation& o );
    };
 
-
 } } // graphene::chain
    

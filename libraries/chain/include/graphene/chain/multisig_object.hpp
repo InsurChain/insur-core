@@ -104,7 +104,6 @@ namespace graphene { namespace chain {
                >
             >
          >
-
       > multisig_object_index_type;
 
       typedef generic_index< multisig_object, multisig_object_index_type > multisig_index;
