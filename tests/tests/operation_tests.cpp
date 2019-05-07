@@ -1216,9 +1216,8 @@ BOOST_AUTO_TEST_CASE( trade_amount_equals_zero )
       BOOST_CHECK_EQUAL(get_balance(core_seller, test), 0);
       BOOST_CHECK_EQUAL(get_balance(core_seller, core), 100000000);
 
-      //ilog( "=================================== START===================================\n\n");
+      ilog( "START\n\n");
       create_sell_order(core_seller, core.amount(1), test.amount(900000));
-      //ilog( "=================================== STEP===================================\n\n");
       create_sell_order(core_buyer, test.amount(900001), core.amount(1));
    } catch( const fc::exception& e) {
       edump((e.to_detail_string()));
@@ -1812,10 +1811,7 @@ BOOST_AUTO_TEST_CASE( vesting_balance_withdraw_test )
       REQUIRE_OP_EVALUATION_SUCCESS( op, amount, core.amount(8000) );
       FC_ASSERT( db.get_balance( alice_account,       core ).amount == 1000000 );
    }
-   // TODO:  Test with non-core asset and Bob account
 } FC_LOG_AND_RETHROW() }
 
-// TODO:  Write linear VBO tests
 
 BOOST_AUTO_TEST_SUITE_END()
-   

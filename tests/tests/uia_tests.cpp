@@ -475,4 +475,3 @@ BOOST_AUTO_TEST_CASE( asset_name_test )
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-   

@@ -132,7 +132,6 @@ BOOST_AUTO_TEST_CASE( generate_empty_blocks )
       fc::temp_directory data_dir( graphene::utilities::temp_directory_path() );
       signed_block b;
 
-      // TODO:  Don't generate this here
       auto init_account_priv_key = fc::ecc::private_key::regenerate(fc::sha256::hash(string("null_key")) );
       signed_block cutoff_block;
       {
@@ -140,14 +139,10 @@ BOOST_AUTO_TEST_CASE( generate_empty_blocks )
          db.open(data_dir.path(), make_genesis );
          b = db.generate_block(db.get_slot_time(1), db.get_scheduled_witness(1), init_account_priv_key, database::skip_nothing);
 
-         // TODO:  Change this test when we correct #406
-         // n.b. we generate GRAPHENE_MIN_UNDO_HISTORY+1 extra blocks which will be discarded on save
          for( uint32_t i = 1; ; ++i )
          {
             BOOST_CHECK( db.head_block_id() == b.id() );
-            //witness_id_type prev_witness = b.witness;
             witness_id_type cur_witness = db.get_scheduled_witness(1);
-            //BOOST_CHECK( cur_witness != prev_witness );
             b = db.generate_block(db.get_slot_time(1), cur_witness, init_account_priv_key, database::skip_nothing);
             BOOST_CHECK( b.witness == cur_witness );
             uint32_t cutoff_height = db.get_dynamic_global_properties().last_irreversible_block_num;
@@ -167,9 +162,7 @@ BOOST_AUTO_TEST_CASE( generate_empty_blocks )
          for( uint32_t i = 0; i < 200; ++i )
          {
             BOOST_CHECK( db.head_block_id() == b.id() );
-            //witness_id_type prev_witness = b.witness;
             witness_id_type cur_witness = db.get_scheduled_witness(1);
-            //BOOST_CHECK( cur_witness != prev_witness );
             b = db.generate_block(db.get_slot_time(1), cur_witness, init_account_priv_key, database::skip_nothing);
          }
          BOOST_CHECK_EQUAL( db.head_block_num(), cutoff_block.block_num()+200 );
@@ -228,6 +221,8 @@ BOOST_AUTO_TEST_CASE( undo_block )
    }
 }
 
+
+
 BOOST_AUTO_TEST_CASE( fork_blocks )
 {
    try {
@@ -258,15 +253,11 @@ BOOST_AUTO_TEST_CASE( fork_blocks )
       {
          auto b =  db2.generate_block(db2.get_slot_time(next_slot), db2.get_scheduled_witness(next_slot), init_account_priv_key, database::skip_nothing);
          next_slot = 1;
-         // notify both databases of the new block.
-         // only db2 should switch to the new fork, db1 should not
          PUSH_BLOCK( db1, b );
          BOOST_CHECK_EQUAL(db1.head_block_id().str(), db1_tip);
          BOOST_CHECK_EQUAL(db2.head_block_id().str(), b.id().str());
       }
 
-      //The two databases are on distinct forks now, but at the same height. Make a block on db2, make it invalid, then
-      //pass it to db1 and assert that db1 doesn't switch to the new fork.
       signed_block good_block;
       BOOST_CHECK_EQUAL(db1.head_block_num(), 13);
       BOOST_CHECK_EQUAL(db2.head_block_num(), 13);
@@ -293,9 +284,6 @@ BOOST_AUTO_TEST_CASE( fork_blocks )
 }
 
 
-/**
- *  These test has been disabled, out of order blocks should result in the node getting disconnected.
- *  
 BOOST_AUTO_TEST_CASE( fork_db_tests )
 {
    try {
@@ -372,7 +360,9 @@ BOOST_AUTO_TEST_CASE( out_of_order_blocks )
       throw;
    }
 }
- */
+
+
+
 
 BOOST_AUTO_TEST_CASE( undo_pending )
 {
@@ -408,7 +398,6 @@ BOOST_AUTO_TEST_CASE( undo_pending )
          cop.owner = authority(1, init_account_pub_key, 1);
          cop.active = cop.owner;
          trx.operations.push_back(cop);
-         //sign( trx,  init_account_priv_key  );
          PUSH_TX( db, trx );
 
          auto b = db.generate_block(db.get_slot_time(1), db.get_scheduled_witness(1), init_account_priv_key, database::skip_nothing);
@@ -463,10 +452,6 @@ BOOST_AUTO_TEST_CASE( switch_forks_undo_create )
       cop.active = cop.owner;
       trx.operations.push_back(cop);
       PUSH_TX( db1, trx );
-
-      // generate blocks
-      // db1 : A
-      // db2 : B C D
 
       auto aw = db1.get_global_properties().active_witnesses;
       auto b = db1.generate_block(db1.get_slot_time(1), db1.get_scheduled_witness(1), init_account_priv_key, database::skip_nothing);
@@ -831,7 +816,6 @@ BOOST_FIXTURE_TEST_CASE( change_block_interval, database_fixture )
                                      get_account("init6").get_id(), get_account("init7").get_id()};
       trx.operations.push_back(uop);
       sign( trx, init_account_priv_key );
-      /*
       sign( trx, get_account("init1" ).active.get_keys().front(),init_account_priv_key);
       sign( trx, get_account("init2" ).active.get_keys().front(),init_account_priv_key);
       sign( trx, get_account("init3" ).active.get_keys().front(),init_account_priv_key);
@@ -839,7 +823,7 @@ BOOST_FIXTURE_TEST_CASE( change_block_interval, database_fixture )
       sign( trx, get_account("init5" ).active.get_keys().front(),init_account_priv_key);
       sign( trx, get_account("init6" ).active.get_keys().front(),init_account_priv_key);
       sign( trx, get_account("init7" ).active.get_keys().front(),init_account_priv_key);
-      */
+      
       db.push_transaction(trx);
       BOOST_CHECK(proposal_id_type()(db).is_authorized_to_execute(db));
    }

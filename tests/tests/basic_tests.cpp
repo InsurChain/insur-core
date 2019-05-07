@@ -45,10 +45,6 @@ using namespace graphene::db;
 
 BOOST_FIXTURE_TEST_SUITE( basic_tests, database_fixture )
 
-/**
- * Verify that names are RFC-1035 compliant https://tools.ietf.org/html/rfc1035
- * https://github.com/cryptonomex/graphene/issues/15
- */
 BOOST_AUTO_TEST_CASE( valid_name_test )
 {
    BOOST_CHECK( !is_valid_name( "a" ) );
@@ -62,18 +58,24 @@ BOOST_AUTO_TEST_CASE( valid_name_test )
    BOOST_CHECK( !is_valid_name( "a0" ) );
    BOOST_CHECK( !is_valid_name( "a." ) );
    BOOST_CHECK( !is_valid_name( "a-" ) );
+   BOOST_CHECK( !is_valid_name( ".a" ) );
+   BOOST_CHECK( !is_valid_name( "-a" ) );
 
    BOOST_CHECK( is_valid_name( "aaa" ) );
    BOOST_CHECK( !is_valid_name( "aAa" ) );
    BOOST_CHECK( is_valid_name( "a0a" ) );
    BOOST_CHECK( !is_valid_name( "a.a" ) );
+   BOOST_CHECK( !is_valid_name( ".a.a" ) );
    BOOST_CHECK( is_valid_name( "a-a" ) );
 
    BOOST_CHECK( is_valid_name( "aa0" ) );
    BOOST_CHECK( !is_valid_name( "aA0" ) );
    BOOST_CHECK( is_valid_name( "a00" ) );
+   BOOST_CHECK( is_valid_name( "0a00" ) );
    BOOST_CHECK( !is_valid_name( "a.0" ) );
+   BOOST_CHECK( !is_valid_name( "0.a.0" ) );
    BOOST_CHECK( is_valid_name( "a-0" ) );
+   BOOST_CHECK( is_valid_name( "0-a-0" ) );
 
    BOOST_CHECK(  is_valid_name( "aaa-bbb-ccc" ) );
    BOOST_CHECK(  is_valid_name( "aaa-bbb.ccc" ) );
@@ -93,10 +95,14 @@ BOOST_AUTO_TEST_CASE( valid_name_test )
    BOOST_CHECK( !is_valid_name( "aaa-bbb-ccc/" ) );
 
    BOOST_CHECK( !is_valid_name( "aaa..bbb-ccc" ) );
+   BOOST_CHECK( !is_valid_name( "aaa...bbb---ccc" ) );
    BOOST_CHECK( is_valid_name( "aaa.bbb-ccc" ) );
+   BOOST_CHECK( is_valid_name( "aaa.bbb--ccc" ) );
    BOOST_CHECK( is_valid_name( "aaa.bbb.ccc" ) );
+   BOOST_CHECK( is_valid_name( "aaa.bbb.ccc-" ) );
 
    BOOST_CHECK(  is_valid_name( "aaa--bbb--ccc" ) );
+   BOOST_CHECK(  is_valid_name( "aaa--bbb--ccc-" ) );
    BOOST_CHECK( !is_valid_name( "xn--sandmnnchen-p8a.de" ) );
    BOOST_CHECK(  is_valid_name( "xn--sandmnnchen-p8a.dex" ) );
    BOOST_CHECK( !is_valid_name( "xn-sandmnnchen-p8a.de" ) );
@@ -122,6 +128,7 @@ BOOST_AUTO_TEST_CASE( valid_symbol_test )
    BOOST_CHECK( is_valid_symbol( "AAA" ) );
    BOOST_CHECK( !is_valid_symbol( "AaA" ) );
    BOOST_CHECK( is_valid_symbol( "A0A" ) );
+   BOOST_CHECK( !is_valid_symbol( "0A0A" ) );
    BOOST_CHECK( is_valid_symbol( "A.A" ) );
 
    BOOST_CHECK( !is_valid_symbol( "A..A" ) );
@@ -171,8 +178,8 @@ BOOST_AUTO_TEST_CASE( price_test )
     BOOST_CHECK(!(b == c));
 
     price_feed dummy;
-    dummy.maintenance_collateral_ratio = 1002;
-    dummy.maximum_short_squeeze_ratio = 1234;
+    dummy.maximum_short_squeeze_ratio = 4321;
+    dummy.maintenance_collateral_ratio = 202;
     dummy.settlement_price = price(asset(1000), asset(2000, asset_id_type(1)));
     price_feed dummy2 = dummy;
     BOOST_CHECK(dummy == dummy2);
@@ -185,16 +192,15 @@ BOOST_AUTO_TEST_CASE( memo_test )
    auto receiver = generate_private_key("2");
    m.from = sender.get_public_key();
    m.to = receiver.get_public_key();
-   m.set_message(sender, receiver.get_public_key(), "Hello, world!", 12345);
+   m.set_message(sender, receiver.get_public_key(), "Hello, INSUR!", 12345);
 
    decltype(fc::digest(m)) hash("8de72a07d093a589f574460deb19023b4aff354b561eb34590d9f4629f51dbf3");
    if( fc::digest(m) != hash )
    {
-      // If this happens, notify the web guys that the memo serialization format changed.
       edump((m)(fc::digest(m)));
       BOOST_FAIL("Memo format has changed. Notify the web guys and update this test.");
    }
-   BOOST_CHECK_EQUAL(m.get_message(receiver, sender.get_public_key()), "Hello, world!");
+   BOOST_CHECK_EQUAL(m.get_message(receiver, sender.get_public_key()), "Hello, INSUR!");
 } FC_LOG_AND_RETHROW() }
 
 BOOST_AUTO_TEST_CASE( exceptions )
@@ -230,7 +236,9 @@ BOOST_AUTO_TEST_CASE( scaled_precision )
    BOOST_CHECK( asset::scaled_precision(16) == share_type(  10*_p) );
    BOOST_CHECK( asset::scaled_precision(17) == share_type( 100*_p) );
    BOOST_CHECK( asset::scaled_precision(18) == share_type(   1*_e) );
-   GRAPHENE_CHECK_THROW( asset::scaled_precision(19), fc::exception );
+   BOOST_CHECK( asset::scaled_precision(19) == share_type(  10*_e) );
+   BOOST_CHECK( asset::scaled_precision(20) == share_type( 100*_e) );
+   GRAPHENE_CHECK_THROW( asset::scaled_precision(21), fc::exception );
 }
 
 BOOST_AUTO_TEST_CASE( merkle_root )
