@@ -9,7 +9,9 @@ set(C_DEFINES, "-D__wasm__ -DQUAD_PRECISION")
 set( CMAKE_C_FLAGS " -Wall ${CMAKE_C_FLAGS} ${C_DEFINES}" )
 set ( generator_abi_sources
    fixsfti.c
+   fixdfti.c
    fixunssfti.c
+   fixunsdfti.c
 )
 
 file ( GLOB generator_abi_headers "${CMAKE_CURRENT_SOURCE_DIR}*.h" )
