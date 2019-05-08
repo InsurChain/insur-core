@@ -19,11 +19,9 @@ const (
 	MINER		//8
 )
 
-// func NewResourceInstance(panic chan error, funcs func(c conf.Config)...) {
-// 	for _, f := range funcs {
+ func NewResourceInstance(panic chan error, funcs func(c conf.Config)...) {
 
-// 	}
-// }
+ }
 
 //DBInterface model  interface
 type DBInterface interface {

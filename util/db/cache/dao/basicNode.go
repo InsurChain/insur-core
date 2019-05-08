@@ -3,8 +3,8 @@ package dao
 import (
 	"errors"
 	"github.com/Sirupsen/logrus"
-	"pnt/db/cache/funcs"
-	"pnt/db/model"
+	"db/cache/funcs"
+	"db/model"
 	"time"
 )
 
@@ -129,4 +129,3 @@ func (b *BasicNodeImpl) UpdateSelfItem(mo model.DBInterface) error {
 	b.log.Infof("update basic_node item %s success", SELFNODE)
 	return nil
 }
-   

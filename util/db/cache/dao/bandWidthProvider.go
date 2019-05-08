@@ -1,10 +1,10 @@
 package dao
 
 import (
-	"pnt/db/model"
-	"pnt/db/cache/funcs"
+	"db/model"
+	"db/cache/funcs"
 	"github.com/Sirupsen/logrus"
-	"pnt/utils"
+	"utils"
 	"math/rand"
 )
 
@@ -65,7 +65,7 @@ func (b *BandWidthProviderImpl) GetItem(nodeID ...string) (mb map[string]*model.
 				continue
 			}
 			mb[r] = bp.Data().(*model.BasicNode)
-		}	
+		}
 	}else {
 		for _, id := range nodeID {
 			bn, err := b.cache.CacheTable(new(model.BasicNode).ModelName()).Value(id); if err != nil {
@@ -81,7 +81,7 @@ func (b *BandWidthProviderImpl) GetItem(nodeID ...string) (mb map[string]*model.
 //DelItem delete item
 func (b *BandWidthProviderImpl) DelItem(nodeID string) error {
 	rl, err := b.cache.CacheTable(new(model.BandWidthProvider).ModelName()).Value(SELFNODE); if err != nil {
-		b.log.Errorln("<DelProviderItem>:::provider get item error: ", err.Error())	
+		b.log.Errorln("<DelProviderItem>:::provider get item error: ", err.Error())
 		return err
 	}
 	if ok, e := utils.ListContains(rl.Data().(model.BandWidthProvider).NodeList, nodeID); ok {
@@ -99,7 +99,7 @@ func (b *BandWidthProviderImpl) AddOneBandProvider(bn *model.BasicNode) error {
 			b.AddItem(model.NewBandWidthProvider())
 			rl, err = b.cache.CacheTable(new(model.BandWidthProvider).ModelName()).Value(SELFNODE)
 		}else {
-			b.log.Errorln("<AddOneBandProvider>:::provider get item: ", err.Error())	
+			b.log.Errorln("<AddOneBandProvider>:::provider get item: ", err.Error())
 			return err
 		}
 	}
@@ -112,11 +112,11 @@ func (b *BandWidthProviderImpl) AddOneBandProvider(bn *model.BasicNode) error {
 //Front 50% randam
 func (b *BandWidthProviderImpl) GetOneSuitableProvider() map[string]*model.BasicNode {
 	rl, err := b.cache.CacheTable(new(model.BandWidthProvider).ModelName()).Value(SELFNODE); if err != nil {
-		b.log.Errorln("<GetOneSuitableProvider>:::provider get item error: ", err.Error())	
+		b.log.Errorln("<GetOneSuitableProvider>:::provider get item error: ", err.Error()
 		return nil
 	}
 
-	l := rl.Data().(*model.BandWidthProvider).NodeList 
+	l := rl.Data().(*model.BandWidthProvider).NodeList
 	x := rand.Intn(l.Len())
 	i := 0
 	for e := l.Front(); e != nil; e = e.Next() {
@@ -133,4 +133,3 @@ func (b *BandWidthProviderImpl) GetOneSuitableProvider() map[string]*model.Basic
 
 
 
-   

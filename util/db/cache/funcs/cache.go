@@ -15,23 +15,18 @@ import (
 //LocalCache local cache 
 type LocalCache struct {
 	Cache	map[string]*CacheTable
-	sync.RWMutex	
+	sync.RWMutex
 }
 
 // CacheTable returns the existing cache table with given name or creates a new one
 // if the table does not exist yet.
 func (l *LocalCache) CacheTable (table string) *CacheTable {
-	//读锁表
 	l.RLock()
-	//检查是否存在该表，并取出表->t 
 	t, ok := l.Cache[table]
-	//解锁
 	l.RUnlock()
-	//如果不存在，则创建，存在则返回该表实例
 	if !ok {
 		l.Lock()
 		t, ok = l.Cache[table]
-		// Double check whether the table exists or not.
 		if !ok {
 			t = &CacheTable{
 				name:  table,
@@ -63,4 +58,3 @@ func GetCacheInstance() *LocalCache {
 	}
 	return NewCacheManager()
 }
-   

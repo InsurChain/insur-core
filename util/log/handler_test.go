@@ -3,7 +3,7 @@ package log
 import (
 	"github.com/Sirupsen/logrus"
 	"os"
-	"pnt/conf"
+	"conf"
 	"testing"
 )
 

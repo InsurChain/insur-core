@@ -1,12 +1,8 @@
 package policy
 
 import (
-	// "math/rand"
-    // cache "pnt/db/cache"
-	// "sort"
-	// "time"
-	"pnt/db/model"
-	"pnt/db"
+	"db/model"
+	"db"
 )
 
 type TunnProtocol int

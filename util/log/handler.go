@@ -5,7 +5,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	"log"
 	"os"
-	"pnt/conf"
+	"conf"
 	"sync"
 )
 

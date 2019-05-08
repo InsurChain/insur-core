@@ -3,9 +3,9 @@ package dao
 import (
 	"github.com/Sirupsen/logrus"
 	"github.com/errors"
-	"pnt/db/cache/funcs"
-	"pnt/db/model"
-	"pnt/utils"
+	"db/cache/funcs"
+	"db/model"
+	"utils"
 )
 
 //RepeaterNodeImpl repeater node interface
@@ -113,4 +113,3 @@ func (b *RepeaterNodeImpl) InitServerRepeater() error {
 	}
 	return nil
 }
-   

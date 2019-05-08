@@ -1,9 +1,9 @@
 package db
 
 import (
-	"pnt/conf"
-	"pnt/db/cache"
-	"pnt/db/dao"
+	"conf"
+	"db/cache"
+	"db/dao"
 	"sync"
 )
 

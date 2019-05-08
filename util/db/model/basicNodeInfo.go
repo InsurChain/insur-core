@@ -32,7 +32,7 @@ type NodeInfo struct {
 
 //BasicNode BasicNode
 type BasicNode struct {
-	NodeInfo	   NodeInfo	`json:"node_info"`	
+	NodeInfo	   NodeInfo	`json:"node_info"`
 	Hardware	   Hardware	`json:"hardware"`
 	Limits		   Limits	`json:"limits"`
 }
@@ -42,5 +42,3 @@ func (b *BasicNode) ModelName() string {
 	return "basic_node"
 }
 
-
-   

@@ -1,12 +1,12 @@
 package dao
 
 import (
-	"pnt/db/model"
+	"db/model"
 )
 
 //Dao Dao
 type Dao interface {
-	CreateTable(model.DBInterface) 
+	CreateTable(model.DBInterface)
 	AddItem(model.DBInterface)
 	UpdateItem(model.DBInterface) error
 	DelItem(nodeID string) error
@@ -38,7 +38,7 @@ type BandWidthProviderDao interface {
 //CPUProviderDao cpu provider
 type CPUProviderDao interface {
 	Dao
-} 
+}
 
 //GPUProviderDao gpu provider
 type GPUProviderDao interface {
@@ -48,4 +48,4 @@ type GPUProviderDao interface {
 //StoreProviderDao store provider
 type StoreProviderDao interface {
 	Dao
-}   
+}
