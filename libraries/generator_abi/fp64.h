@@ -17,5 +17,10 @@ typedef uint64_t rep_t;
 #define significandMask (implicitBit - 1U)
 #define signBit         (REP_C(1) << (significandBits + exponentBits))
 #define absMask         (signBit - 1U)
+#define exponentMask    (absMask ^ significandMask)
+#define oneRep          ((rep_t)exponentBias << significandBits)
+#define infRep          exponentMask
+#define quietBit        (implicitBit >> 1)
+#define qnanRep         (exponentMask | quietBit)
 
 #endif //__compiler_rt_fp_h__

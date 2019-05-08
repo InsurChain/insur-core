@@ -10,8 +10,12 @@ set( CMAKE_C_FLAGS " -Wall ${CMAKE_C_FLAGS} ${C_DEFINES}" )
 set ( generator_abi_sources
    fixsfti.c
    fixdfti.c
+   fixtfti.c
    fixunssfti.c
    fixunsdfti.c
+   fixunstfti.c
+   floattidf.c
+   floatuntidf.c
 )
 
 file ( GLOB generator_abi_headers "${CMAKE_CURRENT_SOURCE_DIR}*.h" )
