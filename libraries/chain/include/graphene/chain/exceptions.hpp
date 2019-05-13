@@ -68,6 +68,20 @@
 namespace graphene { namespace chain {
 
    FC_DECLARE_EXCEPTION( chain_exception, 3000000, "blockchain exception" )
+
+   FC_DECLARE_DERIVED_EXCEPTION( chain_type_exception,              graphene::chain::chain_exception, 3010000, "chain type exception" )
+   FC_DECLARE_DERIVED_EXCEPTION( name_type_exception,               graphene::chain::chain_type_exception, 3010001, "Invalid name" )
+   FC_DECLARE_DERIVED_EXCEPTION( public_key_type_exception,         graphene::chain::chain_type_exception, 3010002, "Invalid public key" )
+   FC_DECLARE_DERIVED_EXCEPTION( private_key_type_exception,        graphene::chain::chain_type_exception, 3010003, "Invalid private key" )
+   FC_DECLARE_DERIVED_EXCEPTION( authority_type_exception,          graphene::chain::chain_type_exception, 3010004, "Invalid authority" )
+   FC_DECLARE_DERIVED_EXCEPTION( action_type_exception,             graphene::chain::chain_type_exception, 3010005, "Invalid action" )
+   FC_DECLARE_DERIVED_EXCEPTION( transaction_type_exception,        graphene::chain::chain_type_exception, 3010006, "Invalid transaction" )
+   FC_DECLARE_DERIVED_EXCEPTION( abi_type_exception,                graphene::chain::chain_type_exception, 3010007, "Invalid ABI" )
+   FC_DECLARE_DERIVED_EXCEPTION( block_id_type_exception,           graphene::chain::chain_type_exception, 3010008, "Invalid block ID" )
+   FC_DECLARE_DERIVED_EXCEPTION( transaction_id_type_exception,     graphene::chain::chain_type_exception, 3010009, "Invalid transaction ID" )
+   FC_DECLARE_DERIVED_EXCEPTION( packed_transaction_type_exception, graphene::chain::chain_type_exception, 3010010, "Invalid packed transaction" )
+   FC_DECLARE_DERIVED_EXCEPTION( asset_type_exception,              graphene::chain::chain_type_exception, 3010011, "Invalid asset" )
+
    FC_DECLARE_DERIVED_EXCEPTION( database_query_exception,          graphene::chain::chain_exception, 3010000, "database query exception" )
    FC_DECLARE_DERIVED_EXCEPTION( block_validate_exception,          graphene::chain::chain_exception, 3020000, "block validation exception" )
    FC_DECLARE_DERIVED_EXCEPTION( transaction_exception,             graphene::chain::chain_exception, 3030000, "transaction validation exception" )

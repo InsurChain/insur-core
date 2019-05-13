@@ -17,6 +17,7 @@ if( GRAPHENE_DISABLE_UNITY_BUILD )
         db_maint.cpp
         db_management.cpp
         db_market.cpp
+        db_notify.cpp
         db_update.cpp
         db_witness_schedule.cpp
       )
@@ -33,6 +34,7 @@ add_library( graphene_chain
              # As database takes the longest to compile, start it first
              ${GRAPHENE_DB_FILES}
              fork_database.cpp
+             name.cpp
 
              protocol/types.cpp
              protocol/address.cpp
@@ -83,6 +85,7 @@ add_library( graphene_chain
              confidential_evaluator.cpp
              special_authority.cpp
              buyback.cpp
+             contract_evaluator.cpp
 
              account_object.cpp
              asset_object.cpp
