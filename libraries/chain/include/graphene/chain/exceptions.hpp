@@ -90,6 +90,31 @@ namespace graphene { namespace chain {
    FC_DECLARE_DERIVED_EXCEPTION( insufficient_feeds,                graphene::chain::chain_exception, 37006, "insufficient feeds" )
 
    FC_DECLARE_DERIVED_EXCEPTION( pop_empty_chain,                   graphene::chain::undo_database_exception, 3070001, "there are no blocks to pop" )
+   FC_DECLARE_DERIVED_EXCEPTION( wasm_exception,                    graphene::chain::chain_exception, 3070000, "WASM Exception" )
+   FC_DECLARE_DERIVED_EXCEPTION( page_memory_error,                 graphene::chain::wasm_exception, 3070001, "error in WASM page memory" )
+   FC_DECLARE_DERIVED_EXCEPTION( wasm_execution_error,              graphene::chain::wasm_exception, 3070002, "Runtime Error Processing WASM" )
+   FC_DECLARE_DERIVED_EXCEPTION( wasm_serialization_error,          graphene::chain::wasm_exception, 3070003, "Serialization Error Processing WASM" )
+   FC_DECLARE_DERIVED_EXCEPTION( overlapping_memory_error,          graphene::chain::wasm_exception, 3070004, "memcpy with overlapping memory" )
+
+   FC_DECLARE_DERIVED_EXCEPTION( action_validate_exception,         graphene::chain::chain_exception, 3070005, "action exception" )
+   FC_DECLARE_DERIVED_EXCEPTION( account_name_exists_exception,     graphene::chain::action_validate_exception, 3070006, "account name already exists" )
+   FC_DECLARE_DERIVED_EXCEPTION( invalid_action_args_exception,     graphene::chain::action_validate_exception, 3070007, "Invalid Action Arguments" )
+   FC_DECLARE_DERIVED_EXCEPTION( graphene_assert_message_exception, graphene::chain::action_validate_exception, 3070008, "graphene_assert_message assertion failure" )
+   FC_DECLARE_DERIVED_EXCEPTION( graphene_assert_code_exception,    graphene::chain::action_validate_exception, 3070009, "graphene_assert_code assertion failure" )
+
+   FC_DECLARE_DERIVED_EXCEPTION( wabt_execution_error,              graphene::chain::wasm_exception, 3070020, "Runtime Error Processing WABT" )
+
+   FC_DECLARE_DERIVED_EXCEPTION( resource_exhausted_exception, chain_exception, 3080000, "resource exhausted exception" )
+   FC_DECLARE_DERIVED_EXCEPTION( ram_usage_exceeded, resource_exhausted_exception, 3080001, "account using more than allotted RAM usage" )
+   FC_DECLARE_DERIVED_EXCEPTION( tx_net_usage_exceeded, resource_exhausted_exception, 3080002, "transaction exceeded the current network usage limit imposed on the transaction" )
+   FC_DECLARE_DERIVED_EXCEPTION( block_net_usage_exceeded, resource_exhausted_exception, 3080003, "transaction network usage is too much for the remaining allowable usage of the current block" )
+   FC_DECLARE_DERIVED_EXCEPTION( tx_cpu_usage_exceeded, resource_exhausted_exception, 3080004, "transaction exceeded the current CPU usage limit imposed on the transaction" )
+   FC_DECLARE_DERIVED_EXCEPTION( block_cpu_usage_exceeded, resource_exhausted_exception, 3080005, "transaction CPU usage is too much for the remaining allowable usage of the current block" )
+   FC_DECLARE_DERIVED_EXCEPTION( deadline_exception, resource_exhausted_exception, 3080006, "transaction took too long" )
+   FC_DECLARE_DERIVED_EXCEPTION( abi_not_found_exception, chain_type_exception, 3010008, "No ABI found" )
+   FC_DECLARE_DERIVED_EXCEPTION( table_not_found_exception, chain_type_exception, 3010009, "No table found" )
+   FC_DECLARE_DERIVED_EXCEPTION( contract_not_found_exception, chain_type_exception, 3010010, "No contract found" )
+   FC_DECLARE_DERIVED_EXCEPTION( leeway_deadline_exception, deadline_exception, 3081001, "transaction reached the deadline set due to leeway on account CPU limits" )
 
    GRAPHENE_DECLARE_OP_BASE_EXCEPTIONS( transfer );
    GRAPHENE_DECLARE_OP_EVALUATE_EXCEPTION( from_account_not_whitelisted, transfer, 1, "owner mismatch" )

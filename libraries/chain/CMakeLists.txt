@@ -94,6 +94,14 @@ add_library( graphene_chain
 
              is_authorized_asset.cpp
 
+             wast_to_wasm.cpp
+             wasm_validation.cpp
+             wasm_injection.cpp
+             wasm_interface.cpp
+
+             webassembly/wavm.cpp
+             webassembly/wabt.cpp
+
              ${HEADERS}
              "${CMAKE_CURRENT_BINARY_DIR}/include/graphene/chain/hardfork.hpp"
            )
