@@ -18,7 +18,10 @@ struct data_storage_operation : public base_operation
    extensions_type          extensions;
 
    account_id_type fee_payer() const{return proxy_account;}
-   void validate() const{}
+   void validate() const
+   {
+       FC_ASSERT(data_hash.size() > 0);
+   }
 
    share_type calculate_fee(const fee_parameters_type &k)const{
        return k.fee;
