@@ -10,8 +10,14 @@ namespace graphene { namespace chain {
       public:
          typedef data_storage_operation operation_type;
 
-         void_result do_evaluate( const data_storage_operation& o ){return void_result();}
-         void_result do_apply( const data_storage_operation& o ){return void_result();}
+         void_result do_evaluate( const data_storage_operation& op ){
+             ilog("data_storage_evaluator do_evaluate");
+             return void_result();
+         }
+         void_result do_apply( const data_storage_operation& op ){
+             ilog("data_storage_evaluator do_evaluate");
+             return void_result();
+         }
    };
 
 } } // graphene::chain

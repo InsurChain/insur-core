@@ -14,17 +14,18 @@ struct data_storage_operation : public base_operation
    fc::string               data_hash;
    asset                    fee;
    data_storage_params      params;
+   signture_type            signature;
    extensions_type          extensions;
 
    account_id_type fee_payer() const{return proxy_account;}
    void validate() const{}
 
    share_type calculate_fee(const fee_parameters_type &k)const{
-       return k.fee + calculate_fee(fc::raw::pack_size(*this), k.price_per_kbyte);
-   }
+       return k.fee;
+   
 
 };
 } }//graphene::chain
 
 FC_REFLECT( graphene::chain::data_storage_operation::fee_parameters_type,(fee)  )
-FC_REFLECT( graphene::chain::data_storage_operation,(proxy_account)(account)(data_hash)(fee)(params)(extensions) )
+FC_REFLECT( graphene::chain::data_storage_operation,(proxy_account)(account)(data_hash)(fee)(params)(signature)(extensions) )
