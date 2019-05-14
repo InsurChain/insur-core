@@ -42,6 +42,9 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/version.hpp>
+#include <boost/algorithm/string/replace.hpp>
+#include <websocketpp/version.hpp>
 
 #include <iostream>
 #include <fstream>

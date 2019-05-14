@@ -49,6 +49,9 @@
 #include <fc/log/file_appender.hpp>
 #include <fc/log/logger.hpp>
 #include <fc/log/logger_config.hpp>
+#include <boost/version.hpp>
+#include <boost/algorithm/string/replace.hpp>
+#include <websocketpp/version.hpp>
 
 #ifdef WIN32
 # include <signal.h>
