@@ -14,6 +14,18 @@ struct data_storage_params{
     asset                amount;
     fc::string           memo;
     fc::time_point_sec   expiration;
+    vector<signature_type> signatures;
+    bool verify_data_storage_signature(const fc::ecc::public_key& expected_signee, const data_storage_params& params)
+    {
+       auto p = params; 
+       p.signatures.clear();
+       digest_type::encoder enc;
+       fc::raw::pack(enc, p);
+       for(const auto& sig: params.signatures)
+           if(fc::ecc::public_key(sig,enc.result(), true) == expected_signee)
+               return true;
+       return false;
+    }
 };
 struct data_storage_operation : public base_operation
 {
@@ -21,16 +33,18 @@ struct data_storage_operation : public base_operation
    fc::string               proxy_memo;
    asset                    fee;
    data_storage_params      requests_params;
-   signture_type            signature;
    extensions_type          extensions;
 
    account_id_type fee_payer() const{return requests_params.proxy_account;}
+   account_id_type get_from_account() const{return requests_params.from;}
+   account_id_type get_to_account() const{return requests_params.to;}
+   account_id_type get_proxy_account() const{return requests_params.proxy_account;}
    void validate() const
    {
+       FC_ASSERT(fee.amount >= 0);
        FC_ASSERT(requests_params.amount.amount >= 0);
-       FC_ASSERT(params.fee.amount >= 0);
        FC_ASSERT(proxy_memo.size() > 0);
-       FC_ASSERT(requests_params.from != requests_params.to);
+       FC_ASSERT(get_from_account() != get_to_account());
    }
 
    share_type calculate_fee(const fee_parameters_type &k)const{
@@ -40,6 +54,6 @@ struct data_storage_operation : public base_operation
 };
 } }//graphene::chain
 
-FC_REFLECT( graphene::chain::data_storage_params,(from)(to)(proxy_account)(percentage)(amount)(memo)(expiration) )
+FC_REFLECT( graphene::chain::data_storage_params,(from)(to)(proxy_account)(percentage)(amount)(memo)(expiration)(signatures) )
 FC_REFLECT( graphene::chain::data_storage_operation::fee_parameters_type,(fee)  )
-FC_REFLECT( graphene::chain::data_storage_operation,(proxy_memo)(fee)(requests_params)(signature)(extensions) )
+FC_REFLECT( graphene::chain::data_storage_operation,(proxy_memo)(fee)(requests_params)(extensions) )

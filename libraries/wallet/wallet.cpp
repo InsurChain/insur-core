@@ -1708,6 +1708,49 @@ public:
       return sign_transaction( tx, broadcast );
    } FC_CAPTURE_AND_RETHROW( (witness_name)(amount) )
    }
+   memo_data sign_memo(string from , string to , string memo)
+   {
+       FC_ASSERT(!self.is_locked());
+
+       memo_data md = memo_data();
+       try{
+           account_object from_account =  get_account(from);
+           md.from = from_account.options.memo_key;
+       }catch(const fc::exception& e){
+           md.from = self.get_public_key(from);
+       }
+       try{
+           account_object to_account = get_account(to);
+           md.to = to_account.options.memo_key;
+       }catch(const fc::exception& e){
+           md.to = self.get_public_key(to);
+       }
+
+       md.set_message(get_private_key(md.from), md.to, memo);
+       return md;
+   }
+   string read_memo(const memo_data& _memo){
+       FC_ASSERT(!self.is_locked());
+       std::string clear_text;
+
+       const memo_data * memo = &_memo;
+       try{
+           FC_ASSERT(_keys.count(memo->to) || _keys.count(memo->from), "Memo is encrypted to a key ${to} or ${from} not in this wallet.",("to",memo->to)("from",memo->from));
+           if(_keys.count(memo->to)){
+               auto my_key = wif_to_key(_keys.at(memo->to));
+               FC_ASSERT(my_key, "Unable to recover private_key to decrypt memo. Wallet may be corrupted.");
+               clear_text = memo->get_message(*my_key, memo->to);
+           }
+           else{
+               auto my_key = wif_to_key(_keys.at(memo->from));
+               FC_ASSERT(my_key, "Unable to recover private_key to decrypt memo. Wallet may be corrupted.");
+               clear_text = memo->get_message(*my_key, memo->from);
+           }
+       }catch(const fc::exception& e){
+           elog("Errof when decrypting memo: ${e}",("e",e.to_detail_string()));
+       }
+       return clear_text;
+   }
 
    signed_transaction vote_for_committee_member(string voting_account,
                                         string committee_member,
@@ -3683,6 +3726,16 @@ signed_transaction wallet_api::withdraw_vesting(
    return my->withdraw_vesting( witness_name, amount, asset_symbol, broadcast );
 }
 
+memo_data wallet_api::sign_memo(string from, string to , string memo)
+{
+    FC_ASSERT(!is_locked());
+    return my->sign_memo(from, to , memo);
+}
+string wallet_api::read_memo(const memo_data& memo)
+{
+    FC_ASSERT(!is_locked());
+    return my->read_memo(memo);
+}
 signed_transaction wallet_api::vote_for_committee_member(string voting_account,
                                                  string witness,
                                                  bool approve,

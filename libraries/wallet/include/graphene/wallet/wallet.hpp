@@ -1282,6 +1282,8 @@ class wallet_api
          string asset_symbol,
          bool broadcast = false);
 
+      memo_data sign_memo(string from , string to , string memo);
+      string read_memo(const memo_data& memo);
       /** Vote for a given committee_member.
        *
        * An account can publish a list of all committee_memberes they approve of.  This 
@@ -1728,6 +1730,8 @@ FC_API( graphene::wallet::wallet_api,
         (update_worker_votes)
         (get_vesting_balances)
         (withdraw_vesting)
+        (sign_memo)
+        (read_memo)
         (vote_for_committee_member)
         (vote_for_witness)
         (set_voting_proxy)
