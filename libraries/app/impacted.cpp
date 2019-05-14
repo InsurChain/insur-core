@@ -213,7 +213,7 @@ struct get_impacted_account_visitor
    }
    void operator()( const data_storage_operation& op )
    {
-      _impacted.insert( op.account );
+      _impacted.insert( op.proxy_account );
    }
 
 };
