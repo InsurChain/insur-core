@@ -31,6 +31,7 @@
 #include <graphene/chain/market_object.hpp>
 #include <graphene/chain/proposal_object.hpp>
 #include <graphene/chain/transaction_object.hpp>
+#include <graphene/chain/data_storage_baas_object.hpp>
 #include <graphene/chain/withdraw_permission_object.hpp>
 #include <graphene/chain/witness_object.hpp>
 
@@ -154,6 +155,15 @@ void database::update_last_irreversible_block()
          _dpo.last_irreversible_block_num = new_last_irreversible_block_num;
       } );
    }
+}
+void database::clear_expired_data_storage_baas_objs()
+{
+    try{
+        auto& data_storage_idx = static_cast<data_storage_index&>(get_mutable_index(implementation_ids,impl_data_storage_baas_object_type));
+        const auto& dedque_index = data_storage_idx.indices().get<by_expiration>();
+        while((!dedque_index.empty()) && (head_block_time()>dedque_index.begin()->expiration))
+            data_storage_idx.remove(*dedupe_index.begin());
+    } FC_CAPTURE_AND_RETHROW()
 }
 
 void database::clear_expired_transactions()

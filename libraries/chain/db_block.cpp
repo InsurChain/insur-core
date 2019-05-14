@@ -729,6 +729,7 @@ void database::_apply_block( const signed_block& next_block )
    create_block_summary(next_block);
    clear_expired_transactions();
    clear_expired_proposals();
+   clear_expired_data_storage_baas_objs();
    clear_expired_orders();
    update_expired_feeds();
    update_withdraw_permissions();
@@ -854,13 +855,16 @@ operation_result database::apply_operation(transaction_evaluation_state& eval_st
 { try {
    int i_which = op.which();
    uint64_t u_which = uint64_t( i_which );
-   if( i_which < 0 )
-      assert( "Negative operation tag" && false );
-   if( u_which >= _operation_evaluators.size() )
-      assert( "No registered evaluator for this operation" && false );
+ //  if( i_which < 0 )
+ //     assert( "Negative operation tag" && false );
+ //  if( u_which >= _operation_evaluators.size() )
+ //     assert( "No registered evaluator for this operation" && false );
+   FC_ASSERT(i_which >= 0, "Negative operation tag in operation ${op}",("op",op) );
+   FC_ASSERT(u_which < _operation_evaluators.size(), "No registered evaluator for this operation ${op}",("op",op));
    unique_ptr<op_evaluator>& eval = _operation_evaluators[ u_which ];
-   if( !eval )
-      assert( "No registered evaluator for this operation" && false );
+   //if( !eval )
+   //   assert( "No registered evaluator for this operation" && false );
+   FC_ASSERT(eval, "No register evaluator for this operation ${op}",("op",op));
    auto op_id = push_applied_operation( op );
    auto result = eval->evaluate( eval_state, op, true );
    set_applied_operation_result( op_id, result );

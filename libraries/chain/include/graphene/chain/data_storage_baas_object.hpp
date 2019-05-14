@@ -11,13 +11,13 @@ namespace graphene { namespace chain {
     class data_storage_baas_object : public graphene::db::abstract_object<data_storage_baas_object>{
         public:
             static const uint8_t space_id = protocol_ids;
-            static const uint8_t type_id = data_storage_baas_object_type;
+            static const uint8_t type_id = impl_data_storage_baas_object_type;
 
             signature_type              signature;
             fc::time_point_sec          expiration;
     };
-    struct by_signature {};
-    struct by_expiration {};
+    struct by_signature ;
+    struct by_expiration ;
 
     using data_storage_baas_multi_index_type = multi_index_container<
         data_storage_baas_object,

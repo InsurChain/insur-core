@@ -161,7 +161,6 @@ namespace graphene { namespace chain {
       vesting_balance_object_type,
       worker_object_type,
       balance_object_type,
-      data_storage_baas_object_type,
       OBJECT_TYPE_COUNT ///< Sentry value which contains the number of different object types
    };
 
@@ -186,6 +185,7 @@ namespace graphene { namespace chain {
       impl_fba_accumulator_object_type,
       impl_escrow_object_type,
       impl_multisig_object_type,
+      impl_data_storage_baas_object_type,
       impl_account_balance_locked_object_type
    };
 
@@ -222,7 +222,6 @@ namespace graphene { namespace chain {
    typedef object_id< protocol_ids, vesting_balance_object_type,    vesting_balance_object>       vesting_balance_id_type;
    typedef object_id< protocol_ids, worker_object_type,             worker_object>                worker_id_type;
    typedef object_id< protocol_ids, balance_object_type,            balance_object>               balance_id_type;
-   typedef object_id< protocol_ids, data_storage_baas_object_type,  data_storage_baas_object>     data_storage_baas_id_type;
 
    // implementation types
    class global_property_object;
@@ -243,6 +242,7 @@ namespace graphene { namespace chain {
    class escrow_object;
    class multisig_object;
    class account_balance_locked_object;
+   class data_storage_baas_object;
 
    typedef object_id< implementation_ids, impl_global_property_object_type,  global_property_object>                    global_property_id_type;
    typedef object_id< implementation_ids, impl_dynamic_global_property_object_type,  dynamic_global_property_object>    dynamic_global_property_id_type;
@@ -266,6 +266,7 @@ namespace graphene { namespace chain {
    typedef object_id< implementation_ids, impl_escrow_object_type, escrow_object >                                      escrow_id_type;
    typedef object_id< implementation_ids, impl_multisig_object_type, multisig_object >                                  multisig_id_type;
    typedef object_id< implementation_ids, impl_account_balance_locked_object_type, account_balance_locked_object >      account_balance_locked_id_type;
+   typedef object_id< implementation_ids, impl_data_storage_baas_object_type, data_storage_baas_object >                data_storage_baas_id_type;
 
    typedef fc::array<char, GRAPHENE_MAX_ASSET_SYMBOL_LENGTH>    symbol_type;
    typedef fc::ripemd160                                        block_id_type;
@@ -378,7 +379,6 @@ FC_REFLECT_ENUM( graphene::chain::object_type,
                  (vesting_balance_object_type)
                  (worker_object_type)
                  (balance_object_type)
-                 (data_storage_baas_object_type)
                  (OBJECT_TYPE_COUNT)
                )
 FC_REFLECT_ENUM( graphene::chain::impl_object_type,
@@ -402,6 +402,7 @@ FC_REFLECT_ENUM( graphene::chain::impl_object_type,
                  (impl_escrow_object_type)
                  (impl_multisig_object_type)
                  (impl_account_balance_locked_object_type)
+                 (impl_data_storage_baas_object_type)
                )
 
 FC_REFLECT_TYPENAME( graphene::chain::share_type )
@@ -436,6 +437,7 @@ FC_REFLECT_TYPENAME( graphene::chain::fba_accumulator_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::escrow_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::multisig_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::account_balance_locked_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::data_storage_baas_id_type )
 
 FC_REFLECT( graphene::chain::void_t, )
 FC_REFLECT( graphene::chain::interest_rate_t,(interest_rate_days)(interest_rate)(is_valid) )
