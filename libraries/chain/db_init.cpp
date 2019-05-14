@@ -64,6 +64,7 @@
 #include <graphene/chain/worker_evaluator.hpp>
 #include <graphene/chain/pnt_transfer_evaluator.hpp>
 #include <graphene/chain/contract_evaluator.hpp>
+#include <graphene/chain/data_storage_evaluator.hpp>
 
 #include <graphene/chain/protocol/fee_schedule.hpp>
 
@@ -178,6 +179,7 @@ void database::initialize_evaluators()
    register_evaluator<asset_claim_fees_evaluator>();
    register_evaluator<oracle_evaluator>();
    register_evaluator<contract_call_evaluator>();
+   register_evaluator<data_storage_evaluator>();
 
 }
 

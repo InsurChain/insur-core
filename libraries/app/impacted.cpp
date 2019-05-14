@@ -211,6 +211,10 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account );
    }
+   void operator()( const data_storage_operation& op )
+   {
+      _impacted.insert( op.account );
+   }
 
 };
 

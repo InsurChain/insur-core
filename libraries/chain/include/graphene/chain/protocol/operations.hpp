@@ -40,6 +40,7 @@
 #include <graphene/chain/protocol/witness.hpp>
 #include <graphene/chain/protocol/worker.hpp>
 #include <graphene/chain/protocol/contract_ops.hpp>
+#include <graphene/chain/protocol/data_storage_ops.hpp>
 
 namespace graphene { namespace chain {
 
@@ -95,6 +96,7 @@ namespace graphene { namespace chain {
             asset_claim_fees_operation,
             pnt_transfer_operation,
             contract_call_operation,
+            data_storage_operation,
             fba_distribute_operation        // VIRTUAL
          > operation;
 
