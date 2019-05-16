@@ -207,15 +207,15 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.to );
    }
-   void operator()( const contract_call_operation& op )
-   {
-      _impacted.insert( op.account );
-   }
    void operator()( const data_storage_operation& op )
    {
       _impacted.insert( op.requests_params.from );
       _impacted.insert( op.requests_params.to );
       _impacted.insert( op.requests_params.proxy_account );
+   }
+   void operator()( const contract_call_operation& op )
+   {
+      _impacted.insert( op.account );
    }
 
 };
