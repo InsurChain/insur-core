@@ -49,7 +49,33 @@ using namespace graphene::chain;
 using namespace graphene::chain::test;
 
 BOOST_FIXTURE_TEST_SUITE( operation_tests, database_fixture )
+BOOST_AUTO_TEST_CASE(contract_call_test)
+{
+    try{
+        ACTOR(alice);
 
+        transfer(account_id_type(),alice_id, asset(10000));
+        generate_block();
+
+        //construct trx
+        contract_call_operation op;
+        op.account = alice_id;
+        op.name = "bob";
+        op.method = "transfer";
+        op.data = "test call data";
+        op.fee = asset(2000);
+
+
+        trx.clear();
+        trx.operations.push_back(op);
+        set_expiration(db,trx);
+        sign(trx, alice_private_key);
+        idump((trx));
+        PUSH_TX(db,trx);
+        trx.clear();
+
+    }FC_LOG_AND_RETHROW()
+}
 BOOST_AUTO_TEST_CASE( withdraw_permission_create )
 { try {
    auto nathan_private_key = generate_private_key("nathan");
