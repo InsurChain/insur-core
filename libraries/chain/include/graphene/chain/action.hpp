@@ -42,3 +42,4 @@ namespace graphene{ namespace chain{
 
     };
 }}// namespace graphene::chain
+FC_REFLECT( graphene::chain::action, (account)(name)(data) )

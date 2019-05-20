@@ -16,7 +16,6 @@
 #include <fc/smart_ref_impl.hpp>
 
 #include <softfloat.hpp>
-#include <compiler_builtins.hpp>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/core/ignore_unused.hpp>
@@ -68,6 +67,11 @@ class context_aware_api {
       context_aware_api(apply_context& ctx, bool context_free = false )
       :context(ctx)
       {
+          if( context.context_free )
+          {
+              FC_ASSERT( context_free, "only context free api's can be used in this context" );
+          }
+          context.used_context_free_api |= !context_free;
       }
 
       void checktime() {
