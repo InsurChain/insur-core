@@ -217,6 +217,10 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account );
    }
+   void operator()( const contract_deploy_operation& op )
+   {
+      _impacted.insert( op.account );
+   }
 
 };
 
