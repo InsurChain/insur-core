@@ -983,6 +983,42 @@ public:
       return tx;
    } FC_CAPTURE_AND_RETHROW( (name)(owner)(active)(registrar_account)(referrer_account)(referrer_percent)(broadcast) ) }
 
+   signed_transaction deploy_contract(string name ,
+                                      string account,
+                                      string vm_type,
+                                      string vm_version,
+                                      string code_file_path,
+                                      string abi_file_path,
+                                      bool broadcast = false)
+   {
+       try{
+           FC_ASSERT(!self.is_locked());
+           FC_ASSERT(is_valid_name(name));
+           account_object creator_account_object = this->get_account(account);
+           FC_ASSERT(creaetor_account_object.is_lifetime_member());
+           account_id_type creator_account_id = creator_account_object.id;
+
+           contract_deploy_operation op;
+           op.name = name;
+           op.createor_account = creator_account_id;
+           op.vm_type = vm_type;
+           op.vm_version = vm_version;
+           op.code = code_file_path;
+           op.abi = abi_file_path;
+
+           signed_transaction tx;
+           tx.operations.push_back(op);
+           auto current_fee =
+               _remote_db->get_global_properties().parameters.current_fees;
+           set_operation_fees(tx, current_fee);
+
+           if(broadcast)
+               _remote_net_broadcast->broadcast_transaction(tx);
+           return tx;
+
+       }FC_CAPTURE_AND_RETHROW((name)(account)(vm_type)(code_file_path)(abi_file_path)(broadcast))
+   }
+
    
 
    string wallet_address_create(const string &wif_key)

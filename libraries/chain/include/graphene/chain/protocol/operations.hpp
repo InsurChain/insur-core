@@ -98,7 +98,7 @@ namespace graphene { namespace chain {
             pnt_transfer_operation,
             contract_call_operation,
             data_storage_operation,
-            contract_call_operation,
+            contract_deploy_operation,
             fba_distribute_operation        // VIRTUAL
          > operation;
 

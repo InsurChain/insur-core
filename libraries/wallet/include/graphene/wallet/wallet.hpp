@@ -1015,6 +1015,13 @@ class wallet_api
       signed_transaction update_asset_feed_producers(string symbol,
                                                      flat_set<string> new_feed_producers,
                                                      bool broadcast = false);
+      signed_transaction deploy_contract(string name,
+                                         string account,
+                                         string vm_type,
+                                         string vm_version,
+                                         string code_file_path,
+                                         string abi_file_path,
+                                         bool broadcast=false);
       
       /** Publishes a price feed for the named asset.
        *
