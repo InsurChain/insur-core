@@ -6,6 +6,7 @@
 #include <graphene/db/generic_index.hpp>
 #include <graphene/db/object.hpp>
 #include <boost/multi_index/composite_key.hpp>
+#include <fc/unint128.hpp>
 #include <softfloat.hpp>
 
 #include <array>
@@ -128,6 +129,13 @@ struct secondary_index {
 
 typedef secondary_index<uint64_t, index64_object_type>::index_object index64_object;
 typedef secondary_index<uint64_t, index64_object_type>::index_index index64_index;
+
+typedef secondary_index<uint128_t, index128_object_type>::index_object index128_object;
+typedef secondary_index<uint128_t, index128_object_type>::index_index index128_index;
+
+typedef std::array<uint128_t, 2> key256_t;
+typedef secondary_index<key256_t, index256_object_type>::index_object index256_object;
+typedef secondary_index<key256_t, index256_object_type>::index_index index256_index;
 
 } }  // namespace graphene::chain
 

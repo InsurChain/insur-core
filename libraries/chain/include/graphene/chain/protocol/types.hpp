@@ -161,6 +161,12 @@ namespace graphene { namespace chain {
       vesting_balance_object_type,
       worker_object_type,
       balance_object_type,
+      index64_object_type,
+      index128_object_type,
+      index256256_object_type,
+      index_double_object_type,
+      index_long_double_object_type
+
       OBJECT_TYPE_COUNT ///< Sentry value which contains the number of different object types
    };
 
