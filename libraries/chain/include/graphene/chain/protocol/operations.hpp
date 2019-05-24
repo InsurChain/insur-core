@@ -41,7 +41,7 @@
 #include <graphene/chain/protocol/worker.hpp>
 #include <graphene/chain/protocol/contract_ops.hpp>
 #include <graphene/chain/protocol/data_storage_ops.hpp>
-#include <graphene/chain/protocol/contract_ops.hpp>
+#include <graphene/chain/protocol/data_market_ops.hpp>
 
 namespace graphene { namespace chain {
 
@@ -99,6 +99,8 @@ namespace graphene { namespace chain {
             contract_call_operation,
             data_storage_operation,
             contract_deploy_operation,
+            data_market_create_operation,
+            data_market_update_operation,
             fba_distribute_operation        // VIRTUAL
          > operation;
 

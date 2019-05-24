@@ -221,6 +221,14 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account );
    }
+   void operator()( const data_market_create_operation& op )
+   {
+      _impacted.insert( op.account );
+   }
+   void operator()( const data_market_update_operation& op )
+   {
+      _impacted.insert( op.account );
+   }
 
 };
 
