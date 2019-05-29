@@ -46,6 +46,7 @@
 #include <graphene/chain/witness_object.hpp>
 #include <graphene/chain/witness_schedule_object.hpp>
 #include <graphene/chain/worker_object.hpp>
+#include <graphene/chain/alliance_object.hpp>
 
 #include <graphene/chain/account_evaluator.hpp>
 #include <graphene/chain/asset_evaluator.hpp>
@@ -65,6 +66,7 @@
 #include <graphene/chain/pnt_transfer_evaluator.hpp>
 #include <graphene/chain/data_storage_evaluator.hpp>
 #include <graphene/chain/contract_evaluator.hpp>
+#include <graphene/chain/alliance_evaluator.hpp>
 
 #include <graphene/chain/protocol/fee_schedule.hpp>
 
@@ -130,6 +132,8 @@ const uint8_t witness_object::type_id;
 const uint8_t worker_object::space_id;
 const uint8_t worker_object::type_id;
 
+const uint8_t alliance_object::space_id;
+const uint8_t alliance_object::type_id;
 
 void database::initialize_evaluators()
 {
@@ -180,6 +184,8 @@ void database::initialize_evaluators()
    register_evaluator<oracle_evaluator>();
    register_evaluator<data_storage_evaluator>();
    register_evaluator<contract_call_evaluator>();
+   register_evaluator<alliance_create_evaluator>();
+   register_evaluator<alliance_update_evaluator>();
 
 }
 
@@ -224,6 +230,7 @@ void database::initialize_indexes()
    add_index< primary_index<simple_index<budget_record_object           > > >();
    add_index< primary_index< special_authority_index                      > >();
    add_index< primary_index< buyback_index                                > >();
+   add_index< primary_index< alliance_index                               > >();
 
    add_index< primary_index< simple_index< fba_accumulator_object       > > >();
 }

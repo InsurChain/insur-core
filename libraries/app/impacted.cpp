@@ -229,6 +229,14 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account );
    }
+   void operator()( const alliance_create_operation& op )
+   {
+      _impacted.insert( op.account );
+   }
+   void operator()( const alliance_update_operation& op )
+   {
+      _impacted.insert( op.account );
+   }
 
 };
 
