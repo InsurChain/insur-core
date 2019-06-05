@@ -43,6 +43,10 @@
 #include <graphene/chain/protocol/data_storage_ops.hpp>
 #include <graphene/chain/protocol/data_market_ops.hpp>
 #include <graphene/chain/protocol/alliance_ops.hpp>
+#include <graphene/chain/protocol/data_transaction_ops.hpp>
+#include <graphene/chain/protocol/datasource_copyright_ops.hpp>
+#include <graphene/chain/protocol/escrow.hpp>
+
 
 namespace graphene { namespace chain {
 
@@ -104,6 +108,16 @@ namespace graphene { namespace chain {
             data_market_update_operation,
             alliance_create_operation,
             alliance_update_operation,
+            data_transaction_create_operation,
+            data_transaction_update_operation,
+            data_transaction_datasource_upload_operation,
+            data_transaction_datasource_validate_error_operation,
+            data_transaction_complain_operation,
+            datasource_copyright_clear_operation,
+            escrow_transfer_operation,
+            escrow_approve_operation,
+            escrow_dispute_operation,
+            escrow_release_operation,
             fba_distribute_operation        // VIRTUAL
          > operation;
 

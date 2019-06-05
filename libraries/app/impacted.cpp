@@ -231,11 +231,33 @@ struct get_impacted_account_visitor
    }
    void operator()( const alliance_create_operation& op )
    {
-      _impacted.insert( op.account );
+      _impacted.insert( op.issuer );
    }
    void operator()( const alliance_update_operation& op )
    {
-      _impacted.insert( op.account );
+   }
+   void operator()( const data_transaction_create_operation& op )
+   {
+      _impacted.insert( op.requester );
+   }
+   void operator()( const data_transaction_update_operation& op )
+   {
+      _impacted.insert( op.new_requester );
+   }
+   void operator()( const data_transaction_datasource_upload_operation& op )
+   {
+      _impacted.insert( op.requester );
+   }
+   void operator()( const data_transaction_datasource_validate_error_operation& op )
+   {
+      _impacted.insert( op.datasource );
+   }
+   void operator()( const datasource_cyptright_clear_operation& op )
+   {
+   }
+   void operator()( const data_transaction_complain_operation& op )
+   {
+      _impacted.insert( op.requester );
    }
 
 };

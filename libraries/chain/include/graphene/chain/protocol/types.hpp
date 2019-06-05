@@ -167,8 +167,13 @@ namespace graphene { namespace chain {
       index_double_object_type,
       index_long_double_object_type,
       data_market_object_type,
-      alliance_object_type
-      alliance_data_product_object_type
+      alliance_object_type,
+      alliance_data_product_object_type,
+      data_transaction_object_type,
+      data_transaction_complain_object_type,
+      data_transaction_complain_object_type,
+      datasource_copyright_object_type
+
 
       OBJECT_TYPE_COUNT ///< Sentry value which contains the number of different object types
    };
@@ -195,7 +200,8 @@ namespace graphene { namespace chain {
       impl_escrow_object_type,
       impl_multisig_object_type,
       impl_data_storage_baas_object_type,
-      impl_account_balance_locked_object_type
+      impl_account_balance_locked_object_type,
+      impl_data_transaction_search_results_object_type
    };
 
    //typedef fc::unsigned_int            object_id_type;
@@ -219,6 +225,8 @@ namespace graphene { namespace chain {
    class data_market_object
    class alliance_object
    class alliance_data_product_object
+   class data_transaction_object
+   class data_transaction_complain_object
 
    typedef object_id< protocol_ids, account_object_type,            account_object>               account_id_type;
    typedef object_id< protocol_ids, asset_object_type,              asset_object>                 asset_id_type;
@@ -237,6 +245,9 @@ namespace graphene { namespace chain {
    typedef object_id< protocol_ids, data_market_object_type, data_market_object>data_market_id_type;
    typedef object_id< protocol_ids, alliance_object_type, alliance_object>alliance_id_type;
    typedef object_id< protocol_ids, alliance_data_product_object_type, alliance_data_product_object>alliance_data_product_id_type;
+   typedef object_id< protocol_ids, data_transaction_object_type, data_transaction_object>data_transaction_id_type;
+   typedef object_id< protocol_ids, data_transaction_complain_object_type, data_transaction_complain_object>data_transaction_complain_id_type;
+   typedef object_id< protocol_ids, datasource_copyright_object_type, datasource_copyright_object>datasource_copyright_id_type;
 
    // implementation types
    class global_property_object;
@@ -258,6 +269,7 @@ namespace graphene { namespace chain {
    class multisig_object;
    class account_balance_locked_object;
    class data_storage_baas_object;
+   class data_transaction_search_resluts_object;
 
    typedef object_id< implementation_ids, impl_global_property_object_type,  global_property_object>                    global_property_id_type;
    typedef object_id< implementation_ids, impl_dynamic_global_property_object_type,  dynamic_global_property_object>    dynamic_global_property_id_type;
@@ -282,6 +294,7 @@ namespace graphene { namespace chain {
    typedef object_id< implementation_ids, impl_multisig_object_type, multisig_object >                                  multisig_id_type;
    typedef object_id< implementation_ids, impl_account_balance_locked_object_type, account_balance_locked_object >      account_balance_locked_id_type;
    typedef object_id< implementation_ids, impl_data_storage_baas_object_type, data_storage_baas_object >                data_storage_baas_id_type;
+   typedef object_id< implementation_ids, impl_data_transaction_search_results_object_type, data_transaction_search_resluts_object >                data_transaction_search_resluts_id_type;
 
    typedef fc::array<char, GRAPHENE_MAX_ASSET_SYMBOL_LENGTH>    symbol_type;
    typedef fc::ripemd160                                        block_id_type;
@@ -397,6 +410,9 @@ FC_REFLECT_ENUM( graphene::chain::object_type,
                  (data_market_object_type)
                  (alliance_object_type)
                  (alliance_data_product_object_type)
+                 (data_transaction_object_type)
+                 (data_transaction_complain_object_type)
+                 (datasource_copyright_object_type)
                  (OBJECT_TYPE_COUNT)
                )
 FC_REFLECT_ENUM( graphene::chain::impl_object_type,
@@ -421,6 +437,7 @@ FC_REFLECT_ENUM( graphene::chain::impl_object_type,
                  (impl_multisig_object_type)
                  (impl_account_balance_locked_object_type)
                  (impl_data_storage_baas_object_type)
+                 (impl_data_transaction_search_results_object_type)
                )
 
 FC_REFLECT_TYPENAME( graphene::chain::share_type )
@@ -459,6 +476,10 @@ FC_REFLECT_TYPENAME( graphene::chain::data_storage_baas_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::data_market_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::alliance_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::alliance_data_product_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::data_transaction_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::data_transaction_complain_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::datasource_copyright_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::data_transaction_search_resluts_id_type)
 
 FC_REFLECT( graphene::chain::void_t, )
 FC_REFLECT( graphene::chain::interest_rate_t,(interest_rate_days)(interest_rate)(is_valid) )
