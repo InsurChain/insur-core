@@ -36,6 +36,7 @@
 namespace graphene { namespace chain {
 
 database::database()
+    : wasmif(graphene::chain::wasm_interface::vm_type::wabt)
 {
    initialize_indexes();
    initialize_evaluators();
@@ -46,31 +47,69 @@ database::~database()
    clear_pending();
 }
 
-void database::reindex(fc::path data_dir, const genesis_state_type& initial_allocation)
+void database::reindex(fc::path data_dir, bool fast_replay)
 { try {
-   ilog( "reindexing blockchain" );
-   wipe(data_dir, false);
-   open(data_dir, [&initial_allocation]{return initial_allocation;});
-
-   auto start = fc::time_point::now();
    auto last_block = _block_id_to_block.last();
    if( !last_block ) {
       elog( "!no last block" );
       edump((last_block));
       return;
    }
+   if( last_block->block_num() <= head_block_num()) return;
 
+   std::cerr << "reindexing blockchain" << std::endl;
+   auto start = fc::time_point::now();
    const auto last_block_num = last_block->block_num();
+   uint32_t flush_point = last_block_num < 10000 ? 0 : last_block_num - 10000;
+   uint32_t undo_point = last_block_num < 50 ? 0 : last_block_num - 50;
 
-   ilog( "Replaying blocks..." );
-   _undo_db.disable();
-   for( uint32_t i = 1; i <= last_block_num; ++i )
+   std::cerr << "Replaying blocks, starting at " << head_block_num() + 1 << std::endl;
+   if( head_block_num() >= undo_point )
    {
-      if( i % 2000 == 0 ) std::cerr << "   " << double(i*100)/last_block_num << "%   "<<i << " of " <<last_block_num<<"   \n";
+      if( head_block_num() > 0 )
+         _fork_db.start_block( *fetch_block_by_number( head_block_num() ) );
+   }
+   else
+      _undo_db.disable();
+
+   uint32_t skip = skip_witness_signature |
+                   skip_block_size_check |
+                   skip_merkle_check |
+                   skip_transaction_signatures |
+                   skip_transaction_dupe_check |
+                   skip_tapos_check |
+                   skip_witness_schedule_check |
+                   skip_authority_check;
+
+   size_t total_processed_block_size;
+   size_t total_block_size = _block_id_to_block.total_block_size();
+   const auto& gpo = get_global_properties();
+   for( uint32_t i = head_block_num() + 1; i <= last_block_num; ++i )
+   {
+      if (i % 1000 == 0)
+      {
+          // sleep 100ms for every 1000 block
+          if (!fast_replay) {
+              fc::usleep(fc::milliseconds(100));
+          }
+         total_processed_block_size = _block_id_to_block.blocks_current_position();
+
+         std::cerr << "Replaying blocks, [by size: " << double(total_processed_block_size) / total_block_size * 100 << "% " << total_processed_block_size << " of "  << total_block_size 
+             << "] [by num: " << double(i*100)/last_block_num << "% " << i << " of " << last_block_num
+             << "]" << std::endl;
+      }
+      if( i == flush_point )
+      {
+         std::cerr << "Writing database to disk at block " << i << std::endl;
+         object_database::flush();
+         std::cerr << "Done" << std::endl;
+      }
+      if( head_block_time() >= last_block->timestamp - gpo.parameters.maximum_time_until_expiration )
+         skip &= ~skip_transaction_dupe_check;
       fc::optional< signed_block > block = _block_id_to_block.fetch_by_number(i);
       if( !block.valid() )
       {
-         wlog( "Reindexing terminated due to gap:  Block ${i} does not exist!", ("i", i) );
+         std::cerr << "Reindexing terminated due to gap:  Block " << i << " does not exist!";
          uint32_t dropped_count = 0;
          while( true )
          {
@@ -84,25 +123,28 @@ void database::reindex(fc::path data_dir, const genesis_state_type& initial_allo
             _block_id_to_block.remove( *last_id );
             dropped_count++;
          }
-         wlog( "Dropped ${n} blocks from after the gap", ("n", dropped_count) );
+         std::cerr << "Dropped " << dropped_count << " blocks from after the gap";
          break;
       }
-      apply_block(*block, skip_witness_signature |
-                          skip_transaction_signatures |
-                          skip_transaction_dupe_check |
-                          skip_tapos_check |
-                          skip_witness_schedule_check |
-                          skip_authority_check);
+      if( i < undo_point )
+         apply_block( *block, skip );
+      else
+      {
+         _undo_db.enable();
+         push_block( *block, skip );
+      }
    }
    _undo_db.enable();
    auto end = fc::time_point::now();
-   ilog( "Done reindexing, elapsed time: ${t} sec", ("t",double((end-start).count())/1000000.0 ) );
+   std::cerr << "Done reindexing, elapsed time: " << double((end-start).count())/1000000.0 << " sec";
 } FC_CAPTURE_AND_RETHROW( (data_dir) ) }
 
 void database::wipe(const fc::path& data_dir, bool include_blocks)
 {
-   ilog("Wiping database", ("include_blocks", include_blocks));
-   close();
+   std::cerr << "Wiping database, data_dir " << data_dir.generic_string() << " " << include_blocks << std::endl;
+   if (_opened) {
+     close();
+   }
    object_database::wipe(data_dir);
    if( include_blocks )
       fc::remove_all( data_dir / "database" );
@@ -110,10 +152,30 @@ void database::wipe(const fc::path& data_dir, bool include_blocks)
 
 void database::open(
    const fc::path& data_dir,
-   std::function<genesis_state_type()> genesis_loader)
+   std::function<genesis_state_type()> genesis_loader,
+   const std::string& db_version,
+   bool fast_replay)
 {
    try
    {
+      bool wipe_object_db = false;
+      if( !fc::exists( data_dir / "db_version" ) )
+         wipe_object_db = true;
+      else
+      {
+         std::string version_string;
+         fc::read_file_contents( data_dir / "db_version", version_string );
+         wipe_object_db = ( version_string != db_version );
+      }
+      if( wipe_object_db ) {
+          std::cerr << "Wiping object_database due to missing or wrong version" << std::endl;
+          object_database::wipe( data_dir );
+          std::ofstream version_file( (data_dir / "db_version").generic_string().c_str(),
+                                      std::ios::out | std::ios::binary | std::ios::trunc );
+          version_file.write( db_version.c_str(), db_version.size() );
+          version_file.close();
+      }
+
       object_database::open(data_dir);
 
       _block_id_to_block.open(data_dir / "database" / "block_num_to_block");
@@ -121,19 +183,28 @@ void database::open(
       if( !find(global_property_id_type()) )
          init_genesis(genesis_loader());
 
-      fc::optional<signed_block> last_block = _block_id_to_block.last();
+      fc::optional<block_id_type> last_block = _block_id_to_block.last_id();
       if( last_block.valid() )
       {
-         _fork_db.start_block( *last_block );
-         idump((last_block->id())(last_block->block_num()));
-         if( last_block->id() != head_block_id() )
-         {
-              FC_ASSERT( head_block_num() == 0, "last block ID does not match current chain state" );
-         }
+         FC_ASSERT( *last_block >= head_block_id(),
+                    "last block ID does not match current chain state",
+                    ("last_block->id", last_block)("head_block_id",head_block_num()) );
+         reindex(data_dir, fast_replay);
       }
-      //idump((head_block_id())(head_block_num()));
+      _opened = true;
    }
    FC_CAPTURE_LOG_AND_RETHROW( (data_dir) )
+}
+
+void database::truncate_block_db(const fc::path &path, uint64_t block_num) {
+   _block_id_to_block.truncate_block_db(path, block_num);
+}
+
+void database::flush(const fc::string& data_dir, const fc::string& block_id)
+{ try {
+    object_database::flush(data_dir, block_id);
+  }
+  FC_CAPTURE_LOG_AND_RETHROW((data_dir)(block_id))
 }
 
 void database::close(bool rewind)
@@ -149,23 +220,18 @@ void database::close(bool rewind)
       {
          uint32_t cutoff = get_dynamic_global_properties().last_irreversible_block_num;
 
+         ilog("head_block_num: ${head}, last_irreversible_block_num: ${l}", ("head", head_block_num())("l", cutoff));
+         ilog( "Rewinding from ${head} to ${cutoff}", ("head",head_block_num())("cutoff",cutoff) );
          while( head_block_num() > cutoff )
          {
-         //   elog("pop");
             block_id_type popped_block_id = head_block_id();
             pop_block();
             _fork_db.remove(popped_block_id); // doesn't throw on missing
-            try
-            {
-               _block_id_to_block.remove(popped_block_id);
-            }
-            catch (const fc::key_not_found_exception&)
-            {
-            }
          }
       }
-      catch (...)
+      catch ( const fc::exception& e )
       {
+         wlog( "Database close unexpected exception: ${e}", ("e", e) );
       }
    }
 
@@ -181,7 +247,8 @@ void database::close(bool rewind)
       _block_id_to_block.close();
 
    _fork_db.reset();
+
+   _opened = false;
 }
 
 } }
-   

@@ -89,31 +89,49 @@ optional< vesting_balance_id_type > database::deposit_lazy_vesting(
 
    fc::time_point_sec now = head_block_time();
 
-   while( true )
-   {
-      if( !ovbid.valid() )
-         break;
-      const vesting_balance_object& vbo = (*ovbid)(*this);
-      if( vbo.owner != req_owner )
-         break;
-      if( vbo.policy.which() != vesting_policy::tag< cdd_vesting_policy >::value )
-         break;
-      if( vbo.policy.get< cdd_vesting_policy >().vesting_seconds != req_vesting_seconds )
-         break;
-      modify( vbo, [&]( vesting_balance_object& _vbo )
-      {
-         if( require_vesting )
-            _vbo.deposit(now, amount);
-         else
-            _vbo.deposit_vested(now, amount);
-      } );
-      return optional< vesting_balance_id_type >();
+   while (true) {
+       if (!ovbid.valid())
+           break;
+
+       const vesting_balance_object &vbo = (*ovbid)(*this);
+       if (vbo.owner != req_owner)
+           break;
+
+       if (vbo.policy.which() != vesting_policy::tag<cdd_vesting_policy>::value)
+           break;
+
+       if (vbo.policy.get<cdd_vesting_policy>().vesting_seconds != req_vesting_seconds)
+           break;
+
+       if (now > HARDFORK_1008_TIME) {
+           if (vbo.balance.asset_id != asset_id_type(1)) break;
+
+           modify(vbo, [&](vesting_balance_object &_vbo) {
+               if (require_vesting)
+                   _vbo.deposit(now, asset(amount, asset_id_type(1)));
+               else
+                   _vbo.deposit_vested(now, asset(amount, asset_id_type(1)));
+           });
+       } else {
+           modify(vbo, [&](vesting_balance_object &_vbo) {
+               if (require_vesting)
+                   _vbo.deposit(now, amount);
+               else
+                   _vbo.deposit_vested(now, amount);
+           });
+       }
+       return optional<vesting_balance_id_type>();
    }
 
    const vesting_balance_object& vbo = create< vesting_balance_object >( [&]( vesting_balance_object& _vbo )
    {
       _vbo.owner = req_owner;
-      _vbo.balance = amount;
+
+      if (head_block_time() > HARDFORK_1008_TIME) {
+          _vbo.balance = asset(amount, asset_id_type(1));
+      } else {
+          _vbo.balance = amount;
+      }
 
       cdd_vesting_policy policy;
       policy.vesting_seconds = req_vesting_seconds;
@@ -128,36 +146,56 @@ optional< vesting_balance_id_type > database::deposit_lazy_vesting(
 
 void database::deposit_cashback(const account_object& acct, share_type amount, bool require_vesting)
 {
-   // If we don't have a VBO, or if it has the wrong maturity
-   // due to a policy change, cut it loose.
-
    if( amount == 0 )
       return;
 
-   if( acct.get_id() == GRAPHENE_COMMITTEE_ACCOUNT || acct.get_id() == GRAPHENE_WITNESS_ACCOUNT ||
+   if (acct.get_id() == GRAPHENE_COMMITTEE_ACCOUNT || acct.get_id() == GRAPHENE_WITNESS_ACCOUNT ||
        acct.get_id() == GRAPHENE_RELAXED_COMMITTEE_ACCOUNT || acct.get_id() == GRAPHENE_NULL_ACCOUNT ||
-       acct.get_id() == GRAPHENE_TEMP_ACCOUNT )
-   {
-      // The blockchain's accounts do not get cashback; it simply goes to the reserve pool.
-      modify(get(asset_id_type()).dynamic_asset_data_id(*this), [amount](asset_dynamic_data_object& d) {
-         d.current_supply -= amount;
-      });
-      return;
+       acct.get_id() == GRAPHENE_TEMP_ACCOUNT) {
+       if (head_block_time() > HARDFORK_1008_TIME) {
+           modify(get(asset_id_type(1)).dynamic_asset_data_id(*this), [amount](asset_dynamic_data_object &d) {
+               d.current_supply -= amount;
+           });
+       } else {
+           modify(get(asset_id_type()).dynamic_asset_data_id(*this), [amount](asset_dynamic_data_object &d) {
+               d.current_supply -= amount;
+           });
+       }
+       return;
    }
 
-   optional< vesting_balance_id_type > new_vbid = deposit_lazy_vesting(
-      acct.cashback_vb,
-      amount,
-      get_global_properties().parameters.cashback_vesting_period_seconds,
-      acct.id,
-      require_vesting );
+   optional<vesting_balance_id_type> new_vbid = deposit_lazy_vesting(
+       acct.cashback_vb,
+       amount,
+       get_global_properties().parameters.cashback_vesting_period_seconds,
+       acct.id,
+       require_vesting);
 
-   if( new_vbid.valid() )
-   {
-      modify( acct, [&]( account_object& _acct )
-      {
-         _acct.cashback_vb = *new_vbid;
-      } );
+   if (new_vbid.valid()) {
+       modify(acct, [&](account_object &_acct) {
+           _acct.cashback_vb = *new_vbid;
+       });
+   }
+
+   return;
+}
+
+void database::deposit_contract_call_cashback(const account_object& acct, share_type amount)
+{
+   if( amount == 0 )
+      return;
+
+   optional<vesting_balance_id_type> new_vbid = deposit_lazy_vesting(
+       acct.cashback_vb,
+       amount,
+       get_inter_contract_calling_params().contract_basic_fee_vesting_period_seconds,
+       acct.id,
+       true);
+
+   if (new_vbid.valid()) {
+       modify(acct, [&](account_object &_acct) {
+           _acct.cashback_vb = *new_vbid;
+       });
    }
 
    return;
@@ -187,4 +225,3 @@ void database::deposit_witness_pay(const witness_object& wit, share_type amount)
 }
 
 } }
-   

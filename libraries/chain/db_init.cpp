@@ -46,7 +46,15 @@
 #include <graphene/chain/witness_object.hpp>
 #include <graphene/chain/witness_schedule_object.hpp>
 #include <graphene/chain/worker_object.hpp>
-#include <graphene/chain/alliance_object.hpp>
+
+#include <graphene/chain/data_market_object.hpp>
+#include <graphene/chain/free_data_product_object.hpp>
+#include <graphene/chain/league_data_product_object.hpp>
+#include <graphene/chain/league_object.hpp>
+#include <graphene/chain/pocs_object.hpp>
+#include <graphene/chain/second_hand_data_object.hpp>
+#include <graphene/chain/signature_object.hpp>
+#include <graphene/chain/contract_table_objects.hpp>
 
 #include <graphene/chain/account_evaluator.hpp>
 #include <graphene/chain/asset_evaluator.hpp>
@@ -55,7 +63,6 @@
 #include <graphene/chain/committee_member_evaluator.hpp>
 #include <graphene/chain/confidential_evaluator.hpp>
 #include <graphene/chain/custom_evaluator.hpp>
-#include <graphene/chain/policy_evaluator.hpp>
 #include <graphene/chain/market_evaluator.hpp>
 #include <graphene/chain/proposal_evaluator.hpp>
 #include <graphene/chain/transfer_evaluator.hpp>
@@ -63,10 +70,17 @@
 #include <graphene/chain/withdraw_permission_evaluator.hpp>
 #include <graphene/chain/witness_evaluator.hpp>
 #include <graphene/chain/worker_evaluator.hpp>
-#include <graphene/chain/pnt_transfer_evaluator.hpp>
-#include <graphene/chain/data_storage_evaluator.hpp>
+#include <graphene/chain/stale_evaluator.hpp>
+#include <graphene/chain/data_market_evaluator.hpp>
+#include <graphene/chain/data_transaction_evaluator.hpp>
+#include <graphene/chain/pay_data_transaction_evaluator.hpp>
+#include <graphene/chain/free_data_product_evaluator.hpp>
+#include <graphene/chain/league_data_product_evaluator.hpp>
+#include <graphene/chain/league_evaluator.hpp>
+#include <graphene/chain/datasource_copyright_evaluator.hpp>
+#include <graphene/chain/loyalty_evaluator.hpp>
+#include <graphene/chain/proxy_transfer_evaluator.hpp>
 #include <graphene/chain/contract_evaluator.hpp>
-#include <graphene/chain/alliance_evaluator.hpp>
 
 #include <graphene/chain/protocol/fee_schedule.hpp>
 
@@ -132,8 +146,44 @@ const uint8_t witness_object::type_id;
 const uint8_t worker_object::space_id;
 const uint8_t worker_object::type_id;
 
-const uint8_t alliance_object::space_id;
-const uint8_t alliance_object::type_id;
+const uint8_t data_market_category_object::space_id;
+const uint8_t data_market_category_object::type_id;
+
+const uint8_t free_data_product_object::space_id;
+const uint8_t free_data_product_object::type_id;
+
+const uint8_t league_data_product_object::space_id;
+const uint8_t league_data_product_object::type_id;
+
+const uint8_t league_object::space_id;
+const uint8_t league_object::type_id;
+
+const uint8_t data_transaction_object::space_id;
+const uint8_t data_transaction_object::type_id;
+
+const uint8_t pocs_object::space_id;
+const uint8_t pocs_object::type_id;
+
+const uint8_t data_transaction_complain_object::space_id;
+const uint8_t data_transaction_complain_object::type_id;
+
+const uint8_t lock_balance_object::space_id;
+const uint8_t lock_balance_object::type_id;
+
+const uint8_t trust_node_pledge_object::space_id;
+const uint8_t trust_node_pledge_object::type_id;
+
+const uint8_t signature_object::space_id;
+const uint8_t signature_object::type_id;
+
+const uint8_t table_id_object::space_id;
+const uint8_t table_id_object::type_id;
+
+const uint8_t key_value_object::space_id;
+const uint8_t key_value_object::type_id;
+
+// const uint8_t template index64_object::space_id;
+// const uint8_t template index64_object::type_id;
 
 void database::initialize_evaluators()
 {
@@ -141,12 +191,14 @@ void database::initialize_evaluators()
    register_evaluator<account_create_evaluator>();
    register_evaluator<account_update_evaluator>();
    register_evaluator<account_upgrade_evaluator>();
+   register_evaluator<account_upgrade_merchant_evaluator>();
+   register_evaluator<account_upgrade_datasource_evaluator>();
+   register_evaluator<account_upgrade_data_transaction_member_evaluator>();
    register_evaluator<account_whitelist_evaluator>();
    register_evaluator<committee_member_create_evaluator>();
    register_evaluator<committee_member_update_evaluator>();
    register_evaluator<committee_member_update_global_parameters_evaluator>();
    register_evaluator<custom_evaluator>();
-   register_evaluator<policy_evaluator>();
    register_evaluator<asset_create_evaluator>();
    register_evaluator<asset_issue_evaluator>();
    register_evaluator<asset_reserve_evaluator>();
@@ -160,6 +212,7 @@ void database::initialize_evaluators()
    register_evaluator<limit_order_cancel_evaluator>();
    register_evaluator<call_order_update_evaluator>();
    register_evaluator<transfer_evaluator>();
+   register_evaluator<inline_transfer_evaluator>();
    register_evaluator<override_transfer_evaluator>();
    register_evaluator<asset_fund_fee_pool_evaluator>();
    register_evaluator<asset_publish_feeds_evaluator>();
@@ -175,18 +228,45 @@ void database::initialize_evaluators()
    register_evaluator<withdraw_permission_update_evaluator>();
    register_evaluator<withdraw_permission_delete_evaluator>();
    register_evaluator<worker_create_evaluator>();
-   register_evaluator<pnt_transfer_evaluator>();
    register_evaluator<balance_claim_evaluator>();
+   register_evaluator<balance_lock_evaluator>();
+   register_evaluator<balance_unlock_evaluator>();
    register_evaluator<transfer_to_blind_evaluator>();
    register_evaluator<transfer_from_blind_evaluator>();
    register_evaluator<blind_transfer_evaluator>();
    register_evaluator<asset_claim_fees_evaluator>();
-   register_evaluator<oracle_evaluator>();
-   register_evaluator<data_storage_evaluator>();
-   register_evaluator<contract_call_evaluator>();
-   register_evaluator<alliance_create_evaluator>();
-   register_evaluator<alliance_update_evaluator>();
+   // stale evaluator
+   register_evaluator<stale_data_market_category_create_evaluator>();
+   register_evaluator<stale_data_market_category_update_evaluator>();
+   register_evaluator<stale_free_data_product_create_evaluator>();
+   register_evaluator<stale_free_data_product_update_evaluator>();
+   register_evaluator<stale_league_data_product_create_evaluator>();
+   register_evaluator<stale_league_data_product_update_evaluator>();
+   register_evaluator<stale_league_create_evaluator>();
+   register_evaluator<stale_league_update_evaluator>();
 
+   // new added evaluator
+   register_evaluator<data_market_category_create_evaluator>();
+   register_evaluator<data_market_category_update_evaluator>();
+   register_evaluator<free_data_product_create_evaluator>();
+   register_evaluator<free_data_product_update_evaluator>();
+   register_evaluator<league_data_product_create_evaluator>();
+   register_evaluator<league_data_product_update_evaluator>();
+   register_evaluator<league_create_evaluator>();
+   register_evaluator<league_update_evaluator>();
+   register_evaluator<data_transaction_create_evaluator>();
+   register_evaluator<data_transaction_update_evaluator>();
+   register_evaluator<pay_data_transaction_evaluator>();
+   register_evaluator<data_transaction_datasource_upload_evaluator>();
+   register_evaluator<data_transaction_datasource_validate_error_evaluator>();
+   register_evaluator<data_transaction_complain_evaluator>();
+   register_evaluator<datasource_copyright_clear_evaluator>();
+   register_evaluator<proxy_transfer_evaluator>();
+   register_evaluator<contract_deploy_evaluator>();
+   register_evaluator<contract_call_evaluator>();
+   register_evaluator<contract_update_evaluator>();
+   register_evaluator<trust_node_pledge_withdraw_evaluator>();
+   register_evaluator<inter_contract_call_evaluator>();
 }
 
 void database::initialize_indexes()
@@ -215,10 +295,21 @@ void database::initialize_indexes()
    add_index< primary_index<worker_index> >();
    add_index< primary_index<balance_index> >();
    add_index< primary_index<blinded_balance_index> >();
+   add_index< primary_index<data_market_category_index> >();
+   add_index< primary_index<free_data_product_index> >();
+   add_index< primary_index<league_data_product_index> >();
+   add_index< primary_index<league_index> >();
+   add_index< primary_index<data_transaction_index> >();
+   add_index< primary_index<pocs_index> >();
+   add_index< primary_index<datasource_copyright_index> >();
+   add_index< primary_index<data_transaction_complain_index> >();
+   add_index< primary_index<second_hand_data_index> >();
 
    //Implementation object indexes
    add_index< primary_index<transaction_index                             > >();
    add_index< primary_index<account_balance_index                         > >();
+   add_index< primary_index<account_balance_locked_index                  > >();
+   add_index< primary_index<trust_node_pledge_index          > >();
    add_index< primary_index<asset_bitasset_data_index                     > >();
    add_index< primary_index<simple_index<global_property_object          >> >();
    add_index< primary_index<simple_index<dynamic_global_property_object  >> >();
@@ -230,9 +321,16 @@ void database::initialize_indexes()
    add_index< primary_index<simple_index<budget_record_object           > > >();
    add_index< primary_index< special_authority_index                      > >();
    add_index< primary_index< buyback_index                                > >();
-   add_index< primary_index< alliance_index                               > >();
 
    add_index< primary_index< simple_index< fba_accumulator_object       > > >();
+
+   add_index< primary_index<signature_index                            > >();
+
+   // contract object indexes
+   add_index< primary_index< table_id_multi_index> >();
+   add_index< primary_index< key_value_index> >();
+   add_index< primary_index< index64_index> >();
+
 }
 
 void database::init_genesis(const genesis_state_type& genesis_state)
@@ -367,8 +465,9 @@ void database::init_genesis(const genesis_state_type& genesis_state)
          a.options.core_exchange_rate.quote.asset_id = asset_id_type(0);
          a.dynamic_asset_data_id = dyn_asset.id;
       });
-   assert( asset_id_type(core_asset.id) == asset().asset_id );
-   assert( get_balance(account_id_type(), asset_id_type()) == asset(dyn_asset.current_supply) );
+   FC_ASSERT( dyn_asset.id == asset_dynamic_data_id_type() );
+   FC_ASSERT( asset_id_type(core_asset.id) == asset().asset_id );
+   FC_ASSERT( get_balance(account_id_type(), asset_id_type()) == asset(dyn_asset.current_supply) );
    // Create more special assets
    while( true )
    {
@@ -406,6 +505,7 @@ void database::init_genesis(const genesis_state_type& genesis_state)
        p.parameters.current_fees->zero_all_fees();
 
    });
+
    create<dynamic_global_property_object>([&](dynamic_global_property_object& p) {
       p.time = genesis_state.initial_timestamp;
       p.dynamic_flags = 0;
@@ -447,9 +547,6 @@ void database::init_genesis(const genesis_state_type& genesis_state)
           account_upgrade_operation op;
           op.account_to_upgrade = account_id;
           op.upgrade_to_lifetime_member = true;
-          //hanyang plan b
-          op.policy_flag =false;
-          op.policy_hash_code="";
           apply_operation(genesis_eval_state, op);
       }
    }
@@ -469,8 +566,7 @@ void database::init_genesis(const genesis_state_type& genesis_state)
    const auto get_asset_id = [&assets_by_symbol](const string& symbol) {
       auto itr = assets_by_symbol.find(symbol);
 
-      // TODO: This is temporary for handling BTS snapshot
-      if( symbol == "BTS" )
+      if( symbol == "GXC" )
           itr = assets_by_symbol.find(GRAPHENE_SYMBOL);
 
       FC_ASSERT(itr != assets_by_symbol.end(),
@@ -542,7 +638,8 @@ void database::init_genesis(const genesis_state_type& genesis_state)
          a.issuer = get_account_id(issuer_name);
          a.options.max_supply = asset.max_supply;
          a.options.flags = witness_fed_asset;
-         a.options.issuer_permissions = charge_market_fee | global_settle | witness_fed_asset | committee_fed_asset;
+         a.options.issuer_permissions = charge_market_fee | override_authority | white_list | transfer_restricted | disable_confidential |
+                                       ( asset.is_bitasset ? disable_force_settle | global_settle | witness_fed_asset | committee_fed_asset : 0 );
          a.dynamic_asset_data_id = dynamic_data_id;
          a.bitasset_data_id = bitasset_data_id;
       });
@@ -553,7 +650,7 @@ void database::init_genesis(const genesis_state_type& genesis_state)
    for( const auto& handout : genesis_state.initial_balances )
    {
       const auto asset_id = get_asset_id(handout.asset_symbol);
-      create<balance_object>([&handout,&get_asset_id,total_allocation,asset_id](balance_object& b) {
+      create<balance_object>([&handout,total_allocation,asset_id](balance_object& b) {
          b.balance = asset(handout.amount, asset_id);
          b.owner = handout.owner;
       });
@@ -608,6 +705,7 @@ void database::init_genesis(const genesis_state_type& genesis_state)
             elog( "Genesis for asset ${aname} is not balanced\n"
                   "   Debt is ${debt}\n"
                   "   Supply is ${supply}\n",
+                  ("aname", it->symbol)
                   ("debt", debt_itr->second)
                   ("supply", supply_itr->second)
                 );
@@ -650,21 +748,6 @@ void database::init_genesis(const genesis_state_type& genesis_state)
       committee_member_create_operation op;
       op.committee_member_account = get_account_id(member.owner_name);
       apply_operation(genesis_eval_state, op);
-   });
-
-   // Create initial workers
-   std::for_each(genesis_state.initial_worker_candidates.begin(), genesis_state.initial_worker_candidates.end(),
-                  [&](const genesis_state_type::initial_worker_type& worker)
-   {
-       worker_create_operation op;
-       op.owner = get_account_id(worker.owner_name);
-       op.work_begin_date = genesis_state.initial_timestamp;
-       op.work_end_date = time_point_sec::maximum();
-       op.daily_pay = worker.daily_pay;
-       op.name = "Genesis-Worker-" + worker.owner_name;
-       op.initializer = vesting_balance_worker_initializer{uint16_t(0)};
-
-       apply_operation(genesis_eval_state, std::move(op));
    });
 
    // Set active witnesses
@@ -717,10 +800,9 @@ void database::init_genesis(const genesis_state_type& genesis_state)
 
    FC_ASSERT( get_index<fba_accumulator_object>().get_next_id() == fba_accumulator_id_type( fba_accumulator_id_count ) );
 
-   debug_dump();
+   // debug_dump();
 
    _undo_db.enable();
 } FC_CAPTURE_AND_RETHROW() }
 
 } }
-   
