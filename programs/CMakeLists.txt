@@ -6,4 +6,5 @@ add_subdirectory( debug_node )
 add_subdirectory( delayed_node )
 add_subdirectory( js_operation_serializer )
 add_subdirectory( size_checker )
+add_subdirectory( ins_abigen )
    
