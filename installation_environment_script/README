@@ -1,0 +1,3 @@
+# install environment script
+# use method: chmod a+x boost_1_57_0_install.sh ubuntu_gcc_install.sh
+# ./boost_1_57_0_install.sh && ./ubuntu_gcc_install.sh
