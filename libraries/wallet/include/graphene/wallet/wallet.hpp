@@ -1022,7 +1022,22 @@ class wallet_api
                                          string code_file_path,
                                          string abi_file_path,
                                          bool broadcast=false);
+    signed_transaction call_contract(string account,
+                                     string contract,
+                                     optional<asset> amount,
+                                     string method,
+                                     string arg,
+                                     string fee_asset_symbol,
+                                     bool broadcast = false);
+    signed_transaction update_contract(string contract,
+                                     optional<string> new_owner,
+                                     string contract_dir,
+                                     string fee_asset_symbol,
+                                     bool broadcast = false);
+      variant get_contract_tables(string contract) const;
       
+      get_table_rows_result get_table_rows_ex(string contract, string table, const get_table_rows_params& params) const;
+      get_table_rows_result get_table_rows(string contract, string table, uint64_t start, uint64_t limit) const;
       /** Publishes a price feed for the named asset.
        *
        * Price feed providers use this command to publish their price feeds for market-issued assets. A price feed is
@@ -1702,6 +1717,12 @@ FC_API( graphene::wallet::wallet_api,
         (import_balance)
         (suggest_brain_key)
         (register_account)
+        (deploy_contract)
+        (update_contract)
+        (call_contract)
+        (get_contract_tables)
+        (get_table_rows_ex)
+        (get_table_rows)
         (upgrade_account)
         (create_account_with_brain_key)
         (sell_asset)
