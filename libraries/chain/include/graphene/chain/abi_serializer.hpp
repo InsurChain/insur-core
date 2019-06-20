@@ -129,6 +129,10 @@ namespace impl {
    template<typename T>
    constexpr bool single_type_requires_abi_v() {
       return std::is_base_of<transaction, T>::value ||
+//             std::is_same<T, packed_transaction>::value ||
+//             std::is_same<T, transaction_trace>::value ||
+//             std::is_same<T, transaction_receipt>::value ||
+//             std::is_same<T, action_trace>::value ||
              std::is_same<T, signed_transaction>::value ||
              std::is_same<T, signed_block>::value ||
              std::is_same<T, action>::value;
@@ -299,6 +303,47 @@ namespace impl {
          out(name, std::move(mvo));
       }
 
+      /**
+       * overload of to_variant_object for actions
+       * @tparam Resolver
+       * @param act
+       * @param resolver
+       * @return
+      template<typename Resolver>
+      static void add(mutable_variant_object &out, const char* name, const action_trace& act, Resolver resolver) {
+         mutable_variant_object mvo;
+         mvo("receipt", act.receipt);
+         mvo("elapsed", act.elapsed);
+         mvo("cpu_usage", act.cpu_usage);
+         mvo("console", act.console);
+         mvo("total_cpu_usage", act.total_inline_cpu_usage);
+         mvo("inline_traces", act.inline_traces);
+         out(name, std::move(mvo));
+      }
+       */
+
+
+      /**
+       * overload of to_variant_object for packed_transaction
+       * @tparam Resolver
+       * @param act
+       * @param resolver
+       * @return
+       */
+//      template<typename Resolver>
+//      static void add(mutable_variant_object &out, const char* name, const packed_transaction& ptrx, Resolver resolver) {
+//         mutable_variant_object mvo;
+//         auto trx = ptrx.get_transaction();
+//         mvo("id", trx.id());
+//         mvo("signatures", ptrx.signatures);
+//         mvo("compression", ptrx.compression);
+//         mvo("packed_context_free_data", ptrx.packed_context_free_data);
+//         mvo("context_free_data", ptrx.get_context_free_data());
+//         mvo("packed_trx", ptrx.packed_trx);
+//         add(mvo, "transaction", trx, resolver);
+//
+//         out(name, std::move(mvo));
+//      }
    };
 
    /**
@@ -419,6 +464,9 @@ namespace impl {
          from_variant(vo["contract_id"], act.contract_id);
          from_variant(vo["method_name"], act.method_name);
 
+//         if (vo.contains("authorization")) {
+//            from_variant(vo["authorization"], act.authorization);
+//         }
 
          bool valid_empty_data = false;
          if( vo.contains( "data" ) ) {
@@ -452,6 +500,39 @@ namespace impl {
          
       }
 
+//      template<typename Resolver>
+//      static void extract( const variant& v, packed_transaction& ptrx, Resolver resolver ) {
+//         const variant_object& vo = v.get_object();
+//         FC_ASSERT(vo.contains("signatures"), "Missing signatures");
+//         FC_ASSERT(vo.contains("compression"), "Missing compression");
+//         from_variant(vo["signatures"], ptrx.signatures);
+//         from_variant(vo["compression"], ptrx.compression);
+//
+//         // TODO: Make this nicer eventually. But for now, if it works... good enough.
+//         if( vo.contains("packed_trx") && vo["packed_trx"].is_string() && !vo["packed_trx"].as_string().empty() ) {
+//            from_variant(vo["packed_trx"], ptrx.packed_trx);
+//            auto trx = ptrx.get_transaction(); // Validates transaction data provided.
+//            if( vo.contains("packed_context_free_data") && vo["packed_context_free_data"].is_string() && !vo["packed_context_free_data"].as_string().empty() ) {
+//               from_variant(vo["packed_context_free_data"], ptrx.packed_context_free_data );
+//            } else if( vo.contains("context_free_data") ) {
+//               vector<bytes> context_free_data;
+//               from_variant(vo["context_free_data"], context_free_data);
+//               ptrx.set_transaction(trx, context_free_data, ptrx.compression);
+//            }
+//         } else {
+//            FC_ASSERT(vo.contains("transaction"), "Missing transaction");
+//            transaction trx;
+//            vector<bytes> context_free_data;
+//            extract(vo["transaction"], trx, resolver);
+//            if( vo.contains("packed_context_free_data") && vo["packed_context_free_data"].is_string() && !vo["packed_context_free_data"].as_string().empty() ) {
+//               from_variant(vo["packed_context_free_data"], ptrx.packed_context_free_data );
+//               context_free_data = ptrx.get_context_free_data();
+//            } else if( vo.contains("context_free_data") ) {
+//               from_variant(vo["context_free_data"], context_free_data);
+//            }
+//            ptrx.set_transaction(trx, context_free_data, ptrx.compression);
+//         }
+//      }
    };
 
    /**
