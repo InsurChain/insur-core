@@ -215,11 +215,13 @@ struct get_impacted_account_visitor
    }
    void operator()( const contract_call_operation& op )
    {
-      _impacted.insert( op.account );
+       _impacted.insert(op.account);
+       _impacted.insert(op.contract_id);
    }
    void operator()( const inter_contract_call_operation& op )
    {
-      _impacted.insert( op.sender_contract );
+       _impacted.insert(op.sender_contract);
+       _impacted.insert(op.contract_id);
    }
    void operator()( const contract_deploy_operation& op )
    {
@@ -227,7 +229,7 @@ struct get_impacted_account_visitor
    }
    void operator()( const contract_update_operation& op )
    {
-      _impacted.insert( op.new_owner );
+       _impacted.insert(op.owner);
    }
    void operator()( const data_market_create_operation& op )
    {
