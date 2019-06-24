@@ -23,6 +23,7 @@
  */
 #include <graphene/chain/account_object.hpp>
 #include <graphene/chain/asset_object.hpp>
+#include <graphene/chain/committee_member_object.hpp>
 #include <graphene/chain/database.hpp>
 #include <graphene/chain/hardfork.hpp>
 #include <fc/uint128.hpp>
@@ -74,9 +75,15 @@ void account_statistics_object::process_fees(const account_object& a, database& 
          share_type lifetime_cut = cut_fee(core_fee_total, account.lifetime_referrer_fee_percentage);
          share_type referral = core_fee_total - network_cut - lifetime_cut;
 
-         d.modify(asset_dynamic_data_id_type()(d), [network_cut](asset_dynamic_data_object& d) {
-            d.accumulated_fees += network_cut;
-         });
+         if (d.head_block_time() > HARDFORK_1008_TIME) {
+             d.modify(asset_dynamic_data_id_type(1)(d), [network_cut](asset_dynamic_data_object &d) {
+                 d.accumulated_fees += network_cut;
+             });
+         } else {
+             d.modify(asset_dynamic_data_id_type()(d), [network_cut](asset_dynamic_data_object &d) {
+                 d.accumulated_fees += network_cut;
+             });
+         }
 
          // Potential optimization: Skip some of this math and object lookups by special casing on the account type.
          // For example, if the account is a lifetime member, we can skip all this and just deposit the referral to
@@ -271,5 +278,30 @@ void account_referrer_index::about_to_modify( const object& before )
 void account_referrer_index::object_modified( const object& after  )
 {
 }
+
+ bool account_object::is_active_committe_member(const database& db)const{
+
+     fc::optional<committee_member_object> com;
+     const auto& idx = db.get_index_type<committee_member_index>().indices().get<by_account>();
+     auto itr = idx.find(this->get_id());
+     if( itr != idx.end() ){
+           com = *itr;
+     }else{
+         return false;
+     }
+     const committee_member_object& com2 = *com;
+     //Compared with actived commitee members list's ID
+     vector<committee_member_id_type> active_committee_members = db.get_global_properties().active_committee_members;
+     //wlog("size : ${size}................", ("size",active_committee_members.size()));
+     //wlog("this id : ${thisid}................", ("thisid",this->id));
+     //wlog("com2 id : ${com2id}................", ("com2id",com2.id.as<committee_member_id_type>()));
+      for( committee_member_id_type id : active_committee_members ){
+     //   wlog("id : ${id}................", ("id",id));
+        if(com2.id.as<committee_member_id_type>() == id){
+              return true;
+        }
+      }
+      return true;
+     }
 
 } } // graphene::chain
