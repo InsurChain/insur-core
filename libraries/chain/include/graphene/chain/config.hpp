@@ -168,6 +168,9 @@
 #define GRAPHENE_NULL_WITNESS (graphene::chain::witness_id_type(0))
 ///@}
 
-// hack for unit test
-#define GRAPHENE_FBA_STEALTH_DESIGNATED_ASSET (asset_id_type(1))
-   
+#define GRAPHENE_DATA_TRANSACTION_COMMISSION_ACCOUNT "commission-account"
+
+#define GRAPHENE_INSUR_ASSET (asset_id_type(1))
+#define GRAPHENE_FBA_STEALTH_DESIGNATED_ASSET (asset_id_type(743))
+
+#define GRAPHENE_MAX_NESTED_OBJECTS (200)
