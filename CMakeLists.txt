@@ -157,7 +157,7 @@ add_subdirectory( contracts )
 add_subdirectory( programs )
 add_subdirectory( tests )
 
-
+#install_directory_permissions(DIRECTOR ${CMAKE_INSTALL_FULL_SYSCONFDIR}/insur)
 if (ENABLE_INSTALLER)
 
 set(VERSION_MAJOR 0)

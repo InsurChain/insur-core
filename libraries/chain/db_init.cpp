@@ -49,8 +49,8 @@
 
 #include <graphene/chain/data_market_object.hpp>
 #include <graphene/chain/free_data_product_object.hpp>
-#include <graphene/chain/league_data_product_object.hpp>
-#include <graphene/chain/league_object.hpp>
+#include <graphene/chain/alliance_data_product_object.hpp>
+#include <graphene/chain/alliance_object.hpp>
 #include <graphene/chain/pocs_object.hpp>
 #include <graphene/chain/second_hand_data_object.hpp>
 #include <graphene/chain/signature_object.hpp>
@@ -75,8 +75,8 @@
 #include <graphene/chain/data_transaction_evaluator.hpp>
 #include <graphene/chain/pay_data_transaction_evaluator.hpp>
 #include <graphene/chain/free_data_product_evaluator.hpp>
-#include <graphene/chain/league_data_product_evaluator.hpp>
-#include <graphene/chain/league_evaluator.hpp>
+#include <graphene/chain/alliance_data_product_evaluator.hpp>
+#include <graphene/chain/alliance_evaluator.hpp>
 #include <graphene/chain/datasource_copyright_evaluator.hpp>
 #include <graphene/chain/loyalty_evaluator.hpp>
 #include <graphene/chain/proxy_transfer_evaluator.hpp>
@@ -152,11 +152,11 @@ const uint8_t data_market_category_object::type_id;
 const uint8_t free_data_product_object::space_id;
 const uint8_t free_data_product_object::type_id;
 
-const uint8_t league_data_product_object::space_id;
-const uint8_t league_data_product_object::type_id;
+const uint8_t alliance_data_product_object::space_id;
+const uint8_t alliance_data_product_object::type_id;
 
-const uint8_t league_object::space_id;
-const uint8_t league_object::type_id;
+const uint8_t alliance_object::space_id;
+const uint8_t alliance_object::type_id;
 
 const uint8_t data_transaction_object::space_id;
 const uint8_t data_transaction_object::type_id;
@@ -240,20 +240,20 @@ void database::initialize_evaluators()
    register_evaluator<stale_data_market_category_update_evaluator>();
    register_evaluator<stale_free_data_product_create_evaluator>();
    register_evaluator<stale_free_data_product_update_evaluator>();
-   register_evaluator<stale_league_data_product_create_evaluator>();
-   register_evaluator<stale_league_data_product_update_evaluator>();
-   register_evaluator<stale_league_create_evaluator>();
-   register_evaluator<stale_league_update_evaluator>();
+   register_evaluator<stale_alliance_data_product_create_evaluator>();
+   register_evaluator<stale_alliance_data_product_update_evaluator>();
+   register_evaluator<stale_alliance_create_evaluator>();
+   register_evaluator<stale_alliance_update_evaluator>();
 
    // new added evaluator
    register_evaluator<data_market_category_create_evaluator>();
    register_evaluator<data_market_category_update_evaluator>();
    register_evaluator<free_data_product_create_evaluator>();
    register_evaluator<free_data_product_update_evaluator>();
-   register_evaluator<league_data_product_create_evaluator>();
-   register_evaluator<league_data_product_update_evaluator>();
-   register_evaluator<league_create_evaluator>();
-   register_evaluator<league_update_evaluator>();
+   register_evaluator<alliance_data_product_create_evaluator>();
+   register_evaluator<alliance_data_product_update_evaluator>();
+   register_evaluator<alliance_create_evaluator>();
+   register_evaluator<alliance_update_evaluator>();
    register_evaluator<data_transaction_create_evaluator>();
    register_evaluator<data_transaction_update_evaluator>();
    register_evaluator<pay_data_transaction_evaluator>();
@@ -297,8 +297,8 @@ void database::initialize_indexes()
    add_index< primary_index<blinded_balance_index> >();
    add_index< primary_index<data_market_category_index> >();
    add_index< primary_index<free_data_product_index> >();
-   add_index< primary_index<league_data_product_index> >();
-   add_index< primary_index<league_index> >();
+   add_index< primary_index<alliance_data_product_index> >();
+   add_index< primary_index<alliance_index> >();
    add_index< primary_index<data_transaction_index> >();
    add_index< primary_index<pocs_index> >();
    add_index< primary_index<datasource_copyright_index> >();
