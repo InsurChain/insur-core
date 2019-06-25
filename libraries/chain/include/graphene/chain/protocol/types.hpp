@@ -171,11 +171,10 @@ namespace graphene { namespace chain {
       alliance_data_product_object_type,
       data_transaction_object_type,
       data_transaction_complain_object_type,
-      data_transaction_complain_object_type,
       datasource_copyright_object_type,
       lock_balance_object_type,
       trust_node_pledge_object_type,
-      pocs_object_type
+      pocs_object_type,
 
 
       OBJECT_TYPE_COUNT ///< Sentry value which contains the number of different object types
@@ -232,7 +231,7 @@ namespace graphene { namespace chain {
    class data_transaction_object;
    class data_transaction_complain_object;
    class datasource_copyright_object;
-   class lock_balance_object_type;
+   class lock_balance_object;
    class trust_node_pledge_object;
    class pocs_object;
 
