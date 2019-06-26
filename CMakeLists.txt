@@ -1,9 +1,23 @@
 # Defines Graphene library target.
 # Build for INSUR BLOCKCHAIN
 project( Graphene )
-cmake_minimum_required( VERSION 2.8.12 )
+cmake_minimum_required( VERSION 3.5 )
 
 set( BLOCKCHAIN_NAME "Graphene" )
+set( CMAKE_CXX_STANDARD 14 )
+set( CMAKE_CXX_EXTENSIONS ON )
+set( CXX_STANDARD_REQUIRED ON)
+
+set( LOAD_TXID_PLUGIN 0)
+set( LOAD_ELASTICSEARCH_PLUGIN 0)
+if(LOAD_TXID_PLUGIN)
+  add_definitions(-DQUERY_TXID_PLUGIN_HPP)
+  set( QUERY_TXID graphene_query_txid)
+endif()
+if(LOAD_ELASTICSEARCH_PLUGIN)
+  add_definitions(-DELASTIC_SEARCH_PLUGIN_HPP)
+  set( ELASTIC_SEARCH graphene_elasticsearch)
+endif()
 
 set( CLI_CLIENT_EXECUTABLE_NAME graphene_client )
 set( GUI_CLIENT_EXECUTABLE_NAME Graphene )
@@ -22,6 +36,8 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules" )
+include( GNUInstallDirs )
+include( InstallDirectoryPermissions )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
@@ -57,9 +73,8 @@ IF( WIN32 )
   set(BOOST_ALL_DYN_LINK OFF) # force dynamic linking for all libraries
 ENDIF(WIN32)
 
-FIND_PACKAGE(Boost 1.57 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-# For Boost 1.53 on windows, coroutine was not in BOOST_LIBRARYDIR and do not need it to build,  but if boost versin >= 1.54, find coroutine otherwise will cause link errors
-IF(NOT "${Boost_VERSION}" MATCHES "1.53(.*)")
+FIND_PACKAGE(Boost 1.67 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+IF(NOT "${Boost_VERSION}" MATCHES "1.67(.*)")
    SET(BOOST_LIBRARIES_TEMP ${Boost_LIBRARIES})
    FIND_PACKAGE(Boost 1.54 REQUIRED COMPONENTS coroutine)
    LIST(APPEND BOOST_COMPONENTS coroutine)
@@ -110,11 +125,11 @@ else( WIN32 ) # Apple AND Linux
     if( APPLE )
         # Apple Specific Options Here
         message( STATUS "Configuring Graphene on OS X" )
-        set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++11 -stdlib=libc++ -Wall" )
+        set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++14 -stdlib=libc++ -Wall" )
     else( APPLE )
         # Linux Specific Options Here
         message( STATUS "Configuring Graphene on Linux" )
-        set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++11 -Wall" )
+        set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++14 -Wall" )
         set( rt_library rt )
         set( pthread_library pthread)
         if ( NOT DEFINED crypto_library )
@@ -151,12 +166,18 @@ if(ENABLE_COVERAGE_TESTING)
     SET(CMAKE_CXX_FLAGS "--coverage ${CMAKE_CXX_FLAGS}")
 endif()
 
+add_subdirectory( externals )
+
 include(wasm)
+include(installer)
 add_subdirectory( libraries )
 add_subdirectory( contracts )
 add_subdirectory( programs )
 add_subdirectory( tests )
+add_subdirectory( tools )
 
+
+install_directory_permissions(DIRECTORY ${CMAKE_INSTALL_FULL_SYSCONFDIR}/ins)
 
 if (ENABLE_INSTALLER)
 
