@@ -23,8 +23,8 @@ add_custom_target(copy_skeleton_contract ALL DEPENDS share/insur/skeleton/skelet
 MESSAGE( STATUS "------- cmake_install_full_includedir ------ is: "
     ${CMAKE_INSTALL_FULL_INCLUDEDIR} )
 
-install(DIRECTORY graphenelib DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR})
-install(DIRECTORY musl DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR})
-install(DIRECTORY libc++ DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+install(DIRECTORY graphenelib DESTINATION lib ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+install(DIRECTORY musl DESTINATION lib ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+install(DIRECTORY libc++ DESTINATION lib ${CMAKE_INSTALL_FULL_INCLUDEDIR})
 install(DIRECTORY skeleton DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/insur)
-install_directory_permissions(DIRECTORY ${CMAKE_INSTALL_FULL_DATAROOTDIR}/insur)
+#install_directory_permissions(DIRECTORY ${CMAKE_INSTALL_FULL_DATAROOTDIR}/insur)

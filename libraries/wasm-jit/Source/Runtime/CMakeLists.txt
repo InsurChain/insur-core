@@ -38,6 +38,6 @@ llvm_map_components_to_libnames(LLVM_LIBS support core passes mcjit native Debug
 target_link_libraries(Runtime Platform Logging IR ${LLVM_LIBS})
 
 install(TARGETS Runtime 
-   LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
-   ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+   LIBRARY DESTINATION lib ${CMAKE_INSTALL_FULL_LIBDIR}
+   ARCHIVE DESTINATION lib ${CMAKE_INSTALL_FULL_LIBDIR})
 
