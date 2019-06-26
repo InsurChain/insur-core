@@ -67,10 +67,22 @@ add_library( graphene_chain
              pts_address.cpp
 
              evaluator.cpp
+             stale_evaluator.cpp
              balance_evaluator.cpp
              account_evaluator.cpp
              assert_evaluator.cpp
              witness_evaluator.cpp
+             data_market_evaluator.cpp
+             data_transaction_evaluator.cpp
+             pay_data_transaction_evaluator.cpp
+             free_data_product_evaluator.cpp
+             alliance_data_product_evaluator.cpp
+             alliance_evaluator.cpp
+             datasource_copyright_evaluator.cpp
+             loyalty_evaluator.cpp
+             proxy_transfer_evaluator.cpp
+             contract_evaluator.cpp
+
              committee_member_evaluator.cpp
              asset_evaluator.cpp
              transfer_evaluator.cpp
@@ -85,7 +97,17 @@ add_library( graphene_chain
              confidential_evaluator.cpp
              special_authority.cpp
              buyback.cpp
-             contract_evaluator.cpp
+
+             apply_context.cpp
+             transaction_context.cpp
+             wast_to_wasm.cpp
+             wasm_interface.cpp
+             wasm_validation.cpp
+             wasm_injection.cpp
+
+             webassembly/wavm.cpp
+             webassembly/binaryen.cpp
+             webassembly/wabt.cpp
 
              account_object.cpp
              asset_object.cpp
@@ -97,24 +119,21 @@ add_library( graphene_chain
 
              is_authorized_asset.cpp
 
-             wast_to_wasm.cpp
-             wasm_validation.cpp
-             wasm_injection.cpp
-             wasm_interface.cpp
-
-             webassembly/wavm.cpp
-             webassembly/wabt.cpp
+             abi_serializer.cpp
+             
+             trust_node_pledge_helper.cpp
 
              ${HEADERS}
              "${CMAKE_CURRENT_BINARY_DIR}/include/graphene/chain/hardfork.hpp"
            )
 
 add_dependencies( graphene_chain build_hardfork_hpp )
-target_link_libraries( graphene_chain fc graphene_db  Logging IR WAST WASM Runtime wasm asmjs passes ast softfloat builtins support)
+target_link_libraries( graphene_chain fc graphene_db  Logging IR WAST WASM Runtime wasm asmjs passes ast softfloat builtins support wabt emscripten-optimizer)
 target_include_directories( graphene_chain
                             PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
 				   "${CMAKE_CURRENT_BINARY_DIR}/include" 
-                                   "${CMAKE_CURRENT_SOURCE_DIR}/../wasm-jit/Include"
+                   "${CMAKE_CURRENT_SOURCE_DIR}/../wasm-jit/Include"
+                   "${CMAKE_CURRENT_SOURCE_DIR}/../../externals/binaryen/src"
 				   "${CMAKE_SOURCE_DIR}/libraries/wabt"
 				   "${CMAKE_BINARY_DIR}/libraries/wabt")
 
