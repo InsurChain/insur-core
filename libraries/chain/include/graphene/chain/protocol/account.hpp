@@ -61,6 +61,7 @@ namespace graphene { namespace chain {
    };
 
    /**
+    *  创建账户操作对象
     *  @ingroup operations
     */
    struct account_create_operation : public base_operation
@@ -75,7 +76,8 @@ namespace graphene { namespace chain {
 
       struct fee_parameters_type
       {
-         uint64_t basic_fee      = 5*GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to register the cheapest non-free account
+
+         uint64_t basic_fee      = 1*GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to register the cheapest non-free account
          uint64_t premium_fee    = 2000*GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to register the cheapest non-free account
          uint32_t price_per_kbyte = GRAPHENE_BLOCKCHAIN_PRECISION;
       };
@@ -90,7 +92,7 @@ namespace graphene { namespace chain {
       /// registrar.
       uint16_t        referrer_percent = 0;
 
-      string          name;
+      fc::string      name;
       authority       owner;
       authority       active;
 
@@ -128,7 +130,7 @@ namespace graphene { namespace chain {
 
       struct fee_parameters_type
       {
-         share_type fee             = 20 * GRAPHENE_BLOCKCHAIN_PRECISION;
+         share_type fee             = 1 * GRAPHENE_BLOCKCHAIN_PRECISION;
          uint32_t   price_per_kbyte = GRAPHENE_BLOCKCHAIN_PRECISION;
       };
 
@@ -180,7 +182,7 @@ namespace graphene { namespace chain {
     */
    struct account_whitelist_operation : public base_operation
    {
-      struct fee_parameters_type { share_type fee = 300000; };
+      struct fee_parameters_type { share_type fee = 3 * GRAPHENE_BLOCKCHAIN_PRECISION; };
       enum account_listing {
          no_listing = 0x0, ///< No opinion is specified about this account
          white_listed = 0x1, ///< This account is whitelisted, but not blacklisted
@@ -219,10 +221,8 @@ namespace graphene { namespace chain {
    struct account_upgrade_operation : public base_operation
    {
       struct fee_parameters_type { 
-         uint64_t membership_annual_fee   =  2000 * GRAPHENE_BLOCKCHAIN_PRECISION;
-         uint64_t membership_lifetime_fee = 10000 * GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to upgrade to a lifetime member
-         ////hanyang plan b
-         uint64_t policy_fee = 0;
+         uint64_t membership_annual_fee   = 1000 * GRAPHENE_BLOCKCHAIN_PRECISION;
+         uint64_t membership_lifetime_fee = 2000 * GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to upgrade to a lifetime member
       };
 
       asset             fee;
@@ -230,16 +230,91 @@ namespace graphene { namespace chain {
       account_id_type   account_to_upgrade;
       /// If true, the account will be upgraded to a lifetime member; otherwise, it will add a year to the subscription
       bool              upgrade_to_lifetime_member = false;
-
-      //hanyang plan b
-      bool              policy_flag = false;
-      string            policy_hash_code;
-      
       extensions_type   extensions;
 
       account_id_type fee_payer()const { return account_to_upgrade; }
       void       validate()const;
       share_type calculate_fee( const fee_parameters_type& k )const;
+   };
+   struct account_upgrade_merchant_operation : public base_operation
+    {
+        struct fee_parameters_type {
+            // uint64_t fee = 5 * GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to upgrade to a merchant member
+            uint64_t fee = 0;
+        };
+        asset             fee;
+        /// The account to upgrade; must not already be a merchant member
+        account_id_type   account_to_upgrade;
+        account_id_type   auth_referrer;
+        /// If true, the account will be upgraded to a merchant member; otherwise, it will add a year to the subscription
+        bool              upgrade_to_merchant_member = false;
+        extensions_type   extensions;
+        account_id_type fee_payer() const { 
+            for (auto& ext : extensions) {
+                if (ext.which() == future_extensions::tag<operation_ext_version_t>::value) {
+                    if (operation_version_one == ext.get<operation_ext_version_t>().version)
+                        return account_id_type();
+                }
+            }
+            return auth_referrer;
+        }
+
+        void       validate()const;
+        share_type calculate_fee( const fee_parameters_type& k )const{
+            return k.fee;
+        }
+    };
+   struct account_upgrade_datasource_operation : public base_operation
+   {
+      struct fee_parameters_type {
+         // uint64_t fee = 5 * GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to upgrade to a datasource member
+         uint64_t fee = 0;
+      };
+
+      asset             fee;
+      /// The account to upgrade; must not already be a datasource member
+      account_id_type   account_to_upgrade;
+      account_id_type   auth_referrer;
+      /// If true, the account will be upgraded to a datasource member; otherwise, it will add a year to the subscription
+      bool              upgrade_to_datasource_member = false;
+      extensions_type   extensions;
+      account_id_type fee_payer() const { 
+          for (auto& ext : extensions) {
+              if (ext.which() == future_extensions::tag<operation_ext_version_t>::value) {
+                  if (operation_version_one == ext.get<operation_ext_version_t>().version)
+                      return account_id_type();
+              }
+          }
+          return auth_referrer;
+      }
+      void       validate()const;
+      share_type calculate_fee( const fee_parameters_type& k )const{
+          return k.fee;
+      }
+   };
+
+   struct account_upgrade_data_transaction_member_operation : public base_operation
+   {
+      struct fee_parameters_type {
+         // uint64_t fee = 5 * GRAPHENE_BLOCKCHAIN_PRECISION; ///< the cost to upgrade to a data_transaction_member member
+         uint64_t fee = 0;
+      };
+
+      asset             fee;
+      /// The account to upgrade; must not already be a data_transaction_member member
+      account_id_type   account_to_upgrade;
+      /// If true, the account will be upgraded to a data_transaction_member member; otherwise, it will add a year to the subscription
+      bool              upgrade_to_data_transaction_member = false;
+      extensions_type   extensions;
+      account_id_type fee_payer()const { 
+          return account_id_type();
+      }
+      void validate()const {
+          FC_ASSERT( fee.amount >= 0 );
+      }
+      share_type calculate_fee( const fee_parameters_type& k )const{
+          return k.fee;
+      }
    };
 
    /**
@@ -271,7 +346,6 @@ namespace graphene { namespace chain {
 } } // graphene::chain
 
 FC_REFLECT(graphene::chain::account_options, (memo_key)(voting_account)(num_witness)(num_committee)(votes)(extensions))
-FC_REFLECT_TYPENAME( graphene::chain::account_whitelist_operation::account_listing)
 FC_REFLECT_ENUM( graphene::chain::account_whitelist_operation::account_listing,
                 (no_listing)(white_listed)(black_listed)(white_and_black_listed))
 
@@ -288,15 +362,22 @@ FC_REFLECT( graphene::chain::account_update_operation,
           )
 
 FC_REFLECT( graphene::chain::account_upgrade_operation,
-            (fee)(account_to_upgrade)(upgrade_to_lifetime_member)(policy_flag)(policy_hash_code)(extensions) )
+            (fee)(account_to_upgrade)(upgrade_to_lifetime_member)(extensions) )
 
 FC_REFLECT( graphene::chain::account_whitelist_operation, (fee)(authorizing_account)(account_to_list)(new_listing)(extensions))
 
 FC_REFLECT( graphene::chain::account_create_operation::fee_parameters_type, (basic_fee)(premium_fee)(price_per_kbyte) )
 FC_REFLECT( graphene::chain::account_whitelist_operation::fee_parameters_type, (fee) )
 FC_REFLECT( graphene::chain::account_update_operation::fee_parameters_type, (fee)(price_per_kbyte) )
-FC_REFLECT( graphene::chain::account_upgrade_operation::fee_parameters_type, (membership_annual_fee)(membership_lifetime_fee) (policy_fee))
+FC_REFLECT( graphene::chain::account_upgrade_operation::fee_parameters_type, (membership_annual_fee)(membership_lifetime_fee) )
 FC_REFLECT( graphene::chain::account_transfer_operation::fee_parameters_type, (fee) )
 
 FC_REFLECT( graphene::chain::account_transfer_operation, (fee)(account_id)(new_owner)(extensions) )
-   
+
+
+FC_REFLECT( graphene::chain::account_upgrade_merchant_operation::fee_parameters_type, (fee) )
+FC_REFLECT( graphene::chain::account_upgrade_merchant_operation,(fee)(account_to_upgrade)(auth_referrer)(upgrade_to_merchant_member)(extensions))
+FC_REFLECT( graphene::chain::account_upgrade_datasource_operation::fee_parameters_type, (fee) )
+FC_REFLECT( graphene::chain::account_upgrade_datasource_operation,(fee)(account_to_upgrade)(auth_referrer)(upgrade_to_datasource_member)(extensions))
+FC_REFLECT( graphene::chain::account_upgrade_data_transaction_member_operation::fee_parameters_type, (fee) )
+FC_REFLECT( graphene::chain::account_upgrade_data_transaction_member_operation,(fee)(account_to_upgrade)(upgrade_to_data_transaction_member)(extensions))

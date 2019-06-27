@@ -25,6 +25,7 @@
 #include <graphene/chain/exceptions.hpp>
 #include <graphene/chain/transaction_evaluation_state.hpp>
 #include <graphene/chain/protocol/operations.hpp>
+#include <graphene/chain/hardfork.hpp>
 
 namespace graphene { namespace chain {
 
@@ -39,7 +40,7 @@ namespace graphene { namespace chain {
       virtual ~generic_evaluator(){}
 
       virtual int get_type()const = 0;
-      virtual operation_result start_evaluate(transaction_evaluation_state& eval_state, const operation& op, bool apply);
+      virtual operation_result start_evaluate(transaction_evaluation_state& eval_state, const operation& op, bool apply, uint32_t billed_cpu_time_us);
 
       /**
        * @note derived classes should ASSUME that the default validation that is
@@ -47,7 +48,7 @@ namespace graphene { namespace chain {
        * not perform these extra checks.
        */
       virtual operation_result evaluate(const operation& op) = 0;
-      virtual operation_result apply(const operation& op) = 0;
+      virtual operation_result apply(const operation& op, uint32_t billed_cpu_time_us = 0) = 0;
 
       /**
        * Routes the fee to where it needs to go.  The default implementation
@@ -73,16 +74,17 @@ namespace graphene { namespace chain {
        * @brief Fetch objects relevant to fee payer and set pointer members
        * @param account_id Account which is paying the fee
        * @param fee The fee being paid. May be in assets other than core.
+       * @param o The operation of this paying.
        *
        * This method verifies that the fee is valid and sets the object pointer members and the fee fields. It should
        * be called during do_evaluate.
        *
        * In particular, core_fee_paid field is set by prepare_fee().
        */
-      void prepare_fee(account_id_type account_id, asset fee);
+       void prepare_fee(account_id_type account_id, asset fee, const operation& o);
 
       /**
-       * Convert the fee into BTS through the exchange pool.
+       * Convert the fee into INSUR through the exchange pool.
        *
        * Reads core_fee_paid field for how much CORE is deducted from the exchange pool,
        * and fee_from_account for how much USD is added to the pool.
@@ -93,7 +95,7 @@ namespace graphene { namespace chain {
        *
        * Rather than returning a value, this method fills in core_fee_paid field.
        */
-      void convert_fee();
+      virtual void convert_fee();
 
       object_id_type get_relative_id( object_id_type rel_id )const;
 
@@ -121,17 +123,17 @@ namespace graphene { namespace chain {
    {
    public:
       virtual ~op_evaluator(){}
-      virtual operation_result evaluate(transaction_evaluation_state& eval_state, const operation& op, bool apply) = 0;
+      virtual operation_result evaluate(transaction_evaluation_state& eval_state, const operation& op, bool apply, uint32_t billed_cpu_time_us) = 0;
    };
 
    template<typename T>
    class op_evaluator_impl : public op_evaluator
    {
    public:
-      virtual operation_result evaluate(transaction_evaluation_state& eval_state, const operation& op, bool apply = true) override
+      virtual operation_result evaluate(transaction_evaluation_state& eval_state, const operation& op, bool apply = true, uint32_t billed_cpu_time_us = 0) override
       {
          T eval;
-         return eval.start_evaluate(eval_state, op, apply);
+         return eval.start_evaluate(eval_state, op, apply, billed_cpu_time_us);
       }
    };
 
@@ -145,21 +147,27 @@ namespace graphene { namespace chain {
       {
          auto* eval = static_cast<DerivedEvaluator*>(this);
          const auto& op = o.get<typename DerivedEvaluator::operation_type>();
-
-         prepare_fee(op.fee_payer(), op.fee);
-         if( !trx_state->skip_fee_schedule_check )
-         {
-            share_type required_fee = calculate_fee_for_operation(op);
-            GRAPHENE_ASSERT( core_fee_paid >= required_fee,
-                       insufficient_fee,
-                       "Insufficient Fee Paid",
-                       ("core_fee_paid",core_fee_paid)("required", required_fee) );
+         eval->prepare_fee(op.fee_payer(), op.fee, o);
+         //head_block_time later than HRADFORK_1001_TIME we use pocs caculator fee, so the fee may be less than required_fee
+         if (!trx_state->skip_fee_schedule_check
+                 && (o.which() != operation::tag<pay_data_transaction_operation>::value)
+                 && (o.which() != operation::tag<contract_call_operation>::value)) {
+             share_type required_fee;
+             if (db().head_block_time() > HARDFORK_1024_TIME && o.which() == operation::tag<contract_update_operation>::value) {
+                 asset_id_type core_asset_id = db().current_core_asset_id();
+                 required_fee = db().get_update_contract_fee(op, core_asset_id).amount;
+             } else {
+                 required_fee = calculate_fee_for_operation(op);
+             }
+             GRAPHENE_ASSERT(core_fee_paid >= required_fee,
+                             insufficient_fee,
+                             "Insufficient Fee Paid",
+                             ("core_fee_paid", core_fee_paid)("required", required_fee));
          }
-
          return eval->do_evaluate(op);
       }
 
-      virtual operation_result apply(const operation& o) final override
+      virtual operation_result apply(const operation& o, uint32_t billed_cpu_time_us) final override
       {
          auto* eval = static_cast<DerivedEvaluator*>(this);
          const auto& op = o.get<typename DerivedEvaluator::operation_type>();
@@ -167,7 +175,7 @@ namespace graphene { namespace chain {
          convert_fee();
          pay_fee();
 
-         auto result = eval->do_apply(op);
+         auto result = eval->do_apply(op, billed_cpu_time_us);
 
          db_adjust_balance(op.fee_payer(), -fee_from_account);
 
@@ -175,4 +183,3 @@ namespace graphene { namespace chain {
       }
    };
 } }
-   

@@ -51,7 +51,10 @@ namespace graphene { namespace chain {
           * Keep the most recent operation as a root pointer to a linked list of the transaction history.
           */
          account_transaction_history_id_type most_recent_op;
+         /** Total operations related to this account. */
          uint32_t                            total_ops = 0;
+         /** Total operations related to this account that has been removed from the database. */
+         uint32_t                            removed_ops = 0;
 
          /**
           * When calculating votes it is necessary to know how much is stored in orders (and thus unavailable for
@@ -132,32 +135,6 @@ namespace graphene { namespace chain {
           string            memo;
     };
 
-   /**
-    * @brief Tracks the locked balance of a single account/asset pair
-    * @ingroup object
-    *
-    * This object is indexed on owner and asset_type so that black swan
-    * events in asset_type can be processed quickly.
-    */
-
-   class account_balance_locked_object : public graphene::db::abstract_object<account_balance_locked_object>
-    {
-        public:
-            static const uint8_t space_id = implementation_ids;
-            static const uint8_t type_id  = impl_account_balance_locked_object_type;
-
-            account_id_type    owner;
-            asset_id_type      asset_type;
-            time_point_sec     create_time;
-            uint32_t           locked_balance_time;
-            string             locked_time_type;
-            share_type         locked_balance;
-            uint32_t           interest_rate = 0;
-            string             memo;
-
-            asset get_locked_balance()const {return asset(locked_balance,asset_type); }
-            void adjust_locked_balance(const asset& delta);
-    };
     /**
     * @brief Tracks the locked balance of a single account/asset pair
     * @ingroup object
@@ -215,33 +192,33 @@ namespace graphene { namespace chain {
           * If set to time_point_sec::maximum(), the account is a lifetime member.
           * If set to any time not in the past less than time_point_sec::maximum(), the account is an annual member.
           *
-          * See @ref is_lifetime_member, @ref is_basic_account, @ref is_annual_member, and @ref is_member
+          * See @ref is_lifetime_member, @ref is_merchant_member, @is_datasource_member, @is_data_transaction_member, @ref is_basic_account, @ref is_annual_member, and @ref is_member
           */
          time_point_sec membership_expiration_date;
          time_point_sec merchant_expiration_date;
          time_point_sec datasource_expiration_date;
          time_point_sec data_transaction_member_expiration_date;
 
-         ///The account that paid the fee to register this account. Receives a percentage of referral rewards.
+         // The account that paid the fee to register this account. Receives a percentage of referral rewards.
          account_id_type registrar;
-         /// The account credited as referring this account. Receives a percentage of referral rewards.
+         // The account credited as referring this account. Receives a percentage of referral rewards.
          account_id_type referrer;
-         /// The lifetime member at the top of the referral tree. Receives a percentage of referral rewards.
+         // The lifetime member at the top of the referral tree. Receives a percentage of referral rewards.
          account_id_type lifetime_referrer;
          // The merchant member referral
          account_id_type merchant_auth_referrer;
          // The datasource member referral
          account_id_type datasource_auth_referrer;
-         /// Percentage of fee which should go to network.
+         // Percentage of fee which should go to network.
          uint16_t network_fee_percentage = GRAPHENE_DEFAULT_NETWORK_PERCENT_OF_FEE;
-         /// Percentage of fee which should go to lifetime referrer.
+         // Percentage of fee which should go to lifetime referrer.
          uint16_t lifetime_referrer_fee_percentage = 0;
-         /// Percentage of referral rewards (leftover fee after paying network and lifetime referrer) which should go
-         /// to referrer. The remainder of referral rewards goes to the registrar.
+         // Percentage of referral rewards (leftover fee after paying network and lifetime referrer) which should go
+         // to referrer. The remainder of referral rewards goes to the registrar.
          uint16_t referrer_rewards_percentage = 0;
 
-         /// The account's name. This name must be unique among all account names on the graph. May not be empty.
-         string name;
+         // The account's name. This name must be unique among all account names on the graph. May not be empty.
+         string                 name;
          string                 vm_type;
          string                 vm_version;
          bytes                  code;
@@ -360,6 +337,8 @@ namespace graphene { namespace chain {
          {
             return !is_basic_account(now);
          }
+
+
          /**
           * @brief is_merchant_member
           * @return
@@ -473,31 +452,6 @@ namespace graphene { namespace chain {
     */
    typedef generic_index<account_balance_object, account_balance_object_multi_index_type> account_balance_index;
 
-
-   /**
-    * @ingroup object_index
-    */
-
-   typedef multi_index_container<
-       account_balance_locked_object,
-       indexed_by<
-           ordered_unique< tag<by_id>, member< object, object_id_type, &object::id> >,
-           ordered_unique< tag<by_account_asset>,
-            composite_key<
-                account_balance_locked_object,
-                member<account_balance_locked_object,account_id_type, &account_balance_locked_object::owner>,
-                member<account_balance_locked_object,asset_id_type, &account_balance_locked_object::asset_type>,
-                member<account_balance_locked_object,time_point_sec, &account_balance_locked_object::create_time>
-            >
-           >
-       >
-   >account_balance_locked_object_multi_index_type;
-
-   /**
-    * @ingroup object_index
-    */
-   typedef generic_index<account_balance_locked_object,account_balance_locked_object_multi_index_type> account_balance_locked_index;
-
     /**
     * @ingroup object_index
     */
@@ -518,7 +472,7 @@ namespace graphene { namespace chain {
    /**
    * @ingroup object_index
    */
-  typedef generic_index<lock_balance_object, lock_balance_object_multi_index_type> account_lock_balance_index;
+  typedef generic_index<lock_balance_object, lock_balance_object_multi_index_type> account_balance_locked_index;
 
    /**
    * @ingroup object_index
@@ -560,7 +514,7 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_DERIVED( graphene::chain::account_object,
                     (graphene::db::object),
-                    (membership_expiration_date)(registrar)(referrer)(lifetime_referrer)
+                    (membership_expiration_date)(merchant_expiration_date)(datasource_expiration_date)(data_transaction_member_expiration_date)(registrar)(referrer)(lifetime_referrer)(merchant_auth_referrer)(datasource_auth_referrer)
                     (network_fee_percentage)(lifetime_referrer_fee_percentage)(referrer_rewards_percentage)
                     (name)(vm_type)(vm_version)(code)(code_version)(abi)(owner)(active)(options)(statistics)(whitelisting_accounts)(blacklisting_accounts)
                     (whitelisted_accounts)(blacklisted_accounts)
@@ -582,15 +536,12 @@ FC_REFLECT_DERIVED( graphene::chain::lock_balance_object,
 FC_REFLECT_DERIVED( graphene::chain::trust_node_pledge_object,
 					(graphene::db::object),
 					(owner_account)(amount) )
-FC_REFLECT_DERIVED( graphene::chain::account_balance_locked_object,
-                    (graphene::db::object),
-                    (owner)(asset_type)(create_time)(locked_balance_time)(locked_time_type)(locked_balance)(interest_rate)(memo) )
 
 FC_REFLECT_DERIVED( graphene::chain::account_statistics_object,
                     (graphene::chain::object),
                     (owner)
                     (most_recent_op)
-                    (total_ops)
+                    (total_ops)(removed_ops)
                     (total_core_in_orders)
                     (lifetime_fees_paid)
                     (pending_fees)(pending_vested_fees)

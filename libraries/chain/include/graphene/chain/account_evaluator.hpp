@@ -33,7 +33,7 @@ public:
    typedef account_create_operation operation_type;
 
    void_result do_evaluate( const account_create_operation& o );
-   object_id_type do_apply( const account_create_operation& o ) ;
+   object_id_type do_apply(const account_create_operation &o, uint32_t billed_cpu_time_us = 0);
 };
 
 class account_update_evaluator : public evaluator<account_update_evaluator>
@@ -42,20 +42,52 @@ public:
    typedef account_update_operation operation_type;
 
    void_result do_evaluate( const account_update_operation& o );
-   void_result do_apply( const account_update_operation& o );
+   void_result do_apply(const account_update_operation &o, uint32_t billed_cpu_time_us = 0);
 
    const account_object* acnt;
 };
-
 class account_upgrade_evaluator : public evaluator<account_upgrade_evaluator>
 {
 public:
    typedef account_upgrade_operation operation_type;
 
    void_result do_evaluate(const operation_type& o);
-   void_result do_apply(const operation_type& o);
+   void_result do_apply(const operation_type& o, uint32_t billed_cpu_time_us = 0);
 
    const account_object* account;
+};
+class account_upgrade_merchant_evaluator : public evaluator<account_upgrade_merchant_evaluator>
+{
+public:
+   typedef account_upgrade_merchant_operation operation_type;
+
+   void_result do_evaluate(const operation_type& o);
+   void_result do_apply(const operation_type& o, uint32_t billed_cpu_time_us = 0);
+
+   const account_object* account;
+   const account_object* auth_referrer_account;
+};
+class account_upgrade_datasource_evaluator : public evaluator<account_upgrade_datasource_evaluator>
+{
+public:
+   typedef account_upgrade_datasource_operation operation_type;
+
+   void_result do_evaluate(const operation_type& o);
+   void_result do_apply(const operation_type& o, uint32_t billed_cpu_time_us = 0);
+
+   const account_object* account;
+   const account_object* auth_referrer_account;
+};
+
+class account_upgrade_data_transaction_member_evaluator : public evaluator<account_upgrade_data_transaction_member_evaluator>
+{
+public:
+    typedef account_upgrade_data_transaction_member_operation operation_type;
+
+    void_result do_evaluate(const operation_type& o);
+    void_result do_apply(const operation_type& o, uint32_t billed_cpu_time_us = 0);
+
+    const account_object* account;
 };
 
 class account_whitelist_evaluator : public evaluator<account_whitelist_evaluator>
@@ -64,10 +96,9 @@ public:
    typedef account_whitelist_operation operation_type;
 
    void_result do_evaluate( const account_whitelist_operation& o);
-   void_result do_apply( const account_whitelist_operation& o);
+   void_result do_apply( const account_whitelist_operation& o, uint32_t billed_cpu_time_us = 0);
 
    const account_object* listed_account;
 };
 
 } } // graphene::chain
-   

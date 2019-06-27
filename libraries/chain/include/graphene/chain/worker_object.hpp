@@ -61,7 +61,6 @@ struct refund_worker_type
    /// Record of how much this worker has burned in his lifetime
    share_type total_burned;
 
-   void pay_worker(share_type pay, database&);
 };
 
 /**
@@ -74,7 +73,6 @@ struct vesting_balance_worker_type
    /// The balance this worker pays into
    vesting_balance_id_type balance;
 
-   void pay_worker(share_type pay, database& db);
 };
 
 /**
@@ -87,7 +85,6 @@ struct burn_worker_type
    /// Record of how much this worker has burned in his lifetime
    share_type total_burned;
 
-   void pay_worker(share_type pay, database&);
 };
 ///@}
 
@@ -175,4 +172,3 @@ FC_REFLECT_DERIVED( graphene::chain::worker_object, (graphene::db::object),
                     (name)
                     (url)
                   )
-   

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <graphene/chain/webassembly/common.hpp>
+#include <graphene/chain/webassembly/runtime_interface.hpp>
 #include <softfloat.hpp>
 #include "Runtime/Runtime.h"
 #include "IR/Types.h"
@@ -18,8 +20,6 @@ class wavm_runtime : public graphene::chain::wasm_runtime_interface {
       ~wavm_runtime();
       std::unique_ptr<wasm_instantiated_module_interface> instantiate_module(const char* code_bytes, size_t code_size, std::vector<uint8_t> initial_memory) override;
 
-      void immediately_exit_currently_running_module() override;
-
       struct runtime_guard {
          runtime_guard();
          ~runtime_guard();
@@ -29,12 +29,20 @@ class wavm_runtime : public graphene::chain::wasm_runtime_interface {
       std::shared_ptr<runtime_guard> _runtime_guard;
 };
 
+//This is a temporary hack for the single threaded implementation
 struct running_instance_context {
    MemoryInstance* memory;
    apply_context*  apply_ctx;
 };
 extern running_instance_context the_running_instance_context;
 
+/**
+ * class to represent an in-wasm-memory array
+ * it is a hint to the transcriber that the next parameter will
+ * be a size (in Ts) and that the pair are validated together
+ * This triggers the template specialization of intrinsic_invoker_impl
+ * @tparam T
+ */
 template<typename T>
 inline array_ptr<T> array_ptr_impl (running_instance_context& ctx, U32 ptr, size_t length)
 {
@@ -46,11 +54,14 @@ inline array_ptr<T> array_ptr_impl (running_instance_context& ctx, U32 ptr, size
    if (ptr >= mem_total || length > (mem_total - ptr) / sizeof(T))
       Runtime::causeException(Exception::Cause::accessViolation);
    
-   T* ret_ptr = (T*)(getMemoryBaseAddress(mem) + ptr);
+//   T* ret_ptr = (T*)(getMemoryBaseAddress(mem) + ptr);
 
    return array_ptr<T>((T*)(getMemoryBaseAddress(mem) + ptr));
 }
 
+/**
+ * class to represent an in-wasm-memory char array that must be null terminated
+ */
 inline null_terminated_ptr null_terminated_ptr_impl(running_instance_context& ctx, U32 ptr)
 {
    MemoryInstance* mem = ctx.memory;
@@ -68,16 +79,26 @@ inline null_terminated_ptr null_terminated_ptr_impl(running_instance_context& ct
 }
 
 
+/**
+ * template that maps native types to WASM VM types
+ * @tparam T the native type
+ */
 template<typename T>
 struct native_to_wasm {
    using type = void;
 };
 
+/**
+ * specialization for mapping pointers to int32's
+ */
 template<typename T>
 struct native_to_wasm<T *> {
    using type = I32;
 };
 
+/**
+ * Mappings for native types
+ */
 template<>
 struct native_to_wasm<float> {
    using type = F32;
@@ -123,6 +144,8 @@ template<>
 struct native_to_wasm<fc::time_point_sec> {
    using type = I32;
 };
+
+// convenience alias
 template<typename T>
 using native_to_wasm_t = typename native_to_wasm<T>::type;
 
@@ -247,9 +270,15 @@ constexpr bool is_reference_from_value_v = is_reference_from_value<T>::value;
 struct void_type {
 };
 
+/**
+ * Forward declaration of provider for FunctionType given a desired C ABI signature
+ */
 template<typename>
 struct wasm_function_type_provider;
 
+/**
+ * specialization to destructure return and arguments
+ */
 template<typename Ret, typename ...Args>
 struct wasm_function_type_provider<Ret(Args...)> {
    static const FunctionType *type() {
@@ -257,9 +286,22 @@ struct wasm_function_type_provider<Ret(Args...)> {
    }
 };
 
+/**
+ * Forward declaration of the invoker type which transcribes arguments to/from a native method
+ * and injects the appropriate checks
+ *
+ * @tparam Ret - the return type of the native function
+ * @tparam NativeParameters - a std::tuple of the remaining native parameters to transcribe
+ * @tparam WasmParameters - a std::tuple of the transribed parameters
+ */
 template<typename Ret, typename NativeParameters, typename WasmParameters>
 struct intrinsic_invoker_impl;
 
+/**
+ * Specialization for the fully transcribed signature
+ * @tparam Ret - the return type of the native function
+ * @tparam Translated - the arguments to the wasm function
+ */
 template<typename Ret, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<>, std::tuple<Translated...>> {
    using next_method_type        = Ret (*)(running_instance_context &, Translated...);
@@ -275,6 +317,10 @@ struct intrinsic_invoker_impl<Ret, std::tuple<>, std::tuple<Translated...>> {
    }
 };
 
+/**
+ * specialization of the fully transcribed signature for void return values
+ * @tparam Translated - the arguments to the wasm function
+ */
 template<typename ...Translated>
 struct intrinsic_invoker_impl<void_type, std::tuple<>, std::tuple<Translated...>> {
    using next_method_type        = void_type (*)(running_instance_context &, Translated...);
@@ -290,6 +336,13 @@ struct intrinsic_invoker_impl<void_type, std::tuple<>, std::tuple<Translated...>
    }
 };
 
+/**
+ * Sepcialization for transcribing  a simple type in the native method signature
+ * @tparam Ret - the return type of the native method
+ * @tparam Input - the type of the native parameter to transcribe
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename Ret, typename Input, typename... Inputs, typename... Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<Input, Inputs...>, std::tuple<Translated...>> {
    using translated_type = native_to_wasm_t<Input>;
@@ -308,6 +361,15 @@ struct intrinsic_invoker_impl<Ret, std::tuple<Input, Inputs...>, std::tuple<Tran
    }
 };
 
+/**
+ * Specialization for transcribing  a array_ptr type in the native method signature
+ * This type transcribes into 2 wasm parameters: a pointer and byte length and checks the validity of that memory
+ * range before dispatching to the native method
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename T, typename Ret, typename... Inputs, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<T>, size_t, Inputs...>, std::tuple<Translated...>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<Inputs...>, std::tuple<Translated..., I32, I32>>;
@@ -319,8 +381,7 @@ struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<T>, size_t, Inputs...>, 
       const auto length = size_t(size);
       T* base = array_ptr_impl<T>(ctx, (U32)ptr, length);
       if ( reinterpret_cast<uintptr_t>(base) % alignof(T) != 0 ) {
-         if(ctx.apply_ctx->control.contracts_console())
-            wlog( "misaligned array of const values" );
+         wlog( "misaligned array of const values" );
          std::vector<std::remove_const_t<T> > copy(length > 0 ? length : 1);
          T* copy_ptr = &copy[0];
          memcpy( (void*)copy_ptr, (void*)base, length * sizeof(T) );
@@ -335,8 +396,7 @@ struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<T>, size_t, Inputs...>, 
       const auto length = size_t(size);
       T* base = array_ptr_impl<T>(ctx, (U32)ptr, length);
       if ( reinterpret_cast<uintptr_t>(base) % alignof(T) != 0 ) {
-         if(ctx.apply_ctx->control.contracts_console())
-            wlog( "misaligned array of values" );
+         wlog( "misaligned array of values" );
          std::vector<std::remove_const_t<T> > copy(length > 0 ? length : 1);
          T* copy_ptr = &copy[0];
          memcpy( (void*)copy_ptr, (void*)base, length * sizeof(T) );
@@ -353,6 +413,15 @@ struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<T>, size_t, Inputs...>, 
    }
 };
 
+/**
+ * Specialization for transcribing  a null_terminated_ptr type in the native method signature
+ * This type transcribes 1 wasm parameters: a char pointer which is validated to contain
+ * a null value before the end of the allocated memory.
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename Ret, typename... Inputs, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<null_terminated_ptr, Inputs...>, std::tuple<Translated...>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<Inputs...>, std::tuple<Translated..., I32>>;
@@ -369,6 +438,15 @@ struct intrinsic_invoker_impl<Ret, std::tuple<null_terminated_ptr, Inputs...>, s
    }
 };
 
+/**
+ * Specialization for transcribing  a pair of array_ptr types in the native method signature that share size
+ * This type transcribes into 3 wasm parameters: 2 pointers and byte length and checks the validity of those memory
+ * ranges before dispatching to the native method
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename T, typename U, typename Ret, typename... Inputs, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<T>, array_ptr<U>, size_t, Inputs...>, std::tuple<Translated...>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<Inputs...>, std::tuple<Translated..., I32, I32, I32>>;
@@ -387,6 +465,14 @@ struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<T>, array_ptr<U>, size_t
    }
 };
 
+/**
+ * Specialization for transcribing memset parameters
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
+template<typename Ret>
 struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<char>, int, size_t>, std::tuple<>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<>, std::tuple<I32, I32, I32>>;
    using then_type = Ret(*)(running_instance_context&, array_ptr<char>, int, size_t);
@@ -403,6 +489,15 @@ struct intrinsic_invoker_impl<Ret, std::tuple<array_ptr<char>, int, size_t>, std
    }
 };
 
+/**
+ * Specialization for transcribing  a pointer type in the native method signature
+ * This type transcribes into an int32  pointer checks the validity of that memory
+ * range before dispatching to the native method
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename T, typename Ret, typename... Inputs, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<T *, Inputs...>, std::tuple<Translated...>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<Inputs...>, std::tuple<Translated..., I32>>;
@@ -412,8 +507,7 @@ struct intrinsic_invoker_impl<Ret, std::tuple<T *, Inputs...>, std::tuple<Transl
    static auto translate_one(running_instance_context& ctx, Inputs... rest, Translated... translated, I32 ptr) -> std::enable_if_t<std::is_const<U>::value, Ret> {
       T* base = array_ptr_impl<T>(ctx, (U32)ptr, 1);
       if ( reinterpret_cast<uintptr_t>(base) % alignof(T) != 0 ) {
-         if(ctx.apply_ctx->control.contracts_console())
-            wlog( "misaligned const pointer" );
+         wlog( "misaligned const pointer" );
          std::remove_const_t<T> copy;
          T* copy_ptr = &copy;
          memcpy( (void*)copy_ptr, (void*)base, sizeof(T) );
@@ -426,8 +520,7 @@ struct intrinsic_invoker_impl<Ret, std::tuple<T *, Inputs...>, std::tuple<Transl
    static auto translate_one(running_instance_context& ctx, Inputs... rest, Translated... translated, I32 ptr) -> std::enable_if_t<!std::is_const<U>::value, Ret> {
       T* base = array_ptr_impl<T>(ctx, (U32)ptr, 1);
       if ( reinterpret_cast<uintptr_t>(base) % alignof(T) != 0 ) {
-         if(ctx.apply_ctx->control.contracts_console())
-            wlog( "misaligned pointer" );
+         wlog( "misaligned pointer" );
          std::remove_const_t<T> copy;
          T* copy_ptr = &copy;
          memcpy( (void*)copy_ptr, (void*)base, sizeof(T) );
@@ -444,6 +537,15 @@ struct intrinsic_invoker_impl<Ret, std::tuple<T *, Inputs...>, std::tuple<Transl
    }
 };
 
+/**
+ * Specialization for transcribing a reference to a name which can be passed as a native value
+ *    This type transcribes into a native type which is loaded by value into a
+ *    variable on the stack and then passed by reference to the intrinsic.
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename Ret, typename... Inputs, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<const name&, Inputs...>, std::tuple<Translated...>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<Inputs...>, std::tuple<Translated..., native_to_wasm_t<const name&> >>;
@@ -461,6 +563,15 @@ struct intrinsic_invoker_impl<Ret, std::tuple<const name&, Inputs...>, std::tupl
    }
 };
 
+/**
+ * Specialization for transcribing  a reference type in the native method signature
+ *    This type transcribes into an int32  pointer checks the validity of that memory
+ *    range before dispatching to the native method
+ *
+ * @tparam Ret - the return type of the native method
+ * @tparam Inputs - the remaining native parameters to transcribe
+ * @tparam Translated - the list of transcribed wasm parameters
+ */
 template<typename T, typename Ret, typename... Inputs, typename ...Translated>
 struct intrinsic_invoker_impl<Ret, std::tuple<T &, Inputs...>, std::tuple<Translated...>> {
    using next_step = intrinsic_invoker_impl<Ret, std::tuple<Inputs...>, std::tuple<Translated..., I32>>;
@@ -468,14 +579,14 @@ struct intrinsic_invoker_impl<Ret, std::tuple<T &, Inputs...>, std::tuple<Transl
 
    template<then_type Then, typename U=T>
    static auto translate_one(running_instance_context& ctx, Inputs... rest, Translated... translated, I32 ptr) -> std::enable_if_t<std::is_const<U>::value, Ret> {
-      GRAPHENE_ASSERT((U32)ptr != 0, wasm_exception, "references cannot be created for null pointers");
+      // references cannot be created for null pointers
+      FC_ASSERT((U32)ptr != 0, "references cannot be created for null pointers");
       MemoryInstance* mem = ctx.memory;
       if(!mem || (U32)ptr+sizeof(T) >= IR::numBytesPerPage*Runtime::getMemoryNumPages(mem))
          Runtime::causeException(Exception::Cause::accessViolation);
       T &base = *(T*)(getMemoryBaseAddress(mem)+(U32)ptr);
       if ( reinterpret_cast<uintptr_t>(&base) % alignof(T) != 0 ) {
-         if(ctx.apply_ctx->control.contracts_console())
-            wlog( "misaligned const reference" );
+         wlog( "misaligned const reference" );
          std::remove_const_t<T> copy;
          T* copy_ptr = &copy;
          memcpy( (void*)copy_ptr, (void*)&base, sizeof(T) );
@@ -486,14 +597,14 @@ struct intrinsic_invoker_impl<Ret, std::tuple<T &, Inputs...>, std::tuple<Transl
 
    template<then_type Then, typename U=T>
    static auto translate_one(running_instance_context& ctx, Inputs... rest, Translated... translated, I32 ptr) -> std::enable_if_t<!std::is_const<U>::value, Ret> {
-      GRAPHENE_ASSERT((U32)ptr != 0, wasm_exception, "reference cannot be created for null pointers");
+      // references cannot be created for null pointers
+      FC_ASSERT((U32)ptr != 0, "reference cannot be created for null pointers");
       MemoryInstance* mem = ctx.memory;
       if(!mem || (U32)ptr+sizeof(T) >= IR::numBytesPerPage*Runtime::getMemoryNumPages(mem))
          Runtime::causeException(Exception::Cause::accessViolation);
       T &base = *(T*)(getMemoryBaseAddress(mem)+(U32)ptr);
       if ( reinterpret_cast<uintptr_t>(&base) % alignof(T) != 0 ) {
-         if(ctx.apply_ctx->control.contracts_console())
-            wlog( "misaligned reference" );
+         wlog( "misaligned reference" );
          std::remove_const_t<T> copy;
          T* copy_ptr = &copy;
          memcpy( (void*)copy_ptr, (void*)&base, sizeof(T) );
@@ -510,6 +621,9 @@ struct intrinsic_invoker_impl<Ret, std::tuple<T &, Inputs...>, std::tuple<Transl
    }
 };
 
+/**
+ * forward declaration of a wrapper class to call methods of the class
+ */
 template<typename WasmSig, typename Ret, typename MethodSig, typename Cls, typename... Params>
 struct intrinsic_function_invoker {
    using impl = intrinsic_invoker_impl<Ret, std::tuple<Params...>, std::tuple<>>;
@@ -580,6 +694,13 @@ struct intrinsic_function_invoker_wrapper<WasmSig, Ret (Cls::*)(Params...) const
 
 #define __INTRINSIC_NAME(LABEL, SUFFIX) LABEL##SUFFIX
 #define _INTRINSIC_NAME(LABEL, SUFFIX) __INTRINSIC_NAME(LABEL,SUFFIX)
+
+#define _REGISTER_WAVM_INTRINSIC(CLS, MOD, METHOD, WASM_SIG, NAME, SIG)\
+   static Intrinsics::Function _INTRINSIC_NAME(__intrinsic_fn, __COUNTER__) (\
+      MOD "." NAME,\
+      graphene::chain::webassembly::wavm::wasm_function_type_provider<WASM_SIG>::type(),\
+      (void *)graphene::chain::webassembly::wavm::intrinsic_function_invoker_wrapper<WASM_SIG, SIG>::type::fn<&CLS::METHOD>()\
+   );\
 
 
 } } } }// graphene::chain::webassembly::wavm

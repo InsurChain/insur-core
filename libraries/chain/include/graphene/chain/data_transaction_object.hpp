@@ -1,5 +1,4 @@
 #pragma once
-
 #include <graphene/chain/protocol/operations.hpp>
 #include <graphene/db/generic_index.hpp>
 #include <boost/multi_index/composite_key.hpp>
@@ -17,6 +16,12 @@ namespace graphene {
             uint8_t             status = 0;
         };
 
+        /**
+         * Query the data transaction object
+         * @brief
+         *
+         *
+         */
         class data_transaction_object : public graphene::db::abstract_object<data_transaction_object> {
         public:
             static const uint8_t space_id = protocol_ids;
@@ -26,17 +31,24 @@ namespace graphene {
             object_id_type                          product_id;
             string                                  version;
             string                                  params;
+            // value is in enum data_transaction_status
             uint8_t                                 status = 0;
+            // data creation time
             time_point_sec                          create_date_time;
+            // The requester of the query
             account_id_type                         requester;
             fc::optional<alliance_id_type>            alliance_id = fc::optional<alliance_id_type>();
             string                                  memo;
             vector<data_transaction_datasource_status_object>             datasources_status;
+            // product fee
             uint64_t                                product_pay = 0;
+            // Data transaction fee
             uint64_t                                transaction_fee = 0;
+            // commission
             uint64_t                                commission = 0;
         };
 
+        // data_transaction_object sort function
         struct sort_data_transaction_object_by_create_date_time {
             bool operator() (const data_transaction_object &l, const data_transaction_object &r) {
                 return l.create_date_time > r.create_date_time;
@@ -64,6 +76,9 @@ namespace graphene {
             time_point_sec                       create_date_time;
         };
 
+        /**
+         * @ingroup object_index
+         */
         struct by_request_id {};
         struct by_create_date_time {};
         struct by_requester {};
@@ -85,6 +100,9 @@ namespace graphene {
                 >
              >
         >;
+        /**
+         * @ingroup object_index
+         */
         using data_transaction_index = generic_index<data_transaction_object, data_transaction_multi_index_type>;
 
 

@@ -32,6 +32,8 @@
       FC_THROW_EXCEPTION( exc_type, FORMAT, __VA_ARGS__ );            \
    FC_MULTILINE_MACRO_END
 
+#define GRAPHENE_THROW( exc_type, FORMAT, ... ) \
+    throw exc_type( FC_LOG_MESSAGE( error, FORMAT, __VA_ARGS__ ) );
 
 #define GRAPHENE_DECLARE_OP_BASE_EXCEPTIONS( op_name )                \
    FC_DECLARE_DERIVED_EXCEPTION(                                      \
@@ -82,6 +84,7 @@ namespace graphene { namespace chain {
    FC_DECLARE_DERIVED_EXCEPTION( packed_transaction_type_exception, graphene::chain::chain_type_exception, 3010010, "Invalid packed transaction" )
    FC_DECLARE_DERIVED_EXCEPTION( asset_type_exception,              graphene::chain::chain_type_exception, 3010011, "Invalid asset" )
 
+
    FC_DECLARE_DERIVED_EXCEPTION( database_query_exception,          graphene::chain::chain_exception, 3010000, "database query exception" )
    FC_DECLARE_DERIVED_EXCEPTION( block_validate_exception,          graphene::chain::chain_exception, 3020000, "block validation exception" )
    FC_DECLARE_DERIVED_EXCEPTION( transaction_exception,             graphene::chain::chain_exception, 3030000, "transaction validation exception" )
@@ -104,6 +107,8 @@ namespace graphene { namespace chain {
    FC_DECLARE_DERIVED_EXCEPTION( insufficient_feeds,                graphene::chain::chain_exception, 37006, "insufficient feeds" )
 
    FC_DECLARE_DERIVED_EXCEPTION( pop_empty_chain,                   graphene::chain::undo_database_exception, 3070001, "there are no blocks to pop" )
+
+
    FC_DECLARE_DERIVED_EXCEPTION( wasm_exception,                    graphene::chain::chain_exception, 3070000, "WASM Exception" )
    FC_DECLARE_DERIVED_EXCEPTION( page_memory_error,                 graphene::chain::wasm_exception, 3070001, "error in WASM page memory" )
    FC_DECLARE_DERIVED_EXCEPTION( wasm_execution_error,              graphene::chain::wasm_exception, 3070002, "Runtime Error Processing WASM" )
@@ -134,6 +139,7 @@ namespace graphene { namespace chain {
    GRAPHENE_DECLARE_OP_EVALUATE_EXCEPTION( from_account_not_whitelisted, transfer, 1, "owner mismatch" )
    GRAPHENE_DECLARE_OP_EVALUATE_EXCEPTION( to_account_not_whitelisted, transfer, 2, "owner mismatch" )
    GRAPHENE_DECLARE_OP_EVALUATE_EXCEPTION( restricted_transfer_asset, transfer, 3, "restricted transfer asset" )
+   GRAPHENE_DECLARE_OP_EVALUATE_EXCEPTION( restricted_transfer_to_contract, transfer, 4, "restricted transfer asset to contract account" )
 
    //GRAPHENE_DECLARE_OP_BASE_EXCEPTIONS( limit_order_create );
    //GRAPHENE_DECLARE_OP_BASE_EXCEPTIONS( limit_order_cancel );
@@ -292,4 +298,3 @@ namespace graphene { namespace chain {
       { throw( effect_type( e.what(), e.get_log() ) ); }
 
 } } // graphene::chain
-   
