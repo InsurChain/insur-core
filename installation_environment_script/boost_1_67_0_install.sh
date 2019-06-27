@@ -1,5 +1,5 @@
 #!/bin/bash
-# install boost 1.57.0 on MacOS / linux
+# install boost 1.67.0 on MacOS / linux
 
 sys_os=`uname -s`
 if [ $sys_os == "Darwin" ]; then
@@ -11,11 +11,11 @@ else
     exit 1
 fi
 
-# download boost 1.57.0
-wget 'http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz' -O boost_1_57_0.tar.gz
-tar zxvf boost_1_57_0.tar.gz
+# download boost 1.67.0
+wget 'http://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.gz' -O boost_1_67_0.tar.gz
+tar zxvf boost_1_67_0.tar.gz
 
-cd boost_1_57_0
+cd boost_1_67_0
 bash ./bootstrap.sh --prefix=/usr
 
 if [ $sys_os == "Darwin" ]; then
