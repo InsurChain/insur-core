@@ -185,4 +185,3 @@ void stcp_socket::accept()
 
 }} // namespace graphene::net
 
-   

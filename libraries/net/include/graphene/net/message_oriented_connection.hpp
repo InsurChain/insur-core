@@ -67,4 +67,3 @@ namespace graphene { namespace net {
   typedef std::shared_ptr<message_oriented_connection> message_oriented_connection_ptr;
 
 } } // graphene::net
-   

@@ -86,8 +86,6 @@ namespace graphene { namespace net {
     check_firewall_reply_message_type            = 5015,
     get_current_connections_request_message_type = 5016,
     get_current_connections_reply_message_type   = 5017,
-    //hanyang add oracle
-    oracle_get_data_message_type                 = 5018,
     core_message_type_last                       = 5099
   };
 
@@ -103,19 +101,11 @@ namespace graphene { namespace net {
         trx(std::move(transaction))
       {}
    };
-    //hanyang add oracle
-   struct oracle_message
-   {
-      static const core_message_type_enum type;
-      string data_url;
-      oracle_message() {}
-      oracle_message(const std::string& url):data_url(url) {}
-      
-   };
+
    struct block_message
    {
       static const core_message_type_enum type;
-      string url;
+
       block_message(){}
       block_message(const signed_block& blk )
       :block(blk),block_id(blk.id()){}
@@ -434,12 +424,9 @@ FC_REFLECT_ENUM( graphene::net::core_message_type_enum,
                  (check_firewall_reply_message_type)
                  (get_current_connections_request_message_type)
                  (get_current_connections_reply_message_type)
-                 (oracle_get_data_message_type)
                  (core_message_type_last) )
 
 FC_REFLECT( graphene::net::trx_message, (trx) )
-//hanyang add oracle
-FC_REFLECT( graphene::net::oracle_message, (data_url) )
 FC_REFLECT( graphene::net::block_message, (block)(block_id) )
 
 FC_REFLECT( graphene::net::item_id, (item_type)
@@ -536,4 +523,3 @@ namespace std
        }
     };
 }
-   

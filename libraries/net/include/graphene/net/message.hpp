@@ -115,4 +115,3 @@ namespace graphene { namespace net {
 
 FC_REFLECT( graphene::net::message_header, (size)(msg_type) )
 FC_REFLECT_DERIVED( graphene::net::message, (graphene::net::message_header), (data) )
-   

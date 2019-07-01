@@ -87,8 +87,7 @@ namespace graphene { namespace net {
           *          safe to broadcast on.
           */
          virtual void handle_transaction( const graphene::net::trx_message& trx_msg ) = 0;
-//hanyang add oracle
-virtual void handle_oracle( const graphene::net::oracle_message& oracle_message ) = 0;
+
          /**
           *  @brief Called when a new message comes in from the network other than a
           *         block or a transaction.  Currently there are no other possible 
@@ -158,9 +157,6 @@ virtual void handle_oracle( const graphene::net::oracle_message& oracle_message 
           * If we don't know about the block, returns time_point_sec::min()
           */
          virtual fc::time_point_sec get_block_time(const item_hash_t& block_id) = 0;
-
-         /** returns graphene::blockchain::now() */
-         virtual fc::time_point_sec get_blockchain_now() = 0;
 
          virtual item_hash_t get_head_block_id() const = 0;
 
@@ -263,7 +259,6 @@ virtual void handle_oracle( const graphene::net::oracle_message& oracle_message 
         virtual void  broadcast( const message& item_to_broadcast );
         virtual void  broadcast_transaction( const signed_transaction& trx )
         {
-  
            broadcast( trx_message(trx) );
         }
 
@@ -331,4 +326,3 @@ virtual void handle_oracle( const graphene::net::oracle_message& oracle_message 
 
 FC_REFLECT(graphene::net::message_propagation_data, (received_time)(validated_time)(originating_peer));
 FC_REFLECT( graphene::net::peer_status, (version)(host)(info) );
-   
