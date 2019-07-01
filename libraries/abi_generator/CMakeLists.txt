@@ -1,6 +1,6 @@
 # Find an installed build of LLVM
 find_package(LLVM 4.0 REQUIRED CONFIG)
-set( CMAKE_CXX_STANDARD 11 )
+set( CMAKE_CXX_STANDARD 14 )
 
 file(GLOB HEADERS "include/graphene/abi_generator/*.hpp")
 
@@ -36,6 +36,13 @@ target_link_libraries(abi_generator
 )
 
 target_link_libraries(abi_generator
+#  LLVMX86AsmParser # MC, MCParser, Support, X86CodeGen, X86Desc, X86Info
+#  LLVMX86CodeGen # Analysis, AsmPrinter, CodeGen, Core, MC, Support, Target, 
+                 # X86AsmPrinter, X86Desc, X86Info, X86Utils
+#  LLVMX86Desc # MC, MCDisassembler, Object, Support, X86AsmPrinter, X86Info
+#  LLVMX86AsmPrinter # MC, Support, X86Utils
+#  LLVMX86Info # Support
+#  LLVMX86Utils # Core, Support
   LLVMCodeGen # Analysis, Core, MC, Scalar, Support, Target, TransformUtils
   LLVMipo
   LLVMScalarOpts
@@ -51,6 +58,7 @@ target_link_libraries(abi_generator
   LLVMObject # BitReader, Core, Support
   LLVMBitReader # Core, Support
   LLVMCore # BinaryFormat, Support
+  #LLVMBinaryFormat # Support
   LLVMSupport # Demangle
   LLVMDemangle
   LLVMMC
@@ -58,3 +66,8 @@ target_link_libraries(abi_generator
   graphene_db
   graphene_chain
 )
+
+#if (USE_PCH)
+#  set_target_properties(abi_generator PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
+#  cotire(eos_utilities)
+#endif(USE_PCH)
