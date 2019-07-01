@@ -2,6 +2,27 @@
 
 namespace graphene {
 
+void abi_generator::set_target_contract(const string& contract, const vector<string>& actions) {
+  target_contract = contract;
+  target_actions  = actions;
+}
+
+void abi_generator::enable_optimizaton(abi_generator::optimization o) {
+  optimizations |= o;
+}
+
+bool abi_generator::is_opt_enabled(abi_generator::optimization o) {
+  return (optimizations & o) != 0;
+}
+
+void abi_generator::set_output(abi_def& output) {
+  this->output = &output;
+}
+
+void abi_generator::set_verbose(bool verbose) {
+  this->verbose = verbose;
+}
+
 void abi_generator::set_abi_context(const string& abi_context) {
   this->abi_context = abi_context;
 }
@@ -9,6 +30,273 @@ void abi_generator::set_abi_context(const string& abi_context) {
 void abi_generator::set_compiler_instance(CompilerInstance& compiler_instance) {
   this->compiler_instance = &compiler_instance;
 }
+
+void abi_generator::handle_tagdecl_definition(TagDecl* tag_decl) {
+  ast_context = &tag_decl->getASTContext();
+  auto decl_location = tag_decl->getLocation().printToString(ast_context->getSourceManager());
+  try {
+  handle_decl(tag_decl);
+} FC_CAPTURE_AND_RETHROW((decl_location)) }
+
+string abi_generator::remove_namespace(const string& full_name) {
+   int i = full_name.size();
+   int on_spec = 0;
+   int colons = 0;
+   while( --i >= 0 ) {
+      if( full_name[i] == '>' ) {
+         ++on_spec; colons=0;
+      } else if( full_name[i] == '<' ) {
+         --on_spec; colons=0;
+      } else if( full_name[i] == ':' && !on_spec) {
+         if (++colons == 2)
+            return full_name.substr(i+2);
+      } else {
+         colons = 0;
+      }
+   }
+   return full_name;
+}
+
+bool abi_generator::is_builtin_type(const string& type_name) {
+  abi_serializer serializer;
+  auto rtype = resolve_type(type_name);
+  return serializer.is_builtin_type(translate_type(rtype));
+}
+
+string abi_generator::translate_type(const string& type_name) {
+  string built_in_type = type_name;
+
+  if (type_name == "unsigned __int128" || type_name == "uint128_t") built_in_type = "uint128";
+  else if (type_name == "__int128"          || type_name == "int128_t")  built_in_type = "int128";
+
+  else if (type_name == "unsigned long long" || type_name == "uint64_t") built_in_type = "uint64";
+  else if (type_name == "unsigned long"      || type_name == "uint32_t") built_in_type = "uint32";
+  else if (type_name == "unsigned short"     || type_name == "uint16_t") built_in_type = "uint16";
+  else if (type_name == "unsigned char"      || type_name == "uint8_t")  built_in_type = "uint8";
+
+  else if (type_name == "long long"          || type_name == "int64_t")  built_in_type = "int64";
+  else if (type_name == "long"               || type_name == "int32_t")  built_in_type = "int32";
+  else if (type_name == "short"              || type_name == "int16_t")  built_in_type = "int16";
+  else if (type_name == "char"               || type_name == "int8_t")   built_in_type = "int8";
+  else if (type_name == "double")   built_in_type = "float64";
+
+  return built_in_type;
+}
+
+bool abi_generator::inspect_type_methods_for_actions(const Decl* decl) { try {
+
+  const auto* rec_decl = dyn_cast<CXXRecordDecl>(decl);
+  if(rec_decl == nullptr) return false;
+
+  const auto* type = rec_decl->getTypeForDecl();
+  ABI_ASSERT(type != nullptr);
+
+  bool at_least_one_action = false;
+
+  auto export_method = [&](const CXXMethodDecl* method) {
+
+    auto method_name = method->getNameAsString();
+
+    // Try to get "action" annotation from method comment
+    bool raw_comment_is_action = false;
+    bool payable = false;
+    const RawComment* raw_comment = ast_context->getRawCommentForDeclNoCache(method);
+    if(raw_comment != nullptr) {
+      SourceManager& source_manager = ast_context->getSourceManager();
+      string raw_text = raw_comment->getRawText(source_manager);
+      regex action_r(R"(@abi (action)((?: [a-z0-9]+)*))");
+      smatch action_smatch;
+      regex_search(raw_text, action_smatch, action_r);
+      raw_comment_is_action = action_smatch.size() == 3;
+      
+      regex payable_r(R"(@abi (payable)((?: [a-z0-9]+)*))");
+      smatch payable_smatch;
+      regex_search(raw_text, payable_smatch, payable_r);
+      raw_comment_is_action = payable_smatch.size() == 3;
+      payable = payable_smatch.size() == 3;
+    }
+
+    // Check if current method is listed the GRAPHENE_ABI macro
+    bool is_action_from_macro = rec_decl->getName().str() == target_contract && std::find(target_actions.begin(), target_actions.end(), method_name) != target_actions.end();
+    
+    if(!raw_comment_is_action && !is_action_from_macro) {
+      return;
+    }
+
+    ABI_ASSERT(find_struct(method_name) == nullptr, "action already exists ${method_name}", ("method_name",method_name));
+
+    struct_def abi_struct;
+    for(const auto* p : method->parameters() ) {
+      clang::QualType qt = p->getOriginalType().getNonReferenceType();
+      qt.setLocalFastQualifiers(0);
+
+      string field_name = p->getNameAsString();
+      string field_type_name = add_type(qt, 0);
+
+      field_def struct_field{field_name, field_type_name};
+      ABI_ASSERT(is_builtin_type(get_vector_element_type(struct_field.type))
+        || find_struct(get_vector_element_type(struct_field.type))
+        || find_type(get_vector_element_type(struct_field.type))
+        , "Unknown type ${type} [${abi}]",("type",struct_field.type)("abi",*output));
+
+      type_size[string(struct_field.type)] = is_vector(struct_field.type) ? 0 : ast_context->getTypeSize(qt);
+      abi_struct.fields.push_back(struct_field);
+    }
+
+    abi_struct.name = method_name;
+    abi_struct.base = "";
+
+    output->structs.push_back(abi_struct);
+
+    full_types[method_name] = method_name;
+
+    output->actions.push_back({method_name, method_name, payable});
+    at_least_one_action = true;
+  };
+
+  const auto export_methods = [&export_method](const CXXRecordDecl* rec_decl) {
+
+
+    auto export_methods_impl = [&export_method](const CXXRecordDecl* rec_decl, auto& ref) -> void {
+
+
+      auto rec_name = rec_decl->getName().str();
+
+      rec_decl->forallBases([&ref](const CXXRecordDecl* base) -> bool {
+        ref(base, ref);
+        return true;
+      });
+
+      for(const auto* method : rec_decl->methods()) {
+        export_method(method);
+      }
+
+    };
+
+    export_methods_impl(rec_decl, export_methods_impl);
+  };
+
+  export_methods(rec_decl);
+
+  return at_least_one_action;
+
+} FC_CAPTURE_AND_RETHROW() }
+
+void abi_generator::handle_decl(const Decl* decl) { try {
+
+  ABI_ASSERT(decl != nullptr);
+  ABI_ASSERT(output != nullptr);
+  ABI_ASSERT(ast_context != nullptr);
+
+  // Only process declarations that has the `abi_context` folder as parent.
+  SourceManager& source_manager = ast_context->getSourceManager();
+  auto file_name = source_manager.getFilename(decl->getLocStart());
+  if ( !abi_context.empty() && !file_name.startswith(abi_context) ) {
+    return;
+  }
+
+  // Check if the current declaration has actions (GRAPHENE_ABI, or explicit)
+  bool type_has_actions = inspect_type_methods_for_actions(decl);
+  if( type_has_actions ) return;
+
+  // The current Decl doesn't have actions
+  const RawComment* raw_comment = ast_context->getRawCommentForDeclNoCache(decl);
+  if(raw_comment == nullptr) {
+    return;
+  }
+
+  string raw_text = raw_comment->getRawText(source_manager);
+  regex r;
+
+  // If GRAPHENE_ABI macro was found, we will only check if the current Decl
+  // is intented to be an ABI table record, otherwise we check for both (action or table)
+  if( target_contract.size() )
+    r = regex(R"(@abi (table)((?: [a-z0-9]+)*))");
+  else
+    r = regex(R"(@abi (action|table)((?: [a-z0-9]+)*))");
+
+  smatch smatch;
+  while(regex_search(raw_text, smatch, r))
+  {
+    if(smatch.size() == 3) {
+
+      auto type = smatch[1].str();
+
+      vector<string> params;
+      auto string_params = smatch[2].str();
+      boost::trim(string_params);
+      if(!string_params.empty())
+        boost::split(params, string_params, boost::is_any_of(" "));
+
+      if(type == "action") {
+
+        const auto* action_decl = dyn_cast<CXXRecordDecl>(decl);
+        ABI_ASSERT(action_decl != nullptr);
+
+        auto qt = action_decl->getTypeForDecl()->getCanonicalTypeInternal();
+
+        auto type_name = add_struct(qt, "", 0);
+        ABI_ASSERT(!is_builtin_type(type_name),
+          "A built-in type with the same name exists, try using another name: ${type_name}", ("type_name",type_name));
+
+        if(params.size()==0) {
+          params.push_back( boost::algorithm::to_lower_copy(boost::erase_all_copy(type_name, "_")) );
+        }
+
+        for(const auto& action : params) {
+          const auto* ac = find_action(action);
+          if( ac ) {
+            ABI_ASSERT(ac->type == type_name, "Same action name with different type ${action}",("action",action));
+            continue;
+          }
+          output->actions.push_back({action, type_name, false});
+        }
+
+      } else if (type == "table") {
+
+        const auto* table_decl = dyn_cast<CXXRecordDecl>(decl);
+        ABI_ASSERT(table_decl != nullptr);
+
+        auto qt = table_decl->getTypeForDecl()->getCanonicalTypeInternal();
+        auto type_name = add_struct(qt, "", 0);
+
+        ABI_ASSERT(!is_builtin_type(type_name),
+          "A built-in type with the same name exists, try using another name: ${type_name}", ("type_name",type_name));
+
+        const auto* s = find_struct(type_name);
+        ABI_ASSERT(s, "Unable to find type ${type}", ("type",type_name));
+
+        table_def table;
+        table.name = boost::algorithm::to_lower_copy(boost::erase_all_copy(type_name, "_"));
+        table.type = type_name;
+
+        if(params.size() >= 1) {
+          table.name = params[0];
+        }
+
+        if(params.size() >= 2) {
+          table.index_type = params[1];
+          ABI_ASSERT(table.index_type == "i64", "Only i64 index is supported. ${index_type}",("index_type",table.index_type));
+        } else { try {
+          guess_index_type(table, *s);
+        } FC_CAPTURE_AND_RETHROW( (type_name) ) }
+
+        try {
+          guess_key_names(table, *s);
+        } FC_CAPTURE_AND_RETHROW( (type_name) )
+
+        //TODO: assert that we are adding the same table
+        const auto* ta = find_table(table.name);
+        if(!ta) {
+          output->tables.push_back(table);
+        }
+      }
+    }
+
+    raw_text = smatch.suffix();
+  }
+
+} FC_CAPTURE_AND_RETHROW() }
 
 bool abi_generator::is_64bit(const string& type) {
   return type_size[type] == 64;
@@ -158,11 +446,21 @@ bool abi_generator::is_vector(const clang::QualType& vqt) {
     qt = qt->getAs<clang::ElaboratedType>()->getNamedType();
 
   return isa<clang::TemplateSpecializationType>(qt.getTypePtr()) \
-    && boost::starts_with( get_type_name(qt, false), "vector");
+    && (boost::starts_with( get_type_name(qt, false), "vector")||boost::starts_with( get_type_name(qt, false), "set"));
 }
 
 bool abi_generator::is_vector(const string& type_name) {
   return boost::ends_with(type_name, "[]");
+}
+
+bool abi_generator::is_map(const clang::QualType& mqt) {
+  QualType qt(mqt);
+
+  if ( is_elaborated(qt) )
+    qt = qt->getAs<clang::ElaboratedType>()->getNamedType();
+
+  return isa<clang::TemplateSpecializationType>(qt.getTypePtr()) \
+    && boost::starts_with( get_type_name(qt, false), "map");
 }
 
 bool abi_generator::is_struct_specialization(const clang::QualType& qt) {
@@ -188,6 +486,17 @@ string abi_generator::get_vector_element_type(const string& type_name) {
   return type_name;
 }
 
+std::vector<clang::QualType> abi_generator::get_map_element_type(const clang::QualType& qt)
+{
+  const auto* tst = clang::dyn_cast<const clang::TemplateSpecializationType>(qt.getTypePtr());
+  ABI_ASSERT(tst != nullptr);
+  const clang::TemplateArgument& arg0 = tst->getArg(0);
+  const clang::TemplateArgument& arg1 = tst->getArg(1);
+  std::vector<clang::QualType> varg;
+  varg.emplace_back(arg0.getAsType());
+  varg.emplace_back(arg1.getAsType());
+  return varg;
+}
 string abi_generator::get_type_name(const clang::QualType& qt, bool with_namespace=false) {
   auto name = clang::TypeName::getFullyQualifiedName(qt, *ast_context);
   if(!with_namespace)
@@ -269,6 +578,7 @@ string abi_generator::add_vector(const clang::QualType& vqt, size_t recursion_de
 
   auto vector_element_type = get_vector_element_type(qt);
   ABI_ASSERT(!is_vector(vector_element_type), "Only one-dimensional arrays are supported");
+  ABI_ASSERT(!is_map(vector_element_type), "Only one-dimensional maps are supported");
 
   add_type(vector_element_type, recursion_depth);
 
@@ -278,6 +588,54 @@ string abi_generator::add_vector(const clang::QualType& vqt, size_t recursion_de
   return vector_element_type_str;
 }
 
+string abi_generator::add_map(const clang::QualType& mqt, size_t recursion_depth)
+{
+  ABI_ASSERT( ++recursion_depth < max_recursion_depth, "recursive definition, max_recursion_depth" );
+
+  clang::QualType qt(get_named_type_if_elaborated(mqt));
+
+  auto map_element_type_list = get_map_element_type(qt);
+  ABI_ASSERT(!is_map(map_element_type_list[0]), "Only one-dimensional maps are supported");
+  ABI_ASSERT(!is_map(map_element_type_list[1]), "Only one-dimensional maps are supported");
+
+  add_type(map_element_type_list[0], recursion_depth);
+  add_type(map_element_type_list[1], recursion_depth);
+
+  std::string map_element_type_str_0;
+  std::string map_element_type_str_1;
+  if(is_vector(map_element_type_list[0]))
+    map_element_type_str_0 = add_vector(map_element_type_list[0],recursion_depth);
+  else
+    map_element_type_str_0 = translate_type(get_type_name(map_element_type_list[0]));
+  if(is_vector(map_element_type_list[1]))
+    map_element_type_str_1 = add_vector(map_element_type_list[1],recursion_depth);
+  else
+    map_element_type_str_1 = translate_type(get_type_name(map_element_type_list[1]));
+
+  static uint64_t index = 1;
+  std::string index_name = std::to_string(index);
+  std::string map_element_type_str = "map" + index_name + "[]";
+  index++;
+
+  // add struct 
+  struct_def map_def;
+  map_def.name = map_element_type_str.substr(0, map_element_type_str.length() - 2);
+  map_def.base = "";
+
+  std::string key_field_name = "key";
+  std::string key_field_type_name = map_element_type_str_0;
+  field_def key_struct_field{key_field_name, key_field_type_name};
+
+  std::string value_field_name = "value";
+  std::string value_field_type_name = map_element_type_str_1;
+  field_def value_struct_field{value_field_name, value_field_type_name};
+
+  map_def.fields.push_back(key_struct_field);
+  map_def.fields.push_back(value_struct_field);
+
+  output->structs.push_back(map_def);
+  return map_element_type_str;
+}
 string abi_generator::add_type(const clang::QualType& tqt, size_t recursion_depth) {
 
   ABI_ASSERT( ++recursion_depth < max_recursion_depth, "recursive definition, max_recursion_depth" );
@@ -303,6 +661,11 @@ string abi_generator::add_type(const clang::QualType& tqt, size_t recursion_dept
   if( is_vector(qt) ) {
     auto vector_type_name = add_vector(qt, recursion_depth);
     return is_type_def ? type_name : vector_type_name;
+  }
+
+  if( is_map(qt) ){
+    auto map_type_name = add_map(qt, recursion_depth);
+    return is_type_def ? type_name : map_type_name;
   }
 
   if( is_struct(qt) ) {

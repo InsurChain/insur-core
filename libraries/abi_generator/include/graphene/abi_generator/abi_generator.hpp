@@ -9,6 +9,7 @@
 #include <sstream>
 
 #include <graphene/chain/abi_serializer.hpp>
+//#include <graphene/chain/protocol/types.hpp>
 #include <fc/io/json.hpp>
 
 //clashes with something deep in the AST includes in clang 6 and possibly other versions of clang
@@ -91,10 +92,61 @@ namespace graphene {
 
          ~abi_generator() {}
 
+         /**
+           * @brief Enable optimization when generating ABI
+           * @param o optimization to enable
+           */
+         void enable_optimizaton(optimization o);
+
+         /**
+           * @brief Check if an optimization is enabled
+           * @param o optimization to check
+           */
+         bool is_opt_enabled(optimization o);
+
+         /**
+          * @brief Set the destination ABI struct to write
+          * @param output ABI destination
+          */
+         void set_output(abi_def& output);
+
+         /**
+          * @brief Enable/Disable verbose status messages
+          * @param verbose enable/disable flag
+          */
+         void set_verbose(bool verbose);
+
+         /**
+          * @brief Set the root folder that limits where types will be imported. Types declared in header files located in child sub-folders will also be exported
+          * @param abi_context folder
+          */
          void set_abi_context(const string& abi_context);
+
+         /**
+          * @brief Set the single instance of the Clang compiler
+          * @param compiler_instance compiler instance
+          */
          void set_compiler_instance(CompilerInstance& compiler_instance);
 
+         /**
+          * @brief Handle declaration of struct/union/enum
+          * @param tag_decl declaration to handle
+          */
+         void handle_tagdecl_definition(TagDecl* tag_decl);
+
+         void set_target_contract(const string& contract, const vector<string>& actions);
+
       private:
+         bool inspect_type_methods_for_actions(const Decl* decl);
+
+         string remove_namespace(const string& full_name);
+
+         bool is_builtin_type(const string& type_name);
+
+         string translate_type(const string& type_name);
+
+         void handle_decl(const Decl* decl);
+
          bool is_64bit(const string& type);
 
          bool is_128bit(const string& type);
@@ -136,6 +188,8 @@ namespace graphene {
          bool is_vector(const string& type_name);
          string add_vector(const clang::QualType& qt, size_t recursion_depth);
 
+         bool is_map(const clang::QualType& qt);
+         string add_map(const clang::QualType& qt, size_t recursion_depth);
          bool is_struct(const clang::QualType& qt);
          string add_struct(const clang::QualType& qt, string full_type_name, size_t recursion_depth);
 
@@ -148,6 +202,7 @@ namespace graphene {
          QualType get_vector_element_type(const clang::QualType& qt);
          string get_vector_element_type(const string& type_name);
 
+         std::vector<clang::QualType> get_map_element_type(const clang::QualType& qt);
          clang::QualType get_named_type_if_elaborated(const clang::QualType& qt);
 
          const clang::RecordDecl::field_range get_struct_fields(const clang::QualType& qt);
@@ -167,6 +222,89 @@ namespace graphene {
          abi_gen.handle_tagdecl_definition(tag_decl);
       }
    };
+
+   struct find_insur_abi_macro_action : public PreprocessOnlyAction {
+
+         string& contract;
+         vector<string>& actions;
+         const string& abi_context;
+
+         find_insur_abi_macro_action(string& contract, vector<string>& actions, const string& abi_context
+            ): contract(contract),
+            actions(actions), abi_context(abi_context) {
+         }
+
+         struct callback_handler : public PPCallbacks {
+
+            CompilerInstance& compiler_instance;
+            find_insur_abi_macro_action& act;
+
+            callback_handler(CompilerInstance& compiler_instance, find_insur_abi_macro_action& act)
+            : compiler_instance(compiler_instance), act(act) {}
+
+            string remove_namespace(const string& full_name) {
+               int i = full_name.size();
+               int on_spec = 0;
+               int colons = 0;
+               while( --i >= 0 ) {
+                  if( full_name[i] == '>' ) {
+                     ++on_spec; colons=0;
+                  } else if( full_name[i] == '<' ) {
+                     --on_spec; colons=0;
+                  } else if( full_name[i] == ':' && !on_spec) {
+                     if (++colons == 2)
+                        return full_name.substr(i+2);
+                  } else {
+                     colons = 0;
+                  }
+               }
+               return full_name;
+            }
+
+            void MacroExpands (const Token &token, const MacroDefinition &md, SourceRange range, const MacroArgs *args) override {
+
+               auto* id = token.getIdentifierInfo();
+               if( id == nullptr ) return;
+               if( id->getName() != "GRAPHENE_ABI" ) return;
+
+               const auto& sm = compiler_instance.getSourceManager();
+               auto file_name = sm.getFilename(range.getBegin());
+               if ( !act.abi_context.empty() && !file_name.startswith(act.abi_context) ) {
+                  return;
+               }
+
+               ABI_ASSERT( md.getMacroInfo()->getNumArgs() == 2 );
+
+               clang::SourceLocation b(range.getBegin()), _e(range.getEnd());
+               clang::SourceLocation e(clang::Lexer::getLocForEndOfToken(_e, 0, sm, compiler_instance.getLangOpts()));
+               auto macrostr = string(sm.getCharacterData(b), sm.getCharacterData(e)-sm.getCharacterData(b));
+
+               regex r(R"(GRAPHENE_ABI\s*\(\s*(.+?)\s*,((?:.+?)*)\s*\))");
+               smatch smatch;
+               auto res = regex_search(macrostr, smatch, r);
+               ABI_ASSERT( res );
+
+               act.contract = remove_namespace(smatch[1].str());
+
+               auto actions_str = smatch[2].str();
+               boost::trim(actions_str);
+               actions_str = actions_str.substr(1);
+               actions_str.pop_back();
+               boost::remove_erase_if(actions_str, boost::is_any_of(" ("));
+
+               boost::split(act.actions, actions_str, boost::is_any_of(")"));
+            }
+         };
+
+         void ExecuteAction() override {
+            getCompilerInstance().getPreprocessor().addPPCallbacks(
+               llvm::make_unique<callback_handler>(getCompilerInstance(), *this)
+            );
+            PreprocessOnlyAction::ExecuteAction();
+         };
+
+   };
+
 
    class generate_abi_action : public ASTFrontendAction {
 
