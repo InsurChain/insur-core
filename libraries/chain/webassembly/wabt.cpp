@@ -1,3 +1,7 @@
+#include <graphene/chain/webassembly/wabt.hpp>
+#include <graphene/chain/apply_context.hpp>
+#include <graphene/chain/wasm_constraints.hpp>
+
 //wabt includes
 #include <src/interp.h>
 #include <src/binary-reader-interp.h>
@@ -5,6 +9,7 @@
 
 namespace graphene { namespace chain { namespace webassembly { namespace wabt_runtime {
 
+//yep 🤮
 static wabt_apply_instance_vars* static_wabt_vars;
 
 using namespace wabt;
@@ -29,12 +34,14 @@ class wabt_instantiated_module : public wasm_instantiated_module_interface {
       }
 
       void apply(apply_context& context) override {
+         //reset mutable globals
          for(const auto& mg : _initial_globals)
             mg.first->typed_value = mg.second;
 
          wabt_apply_instance_vars this_run_vars{nullptr, context};
          static_wabt_vars = &this_run_vars;
 
+         //reset memory to inital size & copy back in initial data
          if(_env->GetMemoryCount()) {
             Memory* memory = this_run_vars.memory = _env->GetMemory(0);
             memory->page_limits = _initial_memory_configuration;
@@ -44,19 +51,19 @@ class wabt_instantiated_module : public wasm_instantiated_module_interface {
          }
 
          _params[0].set_i64(uint64_t(context.receiver));
-         _params[1].set_i64(uint64_t(context.act.account));
-         _params[2].set_i64(uint64_t(context.act.name));
-
+         _params[1].set_i64(uint64_t(context.act.contract_id));
+         _params[2].set_i64(uint64_t(context.act.method_name));
+         
          ExecResult res = _executor.RunStartFunction(_instatiated_module);
-         GRAPHENE_ASSERT( res.result == interp::Result::Ok, wasm_execution_error, "wabt start function failure (${s})", ("s", ResultToString(res.result)) );
+         GRAPHENE_ASSERT( res.result == interp::Result::Ok, wabt_execution_error, "wabt start function failure (${s})", ("s", ResultToString(res.result)) );
 
          res = _executor.RunExportByName(_instatiated_module, "apply", _params);
-         GRPHENE_ASSERT( res.result == interp::Result::Ok, wasm_execution_error, "wabt execution failure (${s})", ("s", ResultToString(res.result)) );
+         GRAPHENE_ASSERT( res.result == interp::Result::Ok, wabt_execution_error, "wabt execution failure (${s})", ("s", ResultToString(res.result)) );
       }
 
    private:
       std::unique_ptr<interp::Environment>              _env;
-      DefinedModule*                                    _instatiated_module;  
+      DefinedModule*                                    _instatiated_module;  //this is owned by the Environment
       std::vector<uint8_t>                              _initial_memory;
       TypedValues                                       _params{3, TypedValue(Type::I64)};
       std::vector<std::pair<Global*, TypedValue>>       _initial_globals;
@@ -84,13 +91,9 @@ std::unique_ptr<wasm_instantiated_module_interface> wabt_runtime::instantiate_mo
    wabt::Errors errors;
 
    wabt::Result res = ReadBinaryInterp(env.get(), code_bytes, code_size, read_binary_options, &errors, &instantiated_module);
-   GRAPHENE_ASSERT( Succeeded(res), wasm_execution_error, "Error building wabt interp: ${e}", ("e", wabt::FormatErrorsToString(errors, Location::Type::Binary)) );
+   GRAPHENE_ASSERT( Succeeded(res), wabt_execution_error, "Error building wabt interp: ${e}", ("e", wabt::FormatErrorsToString(errors, Location::Type::Binary)) );
    
    return std::make_unique<wabt_instantiated_module>(std::move(env), initial_memory, instantiated_module);
-}
-
-void wabt_runtime::immediately_exit_currently_running_module() {
-   throw wasm_exit();
 }
 
 }}}}

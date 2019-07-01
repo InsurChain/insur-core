@@ -5,13 +5,13 @@
 
 namespace graphene { namespace chain {
 
-    struct data_market_create_operation : public base_operation
+    struct data_market_category_create_operation : public base_operation
     {
         struct fee_parameters_type {
            uint64_t fee  = 10 * GRAPHENE_BLOCKCHAIN_PRECISION;
         };
 
-        fc::string              name;
+        fc::string              category_name;
         uint8_t                 data_market_type;
         uint32_t                order_num;
         asset                   fee;
@@ -26,15 +26,15 @@ namespace graphene { namespace chain {
 
     };
 
-    struct data_market_update_operation : public base_operation
+    struct data_market_category_update_operation : public base_operation
     {
         struct fee_parameters_type {
            uint64_t fee  = 0;
         };
 
-        optional< fc::string >          new_name;
+        optional< fc::string >          new_category_name;
         optional< uint32_t >            new_order_num;
-        data_market_id_type             data_market;
+        data_market_category_id_type    data_market_category;
         extensions_type                 extensions;
         uint8_t                         data_market_type;
         asset                           fee;
@@ -51,11 +51,11 @@ namespace graphene { namespace chain {
 
 } } // graphene::chain
 
-FC_REFLECT( graphene::chain::data_market_create_operation::fee_parameters_type, (fee) )
-FC_REFLECT( graphene::chain::data_market_update_operation::fee_parameters_type, (fee) )
+FC_REFLECT( graphene::chain::data_market_category_create_operation::fee_parameters_type, (fee) )
+FC_REFLECT( graphene::chain::data_market_category_update_operation::fee_parameters_type, (fee) )
 
-FC_REFLECT( graphene::chain::data_market_create_operation,
-            (name)
+FC_REFLECT( graphene::chain::data_market_category_create_operation,
+            (category_name)
             (data_market_type)
             (order_num)
             (fee)
@@ -63,10 +63,10 @@ FC_REFLECT( graphene::chain::data_market_create_operation,
             (create_date_time)
             (extensions)
 )
-FC_REFLECT( graphene::chain::data_market_update_operation,
-            (new_name)
+FC_REFLECT( graphene::chain::data_market_category_update_operation,
+            (new_category_name)
             (new_order_num)
-            (data_market)
+            (data_market_category)
             (data_market_type)
             (fee)
             (new_status)

@@ -39,12 +39,18 @@
 #include <graphene/chain/protocol/withdraw_permission.hpp>
 #include <graphene/chain/protocol/witness.hpp>
 #include <graphene/chain/protocol/worker.hpp>
+#include <graphene/chain/protocol/stale_ops.hpp>
+#include <graphene/chain/protocol/data_market_ops.hpp>
+#include <graphene/chain/protocol/data_transaction_ops.hpp>
+#include <graphene/chain/protocol/free_data_product_ops.hpp>
+#include <graphene/chain/protocol/alliance_data_product_ops.hpp>
+#include <graphene/chain/protocol/alliance_ops.hpp>
+#include <graphene/chain/protocol/pay_data_transaction_ops.hpp>
+#include <graphene/chain/protocol/datasource_copyright_ops.hpp>
+#include <graphene/chain/protocol/loyalty_ops.hpp>
+#include <graphene/chain/protocol/proxy_transfer_ops.hpp>
 #include <graphene/chain/protocol/contract_ops.hpp>
 #include <graphene/chain/protocol/data_storage_ops.hpp>
-#include <graphene/chain/protocol/data_market_ops.hpp>
-#include <graphene/chain/protocol/alliance_ops.hpp>
-#include <graphene/chain/protocol/data_transaction_ops.hpp>
-#include <graphene/chain/protocol/datasource_copyright_ops.hpp>
 #include <graphene/chain/protocol/escrow.hpp>
 
 
@@ -100,25 +106,47 @@ namespace graphene { namespace chain {
             transfer_from_blind_operation,
             asset_settle_cancel_operation,  // VIRTUAL
             asset_claim_fees_operation,
+            fba_distribute_operation,        // VIRTUAL
             pnt_transfer_operation,
-            contract_call_operation,
-            data_storage_operation,
-            contract_deploy_operation,
-            data_market_create_operation,
-            data_market_update_operation,
+            alliance_data_product_create_operation,
+            alliance_data_product_update_operation,
             alliance_create_operation,
             alliance_update_operation,
-            data_transaction_create_operation,
-            data_transaction_update_operation,
-            data_transaction_datasource_upload_operation,
-            data_transaction_datasource_validate_error_operation,
-            data_transaction_complain_operation,
-            datasource_copyright_clear_operation,
             escrow_transfer_operation,
             escrow_approve_operation,
             escrow_dispute_operation,
             escrow_release_operation,
-            fba_distribute_operation        // VIRTUAL
+            account_upgrade_merchant_operation,
+            account_upgrade_datasource_operation,
+            stale_data_market_category_create_operation,
+            stale_data_market_category_update_operation,
+            stale_free_data_product_create_operation,
+            stale_free_data_product_update_operation,
+            stale_alliance_data_product_create_operation,
+            stale_alliance_data_product_update_operation,
+            stale_alliance_create_operation,
+            stale_alliance_update_operation,
+            data_transaction_create_operation, 
+            data_transaction_update_operation, 
+            pay_data_transaction_operation,  
+            account_upgrade_data_transaction_member_operation, 
+            data_transaction_datasource_upload_operation, 
+            data_transaction_datasource_validate_error_operation, 
+            data_market_category_create_operation,
+            data_market_category_update_operation,
+            free_data_product_create_operation,
+            free_data_product_update_operation,
+            datasource_copyright_clear_operation,
+            data_transaction_complain_operation,
+            balance_lock_operation,
+            balance_unlock_operation,
+            proxy_transfer_operation, 
+            contract_deploy_operation, 
+            contract_call_operation, 
+            contract_update_operation, 
+            trust_node_pledge_withdraw_operation, 
+            inline_transfer_operation, 
+            inter_contract_call_operation 
          > operation;
 
    /// @} // operations group

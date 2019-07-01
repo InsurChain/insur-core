@@ -26,6 +26,7 @@
 #include <graphene/chain/protocol/types.hpp>
 #include <graphene/chain/protocol/asset.hpp>
 #include <graphene/chain/protocol/authority.hpp>
+#include <graphene/chain/protocol/contract_receipt.hpp>
 
 namespace graphene { namespace chain {
 
@@ -81,7 +82,7 @@ namespace graphene { namespace chain {
     */
 
    struct void_result{};
-   typedef fc::static_variant<void_result,object_id_type,asset> operation_result;
+   typedef fc::static_variant<void_result,object_id_type,asset,contract_receipt_old,contract_receipt> operation_result;
 
    struct base_operation
    {
@@ -102,15 +103,27 @@ namespace graphene { namespace chain {
     *  For future expansion many structus include a single member of type
     *  extensions_type that can be changed when updating a protocol.  You can
     *  always add new types to a static_variant without breaking backward
-    *  compatibility.   
+    *  compatibility.
     */
-   typedef static_variant<void_t>      future_extensions;
+   typedef static_variant<
+       void_t,
+       operation_ext_version_t,
+       operation_ext_copyright_hash_t,
+       data_transaction_commission_percent_t, // 3
+       pocs_threshold_league_t,
+       pocs_threshold_league_data_product_t,
+       lock_balance_params_t, // 6
+       vm_cpu_limit_t, // 7
+       asset_symbol_t,
+	   trust_node_pledge_t,
+	   inter_contract_calling_params_t
+       > future_extensions;
 
    /**
     *  A flat_set is used to make sure that only one extension of
-    *  each type is added and that they are added in order.  
-    *  
-    *  @note static_variant compares only the type tag and not the 
+    *  each type is added and that they are added in order.
+    *
+    *  @note static_variant compares only the type tag and not the
     *  content.
     */
    typedef flat_set<future_extensions> extensions_type;
@@ -122,4 +135,3 @@ namespace graphene { namespace chain {
 FC_REFLECT_TYPENAME( graphene::chain::operation_result )
 FC_REFLECT_TYPENAME( graphene::chain::future_extensions )
 FC_REFLECT( graphene::chain::void_result, )
-   

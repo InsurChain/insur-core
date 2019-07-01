@@ -33,14 +33,13 @@
 #include <fc/safe.hpp>
 #include <fc/container/flat.hpp>
 #include <fc/string.hpp>
+
+#include <graphene/chain/protocol/ext.hpp>
+
 #include <fc/io/raw.hpp>
 #include <fc/uint128.hpp>
 #include <fc/static_variant.hpp>
 #include <fc/smart_ref_fwd.hpp>
-
-#include <boost/interprocess/containers/string.hpp>
-#include <boost/interprocess/allocators/allocator.hpp>
-#include <boost/interprocess/managed_mapped_file.hpp>
 
 #include <memory>
 #include <vector>
@@ -50,6 +49,9 @@
 #include <graphene/chain/protocol/name.hpp>
 #include <graphene/db/object_id.hpp>
 #include <graphene/chain/protocol/config.hpp>
+
+#define SECONDS_PER_DAY 86400 //seconds of a day
+#include <boost/rational.hpp>
 
 namespace graphene { namespace chain {
    using namespace graphene::db;
@@ -74,7 +76,6 @@ namespace graphene { namespace chain {
    using                               fc::enum_type;
    using                               fc::optional;
    using                               fc::unsigned_int;
-   using                               fc::signed_int;
    using                               fc::time_point_sec;
    using                               fc::time_point;
    using                               fc::safe;
@@ -84,21 +85,89 @@ namespace graphene { namespace chain {
    using                               fc::ecc::range_proof_type;
    using                               fc::ecc::range_proof_info;
    using                               fc::ecc::commitment_type;
-   namespace bip = boost::interprocess;
-   
-   template<typename T>
-   using allocator = bip::allocator<T, bip::managed_mapped_file::segment_manager>;
 
-   template<typename T>
-   using shared_vector = std::vector<T, allocator<T>>;
-
-   using bytes = std::vector<char>;
-   using shared_string = boost::interprocess::basic_string<char, std::char_traits<char>,allocator<char>>;
+   using bytes              = std::vector<char>;
 
    struct void_t{};
 
+   using action_name      = name;
+   using scope_name       = name;
+   using account_name     = uint64_t;
+   using permission_name  = name;
+   using table_name       = name;
+
+   using int128_t            = __int128;
+
+   using checksum256_type    = fc::sha256;
+   using checksum512_type    = fc::sha512;
+   using checksum160_type    = fc::ripemd160;
+
+   typedef vector<std::pair<uint16_t,vector<char>>> abi_extensions_type;
+
+   struct operation_ext_version_t {
+       uint8_t version = 0;
+   };
+
+   struct data_transaction_commission_percent_t {
+       // 10 percent is 1000
+       uint16_t alliance_data_market_commission_percent = (10 * GRAPHENE_1_PERCENT);
+       uint16_t free_data_market_commission_percent = (10 * GRAPHENE_1_PERCENT);
+
+       string commission_account = GRAPHENE_DATA_TRANSACTION_COMMISSION_ACCOUNT;
+       uint16_t reserve_percent = (1 * GRAPHENE_1_PERCENT); // reserve percent of commission, go to reserve pool
+   };
+
+   // vm execution cpu limit
+   struct vm_cpu_limit_t {
+       uint32_t trx_cpu_limit = 20000; // 20 ms
+       uint32_t block_cpu_limit = 800000; // 800 ms
+   };
+
+   struct asset_symbol_t {
+       std::string symbol;
+   };
+
+   struct trust_node_pledge_t {
+       int64_t amount = GRAPHENE_BLOCKCHAIN_PRECISION * 10000;// 10000 GXC (asset 1.3.1)
+   };
+
+   struct inter_contract_calling_params_t {
+       uint8_t max_inter_contract_depth = 3;
+       uint32_t contract_basic_fee_vesting_period_seconds = 259200;
+       uint32_t max_inline_action_size = 1024*64;
+   };
+
+   struct operation_ext_copyright_hash_t {
+       fc::optional<string> copyright_hash;
+   };
+
+   struct pocs_threshold_alliance_t {
+       // Trigger pocs thresholds
+       vector<uint64_t> pocs_thresholds;
+       // the base fee rate
+       vector<uint64_t> fee_bases;
+       // the product weight of the pocs
+       vector<uint64_t> product_pocs_weights;
+   };
+
+   struct pocs_threshold_alliance_data_product_t{
+       uint64_t pocs_threshold = 0;
+   };
+
+   struct interest_rate_t {
+       uint32_t lock_days = 0;
+       uint32_t interest_rate = 0;
+       bool is_valid = false;//
+   };
+
+   struct lock_balance_params_t {
+       vector< pair<fc::string, interest_rate_t> > params;
+   };
+
    typedef fc::ecc::private_key        private_key_type;
    typedef fc::sha256 chain_id_type;
+
+   typedef boost::rational< int32_t >   ratio_type;
 
    enum asset_issuer_permission_flags
    {
@@ -123,18 +192,74 @@ namespace graphene { namespace chain {
       implementation_ids    = 2
    };
 
-   inline bool is_relative( object_id_type o ){ return o.space() == 0; }
+   enum data_market_type_enum
+   {
+      free_data_market   = 1,//free_data_market
+      alliance_data_market = 2//alliance_data_market
+   };
 
-   struct interest_rate_t 
-   {
-      uint32_t interest_rate_days = 0;
-      uint32_t interest_rate = 0;
-      bool is_valid = false;
+   /**
+    * @brief The data_market_category_status enum
+    */
+   enum data_market_category_status{
+        data_market_category_undo_status = 0,// init
+        data_market_category_enable_status  = 1,//enable, online
    };
-   struct lock_balance_params_t
-   {
-      vector< pair<string, interest_rate_t> > params;
+   /**
+    * @brief The free_data_product_status enum
+    */
+   enum data_product_status{
+        data_product_undo_status = 0,//init
+        data_product_enable_status  = 1,//enable, online
+        data_product_pause_status = 2// disable
    };
+   /**
+    * @brief The alliance_status enum
+    */
+   enum alliance_status{
+        alliance_undo_status = 0,//init
+        alliance_enable_status  = 1,//enable, online
+        alliance_pause_status = 2//disable
+   };
+
+   /**
+    * @brief The alliance_data_product_status enum
+    */
+   enum alliance_datasource_status{
+        alliance_datasource_undo_status = 0,//init
+        alliance_datasource_enable_status  = 1,//enable, online
+        alliance_datasource_pause_status = 2//disable
+   };
+
+   /**
+    * @brief The data_transaction_status
+    */
+   enum data_transaction_status {
+        data_transaction_status_init = 0,
+        data_transaction_status_confirmed = 1,
+        data_transaction_status_user_rejected = 99
+   };
+
+   enum data_transaction_datasource_status {
+       data_transaction_datasource_status_init = 0,
+       data_transaction_datasource_status_uploaded = 1,
+       data_transaction_datasource_status_payed = 2,
+       data_transaction_datasource_status_no_data = 3,
+       data_transaction_datasource_status_error = 99
+   };
+
+   /**
+    *  operation version
+    */
+   enum operation_version {
+       operation_version_one = 1,
+       operation_version_two = 2,
+       operation_version_three = 3,
+       operation_version_four = 4,
+       operation_version_five = 5
+   };
+
+   inline bool is_relative( object_id_type o ){ return o.space() == 0; }
 
    /**
     *  List all object types from all namespaces here so they can
@@ -161,23 +286,20 @@ namespace graphene { namespace chain {
       vesting_balance_object_type,
       worker_object_type,
       balance_object_type,
-      index64_object_type,
-      index128_object_type,
-      index256256_object_type,
-      index_double_object_type,
-      index_long_double_object_type,
-      data_market_object_type,
-      alliance_object_type,
+      data_market_category_object_type,
+      free_data_product_object_type,
       alliance_data_product_object_type,
-      data_transaction_object_type,
-      data_transaction_complain_object_type,
-      datasource_copyright_object_type,
-      lock_balance_object_type,
-      trust_node_pledge_object_type,
+      alliance_object_type,
+      data_transaction_object_type, 
       pocs_object_type,
+      datasource_copyright_object_type,
+      second_hand_data_object_type,
+      data_transaction_complain_object_type,
+      lock_balance_object_type,
+	  trust_node_pledge_object_type,
 
+      OBJECT_TYPE_COUNT /////< Sentry value which contains the number of different object types
 
-      OBJECT_TYPE_COUNT ///< Sentry value which contains the number of different object types
    };
 
    enum impl_object_type
@@ -201,10 +323,20 @@ namespace graphene { namespace chain {
       impl_fba_accumulator_object_type,
       impl_escrow_object_type,
       impl_multisig_object_type,
-      impl_data_storage_baas_object_type,
-      impl_account_balance_locked_object_type,
       impl_account_merchant_object_type,
-      impl_data_transaction_search_results_object_type
+      impl_free_data_product_search_results_object_type,
+      impl_alliance_data_product_search_results_object_type,
+      impl_alliance_search_results_object_type,
+      impl_data_transaction_search_results_object_type,
+      impl_signature_object_type, 
+      impl_table_id_object_type, 
+      impl_key_value_object_type, 
+      index64_object_type,
+      index128_object_type,
+      index256_object_type,
+      index_double_object_type,
+      index_long_double_object_type,
+      impl_trx_entry_history_object_type
    };
 
    //typedef fc::unsigned_int            object_id_type;
@@ -224,21 +356,24 @@ namespace graphene { namespace chain {
    class worker_object;
    class balance_object;
    class blinded_balance_object;
-   class data_storage_baas_object;
-   class data_market_object;
-   class alliance_object;
+   class data_market_category_object;
+   class free_data_product_object;
    class alliance_data_product_object;
+   class alliance_object;
    class data_transaction_object;
-   class data_transaction_complain_object;
+   class data_transaction_search_results_object;
+   class personal_auth_object;
+   class pocs_object;
    class datasource_copyright_object;
+   class second_hand_data_object;
+   class data_transaction_complain_object;
    class lock_balance_object;
    class trust_node_pledge_object;
-   class pocs_object;
 
    typedef object_id< protocol_ids, account_object_type,            account_object>               account_id_type;
    typedef object_id< protocol_ids, asset_object_type,              asset_object>                 asset_id_type;
    typedef object_id< protocol_ids, force_settlement_object_type,   force_settlement_object>      force_settlement_id_type;
-   typedef object_id< protocol_ids, committee_member_object_type,           committee_member_object>              committee_member_id_type;
+   typedef object_id< protocol_ids, committee_member_object_type,   committee_member_object>      committee_member_id_type;
    typedef object_id< protocol_ids, witness_object_type,            witness_object>               witness_id_type;
    typedef object_id< protocol_ids, limit_order_object_type,        limit_order_object>           limit_order_id_type;
    typedef object_id< protocol_ids, call_order_object_type,         call_order_object>            call_order_id_type;
@@ -249,15 +384,17 @@ namespace graphene { namespace chain {
    typedef object_id< protocol_ids, vesting_balance_object_type,    vesting_balance_object>       vesting_balance_id_type;
    typedef object_id< protocol_ids, worker_object_type,             worker_object>                worker_id_type;
    typedef object_id< protocol_ids, balance_object_type,            balance_object>               balance_id_type;
-   typedef object_id< protocol_ids, data_market_object_type, data_market_object>data_market_id_type;
-   typedef object_id< protocol_ids, alliance_object_type, alliance_object>alliance_id_type;
-   typedef object_id< protocol_ids, alliance_data_product_object_type, alliance_data_product_object>alliance_data_product_id_type;
-   typedef object_id< protocol_ids, data_transaction_object_type, data_transaction_object>data_transaction_id_type;
-   typedef object_id< protocol_ids, data_transaction_complain_object_type, data_transaction_complain_object>data_transaction_complain_id_type;
-   typedef object_id< protocol_ids, datasource_copyright_object_type, datasource_copyright_object>datasource_copyright_id_type;
-   typedef object_id< protocol_ids, lock_balance_object_type, lock_balance_object>lock_balance_id_type;
-   typedef object_id< protocol_ids, trust_node_pledge_object_type, trust_node_pledge_object>trust_node_pledge_id_type;
-   typedef object_id< protocol_ids, pocs_object_type, pocs_object>pocs_id_type;
+   typedef object_id< protocol_ids, data_market_category_object_type,       data_market_category_object> data_market_category_id_type;
+   typedef object_id< protocol_ids, free_data_product_object_type,       free_data_product_object>  free_data_product_id_type;
+   typedef object_id< protocol_ids, alliance_data_product_object_type,       alliance_data_product_object>  alliance_data_product_id_type;
+   typedef object_id< protocol_ids, alliance_object_type,       alliance_object>                        alliance_id_type;
+   typedef object_id< protocol_ids, data_transaction_object_type,   data_transaction_object>         data_transaction_id_type;
+   typedef object_id< protocol_ids, pocs_object_type, pocs_object>                                  pocs_id_type;
+   typedef object_id< protocol_ids, datasource_copyright_object_type, datasource_copyright_object>      datasource_copyright_id_type;
+   typedef object_id< protocol_ids, second_hand_data_object_type, second_hand_data_object>         second_hand_data_id_type;
+   typedef object_id< protocol_ids, data_transaction_complain_object_type, data_transaction_complain_object> data_transaction_complain_id_type;
+   typedef object_id< protocol_ids, lock_balance_object_type, lock_balance_object>       lock_balance_id_type;
+   typedef object_id< protocol_ids, trust_node_pledge_object_type, trust_node_pledge_object>       trust_node_pledge_id_type;
 
    // implementation types
    class global_property_object;
@@ -277,10 +414,14 @@ namespace graphene { namespace chain {
    class fba_accumulator_object;
    class escrow_object;
    class multisig_object;
-   class account_balance_locked_object;
-   class account_merchant_object;
-   class data_storage_baas_object;
-   class data_transaction_search_resluts_object;
+   class account_merchant_object;//账户下的商户对象
+   class free_data_product_search_results_object;
+   class alliance_data_product_search_results_object;
+   class alliance_search_results_object;
+   class signature_object;
+   class table_id_object;
+   class key_value_object;
+   class trx_entry_object;
 
    typedef object_id< implementation_ids, impl_global_property_object_type,  global_property_object>                    global_property_id_type;
    typedef object_id< implementation_ids, impl_dynamic_global_property_object_type,  dynamic_global_property_object>    dynamic_global_property_id_type;
@@ -291,9 +432,7 @@ namespace graphene { namespace chain {
    typedef object_id< implementation_ids, impl_transaction_object_type,      transaction_object>                        transaction_obj_id_type;
    typedef object_id< implementation_ids, impl_block_summary_object_type,    block_summary_object>                      block_summary_id_type;
 
-   typedef object_id< implementation_ids,
-                      impl_account_transaction_history_object_type,
-                      account_transaction_history_object>       account_transaction_history_id_type;
+   typedef object_id< implementation_ids, impl_account_transaction_history_object_type,account_transaction_history_object>       account_transaction_history_id_type;
    typedef object_id< implementation_ids, impl_chain_property_object_type,   chain_property_object>                     chain_property_id_type;
    typedef object_id< implementation_ids, impl_witness_schedule_object_type, witness_schedule_object>                   witness_schedule_id_type;
    typedef object_id< implementation_ids, impl_budget_record_object_type, budget_record_object >                        budget_record_id_type;
@@ -303,12 +442,19 @@ namespace graphene { namespace chain {
    typedef object_id< implementation_ids, impl_fba_accumulator_object_type, fba_accumulator_object >                    fba_accumulator_id_type;
    typedef object_id< implementation_ids, impl_escrow_object_type, escrow_object >                                      escrow_id_type;
    typedef object_id< implementation_ids, impl_multisig_object_type, multisig_object >                                  multisig_id_type;
-   typedef object_id< implementation_ids, impl_account_balance_locked_object_type, account_balance_locked_object >      account_balance_locked_id_type;
    typedef object_id< implementation_ids, impl_account_merchant_object_type, account_merchant_object >                  account_merchant_id_type;
-   typedef object_id< implementation_ids, impl_data_storage_baas_object_type, data_storage_baas_object >                data_storage_baas_id_type;
-   typedef object_id< implementation_ids, impl_data_transaction_search_results_object_type, data_transaction_search_resluts_object >                data_transaction_search_resluts_id_type;
+   typedef object_id< implementation_ids, impl_free_data_product_search_results_object_type, free_data_product_search_results_object >   free_data_product_search_results_id_type;
+   typedef object_id< implementation_ids, impl_alliance_data_product_search_results_object_type, alliance_data_product_search_results_object >   alliance_data_product_search_results_id_type;
+   typedef object_id< implementation_ids, impl_alliance_search_results_object_type, alliance_search_results_object >        alliance_search_results_id_type;
+   typedef object_id< implementation_ids, impl_data_transaction_search_results_object_type, data_transaction_search_results_object >        data_transaction_search_results_id_type;
+   typedef object_id< implementation_ids, impl_signature_object_type, signature_object>      signature_id_type;
+   typedef object_id< implementation_ids, impl_table_id_object_type, table_id_object>        table_id_object_id_type;
+   typedef object_id< implementation_ids, impl_key_value_object_type, key_value_object>      key_value_object_id_type;
+   typedef object_id< implementation_ids, impl_trx_entry_history_object_type, trx_entry_object> trx_entry_object_id_type;
 
-   typedef fc::array<char, GRAPHENE_MAX_ASSET_SYMBOL_LENGTH>    symbol_type;
+
+   //typedef object_id< implementation_ids, impl_search_results_object_type,search_results_object<DerivedClass>>          search_results_id_type;
+
    typedef fc::ripemd160                                        block_id_type;
    typedef fc::ripemd160                                        checksum_type;
    typedef fc::ripemd160                                        transaction_id_type;
@@ -336,8 +482,6 @@ namespace graphene { namespace chain {
        friend bool operator == ( const public_key_type& p1, const fc::ecc::public_key& p2);
        friend bool operator == ( const public_key_type& p1, const public_key_type& p2);
        friend bool operator != ( const public_key_type& p1, const public_key_type& p2);
-       // TODO: This is temporary for testing
-       bool is_valid_v1( const std::string& base58str );
    };
 
    struct extended_public_key_type
@@ -348,9 +492,9 @@ namespace graphene { namespace chain {
          uint32_t                   check = 0;
          fc::ecc::extended_key_data data;
       };
-      
+
       fc::ecc::extended_key_data key_data;
-       
+
       extended_public_key_type();
       extended_public_key_type( const fc::ecc::extended_key_data& data );
       extended_public_key_type( const fc::ecc::extended_public_key& extpubkey );
@@ -361,7 +505,7 @@ namespace graphene { namespace chain {
       friend bool operator == ( const extended_public_key_type& p1, const extended_public_key_type& p2);
       friend bool operator != ( const extended_public_key_type& p1, const extended_public_key_type& p2);
    };
-   
+
    struct extended_private_key_type
    {
       struct binary_key
@@ -370,9 +514,9 @@ namespace graphene { namespace chain {
          uint32_t                   check = 0;
          fc::ecc::extended_key_data data;
       };
-      
+
       fc::ecc::extended_key_data key_data;
-       
+
       extended_private_key_type();
       extended_private_key_type( const fc::ecc::extended_key_data& data );
       extended_private_key_type( const fc::ecc::extended_private_key& extprivkey );
@@ -383,16 +527,24 @@ namespace graphene { namespace chain {
       friend bool operator == ( const extended_private_key_type& p1, const extended_private_key_type& p2);
       friend bool operator != ( const extended_private_key_type& p1, const extended_private_key_type& p2);
    };
+
+   struct state_snapshot_result
+   {
+        uint32_t            head_block_num = 0;
+        block_id_type       head_block_id;
+        string              snapshot_dir;
+   };
+
 } }  // graphene::chain
 
 namespace fc
 {
-    void to_variant( const graphene::chain::public_key_type& var,  fc::variant& vo );
-    void from_variant( const fc::variant& var,  graphene::chain::public_key_type& vo );
-    void to_variant( const graphene::chain::extended_public_key_type& var, fc::variant& vo );
-    void from_variant( const fc::variant& var, graphene::chain::extended_public_key_type& vo );
-    void to_variant( const graphene::chain::extended_private_key_type& var, fc::variant& vo );
-    void from_variant( const fc::variant& var, graphene::chain::extended_private_key_type& vo );
+    void to_variant( const graphene::chain::public_key_type& var,  fc::variant& vo, uint32_t max_depth = 2 );
+    void from_variant( const fc::variant& var,  graphene::chain::public_key_type& vo, uint32_t max_depth = 2 );
+    void to_variant( const graphene::chain::extended_public_key_type& var, fc::variant& vo, uint32_t max_depth = 2 );
+    void from_variant( const fc::variant& var, graphene::chain::extended_public_key_type& vo, uint32_t max_depth = 2 );
+    void to_variant( const graphene::chain::extended_private_key_type& var, fc::variant& vo, uint32_t max_depth = 2 );
+    void from_variant( const fc::variant& var, graphene::chain::extended_private_key_type& vo, uint32_t max_depth = 2 );
 }
 
 FC_REFLECT( graphene::chain::public_key_type, (key_data) )
@@ -401,6 +553,13 @@ FC_REFLECT( graphene::chain::extended_public_key_type, (key_data) )
 FC_REFLECT( graphene::chain::extended_public_key_type::binary_key, (check)(data) )
 FC_REFLECT( graphene::chain::extended_private_key_type, (key_data) )
 FC_REFLECT( graphene::chain::extended_private_key_type::binary_key, (check)(data) )
+FC_REFLECT( graphene::chain::state_snapshot_result, (head_block_num)(head_block_id)(snapshot_dir) )
+
+
+FC_REFLECT_ENUM( graphene::chain::data_market_type_enum,
+                 (free_data_market)
+                 (alliance_data_market)
+               )
 
 FC_REFLECT_ENUM( graphene::chain::object_type,
                  (null_object_type)
@@ -419,15 +578,17 @@ FC_REFLECT_ENUM( graphene::chain::object_type,
                  (vesting_balance_object_type)
                  (worker_object_type)
                  (balance_object_type)
-                 (data_market_object_type)
-                 (alliance_object_type)
+                 (data_market_category_object_type)
+                 (free_data_product_object_type)
                  (alliance_data_product_object_type)
+                 (alliance_object_type)
                  (data_transaction_object_type)
-                 (data_transaction_complain_object_type)
+                 (pocs_object_type)
                  (datasource_copyright_object_type)
+                 (second_hand_data_object_type)
+                 (data_transaction_complain_object_type)
                  (lock_balance_object_type)
                  (trust_node_pledge_object_type)
-                 (pocs_object_type)
                  (OBJECT_TYPE_COUNT)
                )
 FC_REFLECT_ENUM( graphene::chain::impl_object_type,
@@ -450,10 +611,20 @@ FC_REFLECT_ENUM( graphene::chain::impl_object_type,
                  (impl_fba_accumulator_object_type)
                  (impl_escrow_object_type)
                  (impl_multisig_object_type)
-                 (impl_account_balance_locked_object_type)
                  (impl_account_merchant_object_type)
-                 (impl_data_storage_baas_object_type)
+                 (impl_free_data_product_search_results_object_type)
+                 (impl_alliance_data_product_search_results_object_type)
+                 (impl_alliance_search_results_object_type)
                  (impl_data_transaction_search_results_object_type)
+                 (impl_signature_object_type)
+                 (impl_table_id_object_type)
+                 (impl_key_value_object_type)
+                 (index64_object_type)
+                 (index128_object_type)
+                 (index256_object_type)
+                 (index_double_object_type)
+                 (index_long_double_object_type)
+                 (impl_trx_entry_history_object_type)
                )
 
 FC_REFLECT_TYPENAME( graphene::chain::share_type )
@@ -487,21 +658,43 @@ FC_REFLECT_TYPENAME( graphene::chain::buyback_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::fba_accumulator_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::escrow_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::multisig_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::account_balance_locked_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::data_storage_baas_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::data_market_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::multisig_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::free_data_product_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::alliance_data_product_id_type)
 FC_REFLECT_TYPENAME( graphene::chain::alliance_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::alliance_data_product_id_type )
 FC_REFLECT_TYPENAME( graphene::chain::data_transaction_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::data_transaction_complain_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::datasource_copyright_id_type )
-FC_REFLECT_TYPENAME( graphene::chain::data_transaction_search_resluts_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::data_transaction_search_results_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::account_merchant_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::data_market_category_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::free_data_product_search_results_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::alliance_data_product_search_results_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::alliance_search_results_id_type )
+FC_REFLECT_TYPENAME( graphene::chain::pocs_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::datasource_copyright_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::second_hand_data_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::data_transaction_complain_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::lock_balance_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::trust_node_pledge_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::signature_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::table_id_object_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::key_value_object_id_type)
+FC_REFLECT_TYPENAME( graphene::chain::trx_entry_object_id_type)
 
-FC_REFLECT( graphene::chain::void_t, )
-FC_REFLECT( graphene::chain::interest_rate_t,(interest_rate_days)(interest_rate)(is_valid) )
-FC_REFLECT( graphene::chain::lock_balance_params_t,(params) )
+FC_REFLECT(graphene::chain::void_t, )
+FC_REFLECT(graphene::chain::operation_ext_version_t, (version))
+FC_REFLECT(graphene::chain::data_transaction_commission_percent_t, (alliance_data_market_commission_percent)(free_data_market_commission_percent)(commission_account)(reserve_percent))
+FC_REFLECT(graphene::chain::operation_ext_copyright_hash_t, (copyright_hash))
+FC_REFLECT(graphene::chain::pocs_threshold_alliance_t, (pocs_thresholds)(fee_bases)(product_pocs_weights))
+FC_REFLECT(graphene::chain::pocs_threshold_alliance_data_product_t, (pocs_threshold))
+FC_REFLECT(graphene::chain::interest_rate_t, (lock_days)(interest_rate)(is_valid))
+FC_REFLECT(graphene::chain::lock_balance_params_t, (params))
+FC_REFLECT(graphene::chain::vm_cpu_limit_t, (trx_cpu_limit)(block_cpu_limit))
+FC_REFLECT(graphene::chain::asset_symbol_t, (symbol))
+FC_REFLECT(graphene::chain::trust_node_pledge_t, (amount))
+FC_REFLECT(graphene::chain::inter_contract_calling_params_t, (max_inter_contract_depth)(contract_basic_fee_vesting_period_seconds)(max_inline_action_size))
 
-FC_REFLECT_ENUM( graphene::chain::asset_issuer_permission_flags,
+
+FC_REFLECT_ENUM(graphene::chain::asset_issuer_permission_flags,
    (charge_market_fee)
    (white_list)
    (transfer_restricted)
@@ -512,4 +705,3 @@ FC_REFLECT_ENUM( graphene::chain::asset_issuer_permission_flags,
    (witness_fed_asset)
    (committee_fed_asset)
    )
-   

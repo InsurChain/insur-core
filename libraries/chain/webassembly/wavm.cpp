@@ -1,3 +1,17 @@
+#include <graphene/chain/webassembly/wavm.hpp>
+#include <graphene/chain/wasm_constraints.hpp>
+#include <graphene/chain/wasm_injection.hpp>
+#include <graphene/chain/apply_context.hpp>
+#include <graphene/chain/exceptions.hpp>
+
+#include "IR/Module.h"
+#include "Platform/Platform.h"
+#include "WAST/WAST.h"
+#include "IR/Operators.h"
+#include "IR/Validate.h"
+#include "Runtime/Linker.h"
+#include "Runtime/Intrinsics.h"
+
 #include <mutex>
 
 using namespace IR;
@@ -17,10 +31,9 @@ class wavm_instantiated_module : public wasm_instantiated_module_interface {
 
       void apply(apply_context& context) override {
          vector<Value> args = {Value(uint64_t(context.receiver)),
-	                       Value(uint64_t(context.act.account)),
-                               Value(uint64_t(context.act.name))};
+	                       Value(uint64_t(context.act.contract_id)),
+                               Value(uint64_t(context.act.method_name))};
 
-         call("apply", args, context);
       }
 
    private:
@@ -30,7 +43,7 @@ class wavm_instantiated_module : public wasm_instantiated_module_interface {
             if( !call )
                return;
 
-            GRAPHENE_ASSERT( getFunctionType(call)->parameters.size() == args.size(), wasm_exception, "" );
+            FC_ASSERT( getFunctionType(call)->parameters.size() == args.size() );
 
             //The memory instance is reused across all wavm_instantiated_modules, but for wasm instances
             // that didn't declare "memory", getDefaultMemory() won't see it
@@ -108,17 +121,9 @@ std::unique_ptr<wasm_instantiated_module_interface> wavm_runtime::instantiate_mo
    graphene::chain::webassembly::common::root_resolver resolver;
    LinkResult link_result = linkModule(*module, resolver);
    ModuleInstance *instance = instantiateModule(*module, std::move(link_result.resolvedImports));
-   GRAPHENE_ASSERT(instance != nullptr, wasm_exception, "Fail to Instantiate WAVM Module");
+   FC_ASSERT(instance != nullptr, "Fail to Instantiate WAVM Module");
 
    return std::make_unique<wavm_instantiated_module>(instance, std::move(module), initial_memory);
-}
-
-void wavm_runtime::immediately_exit_currently_running_module() {
-#ifdef _WIN32
-   throw wasm_exit();
-#else
-   Platform::immediately_exit();
-#endif
 }
 
 }}}}

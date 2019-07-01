@@ -54,9 +54,10 @@ digest_type transaction::sig_digest( const chain_id_type& chain_id )const
 
 void transaction::validate() const
 {
+   //operations 表示事务内的操作
    FC_ASSERT( operations.size() > 0, "A transaction must have at least one operation", ("trx",*this) );
    for( const auto& op : operations )
-      operation_validate(op); 
+      operation_validate(op); //校验操作
 }
 
 graphene::chain::transaction_id_type graphene::chain::transaction::id() const
@@ -71,6 +72,7 @@ const signature_type& graphene::chain::signed_transaction::sign(const private_ke
 {
    digest_type h = sig_digest( chain_id );
    signatures.push_back(key.sign_compact(h));
+   signees.clear(); // Clear signees since it may be inconsistent after added a new signature
    return signatures.back();
 }
 
@@ -80,6 +82,21 @@ signature_type graphene::chain::signed_transaction::sign(const private_key_type&
    fc::raw::pack( enc, chain_id );
    fc::raw::pack( enc, *this );
    return key.sign_compact(enc.result());
+}
+
+bool graphene::chain::signed_transaction::validate_signee(const fc::ecc::public_key& expected_signee, const chain_id_type& chain_id) const
+{
+    auto tx = *this;
+    tx.signatures.clear();
+    auto digest = tx.sig_digest(chain_id);
+    idump((expected_signee));
+
+    for (const auto& sig : signatures) {
+        if (fc::ecc::public_key(sig, digest, true) == expected_signee) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void transaction::set_expiration( fc::time_point_sec expiration_time )
@@ -97,8 +114,6 @@ void transaction::get_required_authorities( flat_set<account_id_type>& active, f
 {
    for( const auto& op : operations )
       operation_get_required_authorities( op, active, owner, other );
-   for( const auto& account :owner )
-      active.erase( account );
 }
 
 
@@ -195,7 +210,7 @@ struct sign_state
             if( approved_by.find(a.first) == approved_by.end() )
             {
                if( depth == max_recursion )
-                  return false;
+                  continue;
                if( check_authority( get_active( a.first ), depth+1 ) )
                {
                   approved_by.insert( a.first );
@@ -264,7 +279,8 @@ void verify_authority( const vector<operation>& ops, const flat_set<public_key_t
       GRAPHENE_ASSERT( required_active.find(GRAPHENE_COMMITTEE_ACCOUNT) == required_active.end(),
                        invalid_committee_approval, "Committee account may only propose transactions" );
 
-   sign_state s(sigs,get_active);
+   flat_set<public_key_type> keys;
+   sign_state s(sigs,get_active, keys);
    s.max_recursion = max_recursion_depth;
    for( auto& id : active_aprovals )
       s.approved_by.insert( id );
@@ -299,20 +315,25 @@ void verify_authority( const vector<operation>& ops, const flat_set<public_key_t
 } FC_CAPTURE_AND_RETHROW( (ops)(sigs) ) }
 
 
-flat_set<public_key_type> signed_transaction::get_signature_keys( const chain_id_type& chain_id )const
+const flat_set<public_key_type>& signed_transaction::get_signature_keys( const chain_id_type& chain_id )const
 { try {
-   auto d = sig_digest( chain_id );
-   flat_set<public_key_type> result;
-   for( const auto&  sig : signatures )
+   // Strictly we should check whether the given chain ID is same as the one used to initialize the `signees` field.
+   // However, we don't pass in another chain ID so far, for better performance, we skip the check.
+   if( signees.empty() && !signatures.empty() )
    {
-      GRAPHENE_ASSERT(
-         result.insert( fc::ecc::public_key(sig,d) ).second,
-         tx_duplicate_sig,
-         "Duplicate Signature detected" );
+       auto d = sig_digest( chain_id );
+       flat_set<public_key_type> result;
+       for( const auto&  sig : signatures )
+       {
+          GRAPHENE_ASSERT(
+             result.insert( fc::ecc::public_key(sig,d) ).second,
+             tx_duplicate_sig,
+             "Duplicate Signature detected" );
+       }
+       signees = std::move( result );
    }
-   return result;
+   return signees;
 } FC_CAPTURE_AND_RETHROW() }
-
 
 
 set<public_key_type> signed_transaction::get_required_signatures(
@@ -327,8 +348,8 @@ set<public_key_type> signed_transaction::get_required_signatures(
    vector<authority> other;
    get_required_authorities( required_active, required_owner, other );
 
-
-   sign_state s(get_signature_keys( chain_id ),get_active,available_keys);
+   const flat_set<public_key_type>& signature_keys = get_signature_keys( chain_id );
+   sign_state s( signature_keys, get_active, available_keys );
    s.max_recursion = max_recursion_depth;
 
    for( const auto& auth : other )
@@ -343,7 +364,8 @@ set<public_key_type> signed_transaction::get_required_signatures(
    set<public_key_type> result;
 
    for( auto& provided_sig : s.provided_signatures )
-      if( available_keys.find( provided_sig.first ) != available_keys.end() )
+      if( available_keys.find( provided_sig.first ) != available_keys.end()
+            && signature_keys.find( provided_sig.first ) == signature_keys.end() )
          result.insert( provided_sig.first );
 
    return result;
@@ -386,4 +408,3 @@ void signed_transaction::verify_authority(
 } FC_CAPTURE_AND_RETHROW( (*this) ) }
 
 } } // graphene::chain
-   
