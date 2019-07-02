@@ -2,8 +2,10 @@ file(GLOB HEADERS "include/graphene/app/*.hpp")
 file(GLOB EGENESIS_HEADERS "../egenesis/include/graphene/app/*.hpp")
 
 add_library( graphene_app 
+             network_broadcast_api.cpp
              api.cpp
              application.cpp
+             database_api_impl.cpp
              database_api.cpp
              impacted.cpp
              plugin.cpp
@@ -12,14 +14,14 @@ add_library( graphene_app
            )
 
 # need to link graphene_debug_witness because plugins aren't sufficiently isolated #246
-target_link_libraries( graphene_app graphene_market_history graphene_account_history graphene_chain fc graphene_db graphene_net graphene_time graphene_utilities graphene_debug_witness )
+target_link_libraries( graphene_app graphene_account_history graphene_chain fc graphene_db graphene_net graphene_utilities graphene_debug_witness ${QUERY_TXID})
 target_include_directories( graphene_app
                             PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
                             "${CMAKE_CURRENT_SOURCE_DIR}/../egenesis/include" )
 
-# set_source_files_properties
 if(MSVC)
-  set_source_files_properties( application.cpp api.cpp database_api.cpp PROPERTIES COMPILE_FLAGS "/bigobj" )
+  set_source_files_properties( application.cpp network_broadcast_api.cpp
+      api.cpp database_api.cpp database_api_impl.cpp PROPERTIES COMPILE_FLAGS "/bigobj" )
 endif(MSVC)
 
 INSTALL( TARGETS
@@ -29,3 +31,4 @@ INSTALL( TARGETS
    LIBRARY DESTINATION lib
    ARCHIVE DESTINATION lib
 )
+INSTALL( FILES ${HEADERS} DESTINATION "include/graphene/app" )

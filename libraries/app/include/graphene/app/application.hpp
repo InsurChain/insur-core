@@ -45,6 +45,7 @@ namespace graphene { namespace app {
                                    boost::program_options::options_description& configuration_file_options )const;
          void initialize(const fc::path& data_dir, const boost::program_options::variables_map&options);
          void initialize_plugins( const boost::program_options::variables_map& options );
+         void truncate_block_db(const fc::path &data_dir, uint64_t block_num);
          void startup();
          void shutdown();
          void startup_plugins();
@@ -63,7 +64,7 @@ namespace graphene { namespace app {
             if( !plugin_cfg_options.options().empty() )
                _cfg_options.add(plugin_cfg_options);
 
-            add_plugin( plug->plugin_name(), plug );
+            add_available_plugin( plug );
             return plug;
          }
          std::shared_ptr<abstract_plugin> get_plugin( const string& name )const;
@@ -73,7 +74,7 @@ namespace graphene { namespace app {
          {
             std::shared_ptr<abstract_plugin> abs_plugin = get_plugin( name );
             std::shared_ptr<PluginType> result = std::dynamic_pointer_cast<PluginType>( abs_plugin );
-            FC_ASSERT( result != std::shared_ptr<PluginType>() );
+            FC_ASSERT(result != std::shared_ptr<PluginType>(), "Unable to load plugin '${p}'", ("p",name));
             return result;
          }
 
@@ -89,7 +90,8 @@ namespace graphene { namespace app {
          boost::signals2::signal<void()> syncing_finished;
 
       private:
-         void add_plugin( const string& name, std::shared_ptr<abstract_plugin> p );
+         void enable_plugin( const string& name );
+         void add_available_plugin( std::shared_ptr<abstract_plugin> p );
          std::shared_ptr<detail::application_impl> my;
 
          boost::program_options::options_description _cli_options;
@@ -97,4 +99,3 @@ namespace graphene { namespace app {
    };
 
 } }
-   
