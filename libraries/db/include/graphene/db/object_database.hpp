@@ -50,6 +50,7 @@ namespace graphene { namespace db {
           * Saves the complete state of the object_database to disk, this could take a while
           */
          void flush();
+         void flush(const fc::path& data_dir, const fc::string& block_id);
          void wipe(const fc::path& data_dir); // remove from disk
          void close();
 
@@ -139,6 +140,12 @@ namespace graphene { namespace db {
             return static_cast<IndexType*>(_index[ObjectType::space_id][ObjectType::type_id].get());
          }
 
+         template<typename IndexType, typename SecondaryIndexType, typename... Args>
+         SecondaryIndexType* add_secondary_index( Args... args )
+         {
+            return get_mutable_index_type<IndexType>().template add_secondary_index<SecondaryIndexType, Args...>(args...);
+         }
+
          void pop_undo();
 
          fc::path get_data_dir()const { return _data_dir; }
@@ -171,4 +178,3 @@ namespace graphene { namespace db {
 } } // graphene::db
 
 
-   

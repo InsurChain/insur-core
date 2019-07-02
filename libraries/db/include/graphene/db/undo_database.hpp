@@ -127,8 +127,9 @@ namespace graphene { namespace db {
          void pop_commit();
 
          std::size_t size()const { return _stack.size(); }
-         void set_max_size(size_t new_max_size) { _max_size = new_max_size; }
+         void set_max_size(size_t new_max_size) { _max_size = new_max_size;}
          size_t max_size()const { return _max_size; }
+         uint32_t active_sessions() const { return _active_sessions; }
 
          const undo_state& head()const;
 
@@ -145,4 +146,3 @@ namespace graphene { namespace db {
    };
 
 } } // graphene::db
-   

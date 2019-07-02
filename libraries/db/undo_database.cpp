@@ -38,7 +38,9 @@ undo_database::session undo_database::start_undo_session( bool force_enable )
       _disabled = false;
 
    while( size() > max_size() )
-      _stack.pop_front();
+   {
+      _stack.pop_front();  
+   }
 
    _stack.emplace_back();
    ++_active_sessions;
@@ -49,7 +51,9 @@ void undo_database::on_create( const object& obj )
    if( _disabled ) return;
 
    if( _stack.empty() )
+   {
       _stack.emplace_back();
+   }
    auto& state = _stack.back();
    auto index_id = object_id_type( obj.id.space(), obj.id.type(), 0 );
    auto itr = state.old_index_next_ids.find( index_id );
@@ -60,9 +64,10 @@ void undo_database::on_create( const object& obj )
 void undo_database::on_modify( const object& obj )
 {
    if( _disabled ) return;
-
    if( _stack.empty() )
+   {
       _stack.emplace_back();
+   }
    auto& state = _stack.back();
    if( state.new_ids.find(obj.id) != state.new_ids.end() )
       return;
@@ -73,9 +78,10 @@ void undo_database::on_modify( const object& obj )
 void undo_database::on_remove( const object& obj )
 {
    if( _disabled ) return;
-
    if( _stack.empty() )
+   {
       _stack.emplace_back();
+   }
    undo_state& state = _stack.back();
    if( state.new_ids.count(obj.id) )
    {
@@ -118,8 +124,6 @@ void undo_database::undo()
       _db.insert( std::move(*item.second) );
 
    _stack.pop_back();
-   if( _stack.empty() )
-      _stack.emplace_back();
    enable();
    --_active_sessions;
 } FC_CAPTURE_AND_RETHROW() }
@@ -127,6 +131,12 @@ void undo_database::undo()
 void undo_database::merge()
 {
    FC_ASSERT( _active_sessions > 0 );
+   if( _active_sessions == 1 && _stack.size() == 1 )
+   {
+      _stack.pop_back();
+      --_active_sessions;
+      return;
+   }
    FC_ASSERT( _stack.size() >=2 );
    auto& state = _stack.back();
    auto& prev_state = _stack[_stack.size()-2];
@@ -288,4 +298,3 @@ const undo_state& undo_database::head()const
 }
 
 } } // graphene::db
-   
