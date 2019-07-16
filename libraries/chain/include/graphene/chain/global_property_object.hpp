@@ -77,6 +77,7 @@ namespace graphene { namespace chain {
          time_point_sec    last_budget_time;
          share_type        witness_budget;
          uint32_t          accounts_registered_this_interval = 0;
+
          /**
           *  Every time a block is missed this increases by
           *  RECENTLY_MISSED_COUNT_INCREMENT,
@@ -147,4 +148,3 @@ FC_REFLECT_DERIVED( graphene::chain::global_property_object, (graphene::db::obje
                     (active_committee_members)
                     (active_witnesses)
                   )
-   

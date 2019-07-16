@@ -8,4 +8,3 @@ in the protocol directory.
 
 To be more specific, implementation details such as the objects defined in
 the object database should not be required here.
-   

@@ -35,20 +35,40 @@ void_result multisig_evaluator::do_evaluate( const multisig_operation& op ){
 }
 object_id_type multisig_evaluator::do_apply( const multisig_operation& o )
 { try {
+   db().adjust_balance( o.from, -o.amount );
     int size = o.owners.size();
     const multisig_object&mul = db().create<multisig_object>([&](multisig_object&mul){
         mul.from                = o.from;
+        //mul.owners              = o.owners;
+        //size at least  3 at most 7
         mul.first               = o.owners[0];
         mul.second              = o.owners[1];
         mul.third               = o.owners[2];
-        mul.fourth              = o.owners[3];
-        mul.fifth               = o.owners[4];
-        mul.sixth               = o.owners[5];
-        mul.seventh             = o.owners[6];
+        if(4 == size)
+        {
+            mul.fourth = o.owners[3];
+        }
+        else if (5 == size)
+        {
+            mul.fourth = o.owners[3];
+            mul.fifth = o.owners[4];
+        }
+        else if (6 == size)
+        {
+            mul.fourth = o.owners[3];
+            mul.fifth = o.owners[4];
+            mul.sixth = o.owners[5];
+        }
+        else if (7 == size)
+        {
+            mul.fourth = o.owners[3];
+            mul.fifth = o.owners[4];
+            mul.sixth = o.owners[5];
+            mul.seventh = o.owners[6];
+        }
         mul.amount              = o.amount;
     });
-   db().adjust_balance( o.to, o.amount );
+//   db().adjust_balance( o.to, o.amount );
    return mul.id;
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 } } // graphene::chain
-   

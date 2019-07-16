@@ -609,14 +609,17 @@ void database::perform_chain_maintenance(const signed_block& next_block, const g
 					}
 				}
             }
+            // dlog("account ${a}, core voting_stake ${v}", ("a", stake_account.get_id())("v", voting_stake));
 
+            // voting_stake, add INSURS
             if (d.head_block_time() > HARDFORK_1002_TIME && d.head_block_time() <= HARDFORK_1008_TIME) {
                 const auto& asset_by_symbol = d.get_index_type<asset_index>().indices().get<by_symbol>();
-                auto ins = asset_by_symbol.find(GRAPHENE_SYMBOL);
-                if (ins != asset_by_symbol.end()) {
-                    double exchange_rate = ins->options.core_exchange_rate.to_real();
-                    voting_stake += d.get_balance(stake_account.get_id(), ins->get_id()).amount.value * exchange_rate;
+                auto insurs = asset_by_symbol.find(GRAPHENE_SYMBOL_INSURS);
+                if (insurs != asset_by_symbol.end()) {
+                    double exchange_rate = insurs->options.core_exchange_rate.to_real();
+                    voting_stake += d.get_balance(stake_account.get_id(), insurs->get_id()).amount.value * exchange_rate;
                 }
+                // dlog("total voting_stake ${v}", ("v", voting_stake));
             }
 
 
@@ -625,6 +628,7 @@ void database::perform_chain_maintenance(const signed_block& next_block, const g
             {
                uint32_t offset = id.instance();
                uint32_t vote_type = id.type();
+               // if they somehow managed to specify an illegal offset, ignore it.
                if( offset < d._vote_tally_buffer.size() ) {
             	  if(vote_type == vote_id_type::witness || vote_type == vote_id_type::committee) {
                      if(d._vote_id_valid[offset]) {

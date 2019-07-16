@@ -155,4 +155,3 @@ FC_REFLECT( graphene::chain::escrow_transfer_operation, (fee)(from)(to)(agent)(a
 FC_REFLECT( graphene::chain::escrow_approve_operation, (fee)(from)(to)(agent)(who)(escrow_id)(approve) );
 FC_REFLECT( graphene::chain::escrow_dispute_operation, (fee)(from)(to)(agent)(who)(escrow_id) );
 FC_REFLECT( graphene::chain::escrow_release_operation, (fee)(from)(to)(agent)(who)(receiver)(escrow_id)(amount) );
-   

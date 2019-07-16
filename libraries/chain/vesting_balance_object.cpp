@@ -64,7 +64,7 @@ asset linear_vesting_policy::get_allowed_withdraw( const vesting_policy_context&
         }
     }
 
-    return asset( allowed_withdraw, ctx.amount.asset_id );
+    return asset( allowed_withdraw, ctx.balance.asset_id );
 }
 
 void linear_vesting_policy::on_deposit(const vesting_policy_context& ctx)
@@ -238,4 +238,3 @@ asset vesting_balance_object::get_allowed_withdraw(const time_point_sec& now)con
 }
 
 } } // graphene::chain
-   

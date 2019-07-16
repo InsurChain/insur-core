@@ -32,4 +32,3 @@ class database;
 void evaluate_buyback_account_options( const database& db, const buyback_account_options& auth );
 
 } } // graphene::chain
-   

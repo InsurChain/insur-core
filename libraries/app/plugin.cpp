@@ -21,9 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-/*
- *plugin.cpp
- * */
+
 #include <graphene/app/plugin.hpp>
 #include <graphene/chain/protocol/fee_schedule.hpp>
 
@@ -75,4 +73,3 @@ void plugin::plugin_set_program_options(
 }
 
 } } // graphene::app
-   

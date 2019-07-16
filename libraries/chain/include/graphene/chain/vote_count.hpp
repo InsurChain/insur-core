@@ -75,4 +75,3 @@ struct vote_counter
 };
 
 } } // graphene::chain
-   

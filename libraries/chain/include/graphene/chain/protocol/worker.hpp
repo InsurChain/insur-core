@@ -76,7 +76,7 @@ namespace graphene { namespace chain {
     */
    struct worker_create_operation : public base_operation
    {
-      struct fee_parameters_type { uint64_t fee = 5000*GRAPHENE_BLOCKCHAIN_PRECISION; };
+      struct fee_parameters_type { uint64_t fee = 50000 * GRAPHENE_BLOCKCHAIN_PRECISION; };
 
       asset                fee;
       account_id_type      owner;
@@ -104,4 +104,3 @@ FC_REFLECT( graphene::chain::worker_create_operation::fee_parameters_type, (fee)
 FC_REFLECT( graphene::chain::worker_create_operation,
             (fee)(owner)(work_begin_date)(work_end_date)(daily_pay)(name)(url)(initializer) )
 
-   

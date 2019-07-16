@@ -1,4 +1,3 @@
-
 #include <graphene/chain/proxy_transfer_evaluator.hpp>
 #include <graphene/chain/account_object.hpp>
 #include <graphene/chain/exceptions.hpp>

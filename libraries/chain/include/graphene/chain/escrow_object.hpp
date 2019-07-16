@@ -87,4 +87,3 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_DERIVED( graphene::chain::escrow_object, (graphene::db::object),
 (escrow_id)(from)(to)(agent)(ratification_deadline)(escrow_expiration)(pending_fee)(amount)(disputed)(to_approved)(agent_approved)(json_meta) );
-   

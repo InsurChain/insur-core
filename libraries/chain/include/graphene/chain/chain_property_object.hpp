@@ -48,4 +48,3 @@ FC_REFLECT_DERIVED( graphene::chain::chain_property_object, (graphene::db::objec
                     (chain_id)
                     (immutable_parameters)
                   )
-   

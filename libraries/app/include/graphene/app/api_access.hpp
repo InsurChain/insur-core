@@ -54,4 +54,3 @@ FC_REFLECT( graphene::app::api_access_info,
 FC_REFLECT( graphene::app::api_access,
     (permission_map)
    )
-   

@@ -46,7 +46,8 @@ namespace graphene { namespace chain {
     */
    struct limit_order_create_operation : public base_operation
    {
-      struct fee_parameters_type { uint64_t fee = 5 * GRAPHENE_BLOCKCHAIN_PRECISION; };
+      //修改费率 从 5 修改 到 10000
+      struct fee_parameters_type { uint64_t fee = 10000 * GRAPHENE_BLOCKCHAIN_PRECISION; };
 
       asset           fee;
       account_id_type seller;
@@ -111,7 +112,8 @@ namespace graphene { namespace chain {
    struct call_order_update_operation : public base_operation
    {
       /** this is slightly more expensive than limit orders, this pricing impacts prediction markets */
-      struct fee_parameters_type { uint64_t fee = 20 * GRAPHENE_BLOCKCHAIN_PRECISION; };
+      //修改手续费 从20 修改成 10000
+      struct fee_parameters_type { uint64_t fee = 10000 * GRAPHENE_BLOCKCHAIN_PRECISION; };
 
       asset               fee;
       account_id_type     funding_account; ///< pays fee, collateral, and cover
@@ -171,4 +173,3 @@ FC_REFLECT( graphene::chain::limit_order_create_operation,(fee)(seller)(amount_t
 FC_REFLECT( graphene::chain::limit_order_cancel_operation,(fee)(fee_paying_account)(order)(extensions) )
 FC_REFLECT( graphene::chain::call_order_update_operation, (fee)(funding_account)(delta_collateral)(delta_debt)(extensions) )
 FC_REFLECT( graphene::chain::fill_order_operation, (fee)(order_id)(account_id)(pays)(receives) )
-   

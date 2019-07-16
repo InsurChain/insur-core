@@ -49,4 +49,3 @@ namespace graphene { namespace chain {
          bool                             skip_fee_schedule_check = false;
    };
 } } // namespace graphene::chain
-   

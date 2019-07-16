@@ -109,11 +109,6 @@ void account_statistics_object::process_fees(const account_object& a, database& 
    }
 }
 
-void account_balance_locked_object::adjust_locked_balance(const asset& delta)
-{
-   assert(delta.asset_id == asset_type);
-   locked_balance += delta.amount;
-}
 void account_statistics_object::pay_fee( share_type core_fee, share_type cashback_vesting_threshold )
 {
    if( core_fee > cashback_vesting_threshold )
@@ -290,13 +285,13 @@ void account_referrer_index::object_modified( const object& after  )
          return false;
      }
      const committee_member_object& com2 = *com;
-     //Compared with actived commitee members list's ID
+     //和激活的理事会列表的ID进行对比
      vector<committee_member_id_type> active_committee_members = db.get_global_properties().active_committee_members;
-     //wlog("size : ${size}................", ("size",active_committee_members.size()));
-     //wlog("this id : ${thisid}................", ("thisid",this->id));
-     //wlog("com2 id : ${com2id}................", ("com2id",com2.id.as<committee_member_id_type>()));
+     wlog("size : ${size}................", ("size",active_committee_members.size()));
+     wlog("this id : ${thisid}................", ("thisid",this->id));
+     wlog("com2 id : ${com2id}................", ("com2id",com2.id.as<committee_member_id_type>()));
       for( committee_member_id_type id : active_committee_members ){
-     //   wlog("id : ${id}................", ("id",id));
+        wlog("id : ${id}................", ("id",id));
         if(com2.id.as<committee_member_id_type>() == id){
               return true;
         }

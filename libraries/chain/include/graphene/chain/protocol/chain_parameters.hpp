@@ -108,4 +108,3 @@ FC_REFLECT( graphene::chain::chain_parameters,
             (max_authority_depth)
             (extensions)
           )
-   

@@ -104,6 +104,7 @@ namespace graphene { namespace chain {
                >
             >
          >
+
       > multisig_object_index_type;
 
       typedef generic_index< multisig_object, multisig_object_index_type > multisig_index;
@@ -112,4 +113,3 @@ namespace graphene { namespace chain {
 
 FC_REFLECT_DERIVED( graphene::chain::multisig_object, (graphene::db::object),
 (from)(amount)(first)(second)(third)(fourth)(fifth)(sixth)(seventh ));
-   

@@ -89,4 +89,3 @@ namespace graphene { namespace chain {
 
 FC_REFLECT( graphene::chain::memo_message, (checksum)(text) )
 FC_REFLECT( graphene::chain::memo_data, (from)(to)(nonce)(message) )
-   

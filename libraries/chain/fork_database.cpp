@@ -32,20 +32,22 @@ fork_database::fork_database()
 }
 void fork_database::reset()
 {
+   dlog("fork database reset");
    _head.reset();
    _index.clear();
 }
 
 void fork_database::pop_block()
 {
-   FC_ASSERT( _head, "no blocks to pop" );
+   FC_ASSERT( _head, "no block to pop" );
    auto prev = _head->prev.lock();
-   FC_ASSERT( prev, "poping block would leave head block null" );
+   FC_ASSERT( prev, "popping block would leave head block null" );
     _head = prev;
 }
 
 void     fork_database::start_block(signed_block b)
 {
+   dlog("fork database start_block, block_num: ${num}", ("num", b.block_num()));
    auto item = std::make_shared<fork_item>(std::move(b));
    _index.insert(item);
    _head = item;
@@ -82,10 +84,10 @@ void  fork_database::_push_block(const item_ptr& item)
 
    if( _head && item->previous_id() != block_id_type() )
    {
+      // append item
       auto& index = _index.get<block_id>();
       auto itr = index.find(item->previous_id());
       GRAPHENE_ASSERT(itr != index.end(), unlinkable_block_exception, "block does not link to known chain");
-      FC_ASSERT(!(*itr)->invalid);
       item->prev = *itr;
    }
 
@@ -183,6 +185,7 @@ item_ptr fork_database::fetch_block(const block_id_type& id)const
 
 vector<item_ptr> fork_database::fetch_block_by_number(uint32_t num)const
 {
+   // dlog("fork_database fetch_block_by_number ${num}", ("num", num));
    vector<item_ptr> result;
    auto itr = _index.get<block_num>().find(num);
    while( itr != _index.get<block_num>().end() )
@@ -248,7 +251,18 @@ void fork_database::set_head(shared_ptr<fork_item> h)
 void fork_database::remove(block_id_type id)
 {
    _index.get<block_id>().erase(id);
+   // If we're removing head, try to pop it
+   if( _head && _head->id == id )
+   {
+      try
+      {
+         pop_block();
+      }
+      catch( fc::exception& e ) // If unable to pop normally, E.G. if head's prev is null, reset it
+      {
+         _head.reset();
+      }
+   }
 }
 
 } } // graphene::chain
-   

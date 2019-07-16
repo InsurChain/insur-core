@@ -3,6 +3,20 @@
 
 namespace graphene { namespace chain {
 
+   /**
+    * @ingroup operations
+    *
+    * @brief Transfers an amount of one asset from one account to another
+    *
+    *  Fees are paid by the "from" account
+    *
+    *  @pre amount.amount > 0
+    *  @pre fee.amount >= 0
+    *  @pre from != to
+    *  @post from account's balance will be reduced by fee and amount
+    *  @post to account's balance will be increased by amount
+    *  @return n/a
+    */
    struct pay_data_transaction_operation : public base_operation
    {
       struct fee_parameters_type {
@@ -10,7 +24,9 @@ namespace graphene { namespace chain {
       };
 
       asset                         fee;
+      /// Account to pay_data_transaction asset from
       account_id_type               from;
+      /// Account to pay_data_transaction asset to
       account_id_type               to;
       asset                         amount;
       fc::string                    request_id;

@@ -68,4 +68,3 @@ FC_REFLECT_DERIVED(
    (graphene::db::object),
    (account)
 )
-   

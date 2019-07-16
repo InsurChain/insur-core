@@ -101,4 +101,3 @@ bool fba_accumulator_object::is_configured( const database& db )const
 }
 
 } }
-   

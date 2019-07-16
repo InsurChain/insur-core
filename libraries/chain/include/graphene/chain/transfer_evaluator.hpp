@@ -34,7 +34,7 @@ namespace graphene { namespace chain {
          typedef transfer_operation operation_type;
 
          void_result do_evaluate( const transfer_operation& o );
-         void_result do_apply( const transfer_operation& o );
+         void_result do_apply(const transfer_operation& o, int32_t billed_cpu_time_us = 0);
    };
 
    class override_transfer_evaluator : public evaluator<override_transfer_evaluator>
@@ -43,8 +43,16 @@ namespace graphene { namespace chain {
          typedef override_transfer_operation operation_type;
 
          void_result do_evaluate( const override_transfer_operation& o );
-         void_result do_apply( const override_transfer_operation& o );
+         void_result do_apply(const override_transfer_operation& o, int32_t billed_cpu_time_us = 0);
+   };
+
+   class inline_transfer_evaluator : public evaluator<inline_transfer_evaluator>
+   {
+      public:
+         typedef inline_transfer_operation operation_type;
+
+         void_result do_evaluate(const inline_transfer_operation &o);
+         void_result do_apply(const inline_transfer_operation& o, int32_t billed_cpu_time_us = 0);
    };
 
 } } // graphene::chain
-   

@@ -46,4 +46,3 @@ namespace graphene { namespace chain {
          std::map< block_id_type, std::vector< fc::variant_object > > debug_updates;
    };
 } } // graphene::chain
-   

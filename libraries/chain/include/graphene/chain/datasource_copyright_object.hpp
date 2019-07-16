@@ -8,6 +8,11 @@ namespace graphene
 namespace chain
 {
 
+/**
+ *  @brief datasource_copyright_object
+ *  @ingroup object
+ *  @ingroup protocol
+ */
 class datasource_copyright_object : public graphene ::chain ::abstract_object<datasource_copyright_object>
 {
    public:

@@ -148,4 +148,3 @@ void without_pending_transactions(
 }
 
 } } } // graphene::chain::detail
-   

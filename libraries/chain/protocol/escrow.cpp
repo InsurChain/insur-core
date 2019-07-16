@@ -50,4 +50,3 @@ namespace graphene { namespace chain {
          FC_ASSERT( fee.asset_id == asset_id_type() ); // fee only in bts (temp)
       }
 } }
-   

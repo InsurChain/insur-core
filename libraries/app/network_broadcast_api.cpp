@@ -39,6 +39,7 @@ namespace graphene { namespace app {
     {
        if( _callbacks.size() )
        {
+          /// we need to ensure the database_api is not deleted for the life of the async operation
           auto capture_this = shared_from_this();
           for( uint32_t trx_num = 0; trx_num < b.transactions.size(); ++trx_num )
           {

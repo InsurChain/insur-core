@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <graphene/chain/protocol/operations.hpp>

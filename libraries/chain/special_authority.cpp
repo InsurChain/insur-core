@@ -68,4 +68,3 @@ void evaluate_special_authority( const database& db, const special_authority& a 
 }
 
 } } // graphene::chain
-   

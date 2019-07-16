@@ -37,14 +37,4 @@ namespace graphene { namespace chain {
          void_result do_apply( const policy_operation& o ){return void_result();}
    };
 
-   //hanyang add oracle
-   class oracle_evaluator : public evaluator<oracle_evaluator>
-   {
-      public:
-         typedef oracle_operation operation_type;
-
-         void_result do_evaluate( const oracle_operation& o ){return void_result();}
-         void_result do_apply( const oracle_operation& o ){return void_result();}
-   };
-
 } } // graphene::chain

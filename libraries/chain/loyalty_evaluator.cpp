@@ -1,3 +1,4 @@
+
 #include <graphene/chain/loyalty_evaluator.hpp>
 #include <cmath>
 
@@ -6,9 +7,9 @@ namespace graphene { namespace chain {
 void_result balance_lock_evaluator::do_evaluate(const balance_lock_operation& op)
 { try {
     database& _db = db();
-    // INSUR assets
-    FC_ASSERT(op.amount.asset_id == GRAPHENE_INSUR_ASSET, "lock asset must be INSUR");
-    FC_ASSERT(op.amount <= _db.get_balance(op.account, GRAPHENE_INSUR_ASSET), "account balance not enough");
+    // insurs assets
+    FC_ASSERT(op.amount.asset_id == GRAPHENE_INSURS_ASSET, "lock asset must be INSURS");
+    FC_ASSERT(op.amount <= _db.get_balance(op.account, GRAPHENE_INSURS_ASSET), "account balance not enough");
     FC_ASSERT(op.amount.amount >= GRAPHENE_BLOCKCHAIN_PRECISION, "lock amount must > 1");
 
     //meme length must less than 63 characters

@@ -1,3 +1,4 @@
+
 #include <fc/smart_ref_impl.hpp>
 
 #include <graphene/chain/contract_evaluator.hpp>
@@ -21,6 +22,7 @@ void_result contract_deploy_evaluator::do_evaluate(const contract_deploy_operati
 { try {
     database &d = db();
 
+    // check contract name
     auto &account_idx = d.get_index_type<account_index>();
     auto current_account_itr = account_idx.indices().get<by_name>().find(op.name);
     FC_ASSERT(current_account_itr == account_idx.indices().get<by_name>().end(), "contract name existed, contract name ${n}", ("n", op.name));
@@ -28,6 +30,7 @@ void_result contract_deploy_evaluator::do_evaluate(const contract_deploy_operati
     FC_ASSERT(op.code.size() > 0, "contract code cannot be empty");
     FC_ASSERT(op.abi.actions.size() > 0, "contract has no actions");
 
+    // validate wasm code
     if (d.head_block_time() > HARDFORK_1006_TIME) {
         wasm_interface::validate(op.code);
     }
@@ -67,8 +70,8 @@ void_result contract_update_evaluator::do_evaluate(const contract_update_operati
     if(d.head_block_time() > HARDFORK_1015_TIME) {
         FC_ASSERT(contract_obj.code.size() > 0, "can not update a normal account: ${a}", ("a", op.contract));
     }
+    code_hash = fc::sha256::hash(op.code);
     if (d.head_block_time() < HARDFORK_1024_TIME) {
-        code_hash = fc::sha256::hash(op.code);
         FC_ASSERT(code_hash != contract_obj.code_version, "code not updated");
     }
 
@@ -252,15 +255,19 @@ contract_call_operation::fee_parameters_type contract_call_evaluator::get_contra
 
 void contract_call_evaluator::charge_base_fee(database &db, const contract_call_operation &op, uint32_t cpu_time_us)
 {
+    // calculate base_fee
     const auto &fee_param = get_contract_call_fee_parameter(db);
     auto cpu_fee = fc::uint128(cpu_time_us * fee_param.price_per_ms_cpu);
     share_type base_fee = fee_param.fee + cpu_fee.to_uint64();
 
+    // convert base_fee to UIA
     asset base_fee_from_account = db.from_core_asset(asset{base_fee, asset_id_type(1)}, op.fee.asset_id);
 
+    // adjust UIA fee_pool
     generic_evaluator::prepare_fee(op.fee_payer(), base_fee_from_account, op);
     generic_evaluator::convert_fee();
 
+    // adjust balance
     db.deposit_contract_call_cashback(op.fee_payer()(db), base_fee);
     db.adjust_balance(op.fee_payer(), -base_fee_from_account);
 }
@@ -273,27 +280,30 @@ void contract_call_evaluator::charge_ram_fee_by_account(account_receipt &r, data
     }
 
     int64_t ram_fee_core = ceil(1.0 * r.ram_bytes * fee_param.price_per_kbyte_ram / 1024);
-    //make sure ram-account have enough INSUR to refund
+    //make sure ram-account have enough GXC to refund
     if (ram_fee_core < 0) {
         asset ram_account_balance = db.get_balance(ram_account_id, asset_id_type(1));
         ram_fee_core = -std::min(ram_account_balance.amount.value, -ram_fee_core);
     }
 
-    if (r.account == op.fee_payer()) { 
+    if (r.account == op.fee_payer()) { // op.fee_payer can pay fee with any UIA
         asset fee_core = asset{ram_fee_core, asset_id_type(1)};
+        // convert fee_core to UIA
         asset fee_uia = db.from_core_asset(fee_core, op.fee.asset_id);
         r.ram_fee = fee_uia;
 
         if (ram_fee_core < 0) {
+            // refund core asset
             db.adjust_balance(op.fee_payer(), -fee_core);
             db.adjust_balance(ram_account_id, fee_core);
         } else {
+            // can use any UIA as fee, so need to convert UIA to core asset
             generic_evaluator::prepare_fee(op.fee_payer(), fee_uia, op);
             generic_evaluator::convert_fee();
             db.adjust_balance(op.fee_payer(), -fee_uia);
             db.adjust_balance(ram_account_id, asset{core_fee_paid, asset_id_type(1)});
         }
-    } else { 
+    } else { // contract as fee payer can only pay fee with core asset
         r.ram_fee = asset{ram_fee_core, asset_id_type(1)};
         db.adjust_balance(r.account, -r.ram_fee);
         db.adjust_balance(ram_account_id, r.ram_fee);

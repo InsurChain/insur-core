@@ -16,6 +16,7 @@ void_result datasource_copyright_clear_evaluator::do_apply(const datasource_copy
     const auto& datasource_copyright_idx = _db.get_index_type<datasource_copyright_index>().indices().get<by_multi_id>();
     const auto range = datasource_copyright_idx.equal_range(boost::make_tuple(op.datasource_account, op.product_id));
     for (const datasource_copyright_object& obj : boost::make_iterator_range(range.first, range.second)) {
+        dlog("remove ${o}", ("o", obj));
         _db.remove(obj);
     }
     return void_result();

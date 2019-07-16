@@ -50,30 +50,8 @@ struct policy_operation : public base_operation
    share_type calculate_fee(const fee_parameters_type& k)const { return k.fee; }
 };
 
-//hanyang add oracle 
-struct oracle_operation : public base_operation
-{
-   struct fee_parameters_type {uint64_t fee = 0;};
-
-   asset fee;   // always zero
-   account_id_type from;//记录上传保单账户ID
-   string message ;
-   extensions_type   extensions;
-   account_id_type fee_payer()const { return from; }
-   void validate()const{
-   }
-   share_type calculate_fee(const fee_parameters_type& k)const { return k.fee; }
-};
-
-
-
 } }
 
 FC_REFLECT( graphene::chain::policy_operation::fee_parameters_type,(fee)  )
 
-//hanyang add oracle
-FC_REFLECT( graphene::chain::oracle_operation::fee_parameters_type,(fee)  )
-
 FC_REFLECT( graphene::chain::policy_operation,(fee)(from)(file_name)(file_size)(file_format)(policy_hash_code)(extensions) )
-//hanyang add oracle
-FC_REFLECT( graphene::chain::oracle_operation,(fee)(from)(message)(extensions) )

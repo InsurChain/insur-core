@@ -16,6 +16,7 @@
 #include <fc/smart_ref_impl.hpp>
 
 #include <softfloat.hpp>
+#include <compiler_builtins.hpp>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/core/ignore_unused.hpp>
@@ -67,11 +68,6 @@ class context_aware_api {
       context_aware_api(apply_context& ctx, bool context_free = false )
       :context(ctx)
       {
-          if( context.context_free )
-          {
-              FC_ASSERT( context_free, "only context free api's can be used in this context" );
-          }
-          context.used_context_free_api |= !context_free;
       }
 
       void checktime() {
@@ -227,7 +223,7 @@ class global_api : public context_aware_api
         if (context.db().head_block_time() <= HARDFORK_1023_TIME) {
             FC_ASSERT(false, "get_asset_precision can not be used");
         }
-        FC_ASSERT(datalen >= 0, "datalen must >= 0");
+        FC_ASSERT(datalen > 0, "datalen must > 0");
         std::string symbol(data,datalen);
         const auto& idx = context.db().get_index_type<asset_index>().indices().get<by_symbol>();
         auto itr = idx.find(symbol);

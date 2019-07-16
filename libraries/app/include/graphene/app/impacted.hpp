@@ -40,4 +40,3 @@ void transaction_get_impacted_accounts(
    );
 
 } } // graphene::app
-   

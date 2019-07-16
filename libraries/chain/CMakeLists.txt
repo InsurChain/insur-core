@@ -1,11 +1,5 @@
-
-add_custom_target( build_hardfork_hpp
-                   COMMAND cat-parts "${CMAKE_CURRENT_SOURCE_DIR}/hardfork.d" "${CMAKE_CURRENT_BINARY_DIR}/include/graphene/chain/hardfork.hpp" )
-set_source_files_properties( "${CMAKE_CURRENT_BINARY_DIR}/include/graphene/chain/hardfork.hpp" PROPERTIES GENERATED TRUE )
-
-add_dependencies( build_hardfork_hpp cat-parts )
-
 file(GLOB HEADERS "include/graphene/chain/*.hpp")
+file(GLOB PROTOCOL_HEADERS "include/graphene/chain/protocol/*.hpp")
 
 if( GRAPHENE_DISABLE_UNITY_BUILD )
    set( GRAPHENE_DB_FILES
@@ -16,8 +10,6 @@ if( GRAPHENE_DISABLE_UNITY_BUILD )
         db_init.cpp
         db_maint.cpp
         db_management.cpp
-        db_market.cpp
-        db_notify.cpp
         db_update.cpp
         db_witness_schedule.cpp
       )
@@ -43,7 +35,6 @@ add_library( graphene_chain
              protocol/assert.cpp
              protocol/account.cpp
              protocol/transfer.cpp
-             protocol/pnt_transfer.cpp
              protocol/committee_member.cpp
              protocol/witness.cpp
              protocol/market.cpp
@@ -59,7 +50,6 @@ add_library( graphene_chain
              protocol/fee_schedule.cpp
              protocol/confidential.cpp
              protocol/vote.cpp
-             protocol/escrow.cpp
 
              genesis_state.cpp
              get_config.cpp
@@ -76,8 +66,8 @@ add_library( graphene_chain
              data_transaction_evaluator.cpp
              pay_data_transaction_evaluator.cpp
              free_data_product_evaluator.cpp
-             alliance_data_product_evaluator.cpp
-             alliance_evaluator.cpp
+             league_data_product_evaluator.cpp
+             league_evaluator.cpp
              datasource_copyright_evaluator.cpp
              loyalty_evaluator.cpp
              proxy_transfer_evaluator.cpp
@@ -86,14 +76,11 @@ add_library( graphene_chain
              committee_member_evaluator.cpp
              asset_evaluator.cpp
              transfer_evaluator.cpp
-             pnt_transfer_evaluator.cpp
              proposal_evaluator.cpp
              market_evaluator.cpp
              vesting_balance_evaluator.cpp
              withdraw_permission_evaluator.cpp
              worker_evaluator.cpp
-             escrow_evaluator.cpp
-             multisig_evaluator.cpp
              confidential_evaluator.cpp
              special_authority.cpp
              buyback.cpp
@@ -124,18 +111,18 @@ add_library( graphene_chain
              trust_node_pledge_helper.cpp
 
              ${HEADERS}
-             "${CMAKE_CURRENT_BINARY_DIR}/include/graphene/chain/hardfork.hpp"
+             ${PROTOCOL_HEADERS}
            )
 
-add_dependencies( graphene_chain build_hardfork_hpp )
-target_link_libraries( graphene_chain fc graphene_db  Logging IR WAST WASM Runtime wasm asmjs passes ast softfloat builtins support wabt emscripten-optimizer)
+target_link_libraries( graphene_chain fc graphene_db Logging IR WAST WASM Runtime wasm
+    asmjs passes ast emscripten-optimizer support softfloat builtins wabt)
+
 target_include_directories( graphene_chain
-                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
-				   "${CMAKE_CURRENT_BINARY_DIR}/include" 
-                   "${CMAKE_CURRENT_SOURCE_DIR}/../wasm-jit/Include"
-                   "${CMAKE_CURRENT_SOURCE_DIR}/../../externals/binaryen/src"
-				   "${CMAKE_SOURCE_DIR}/libraries/wabt"
-				   "${CMAKE_BINARY_DIR}/libraries/wabt")
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
+           "${CMAKE_CURRENT_SOURCE_DIR}/../wasm-jit/Include"
+           "${CMAKE_CURRENT_SOURCE_DIR}/../../externals/binaryen/src"
+           "${CMAKE_SOURCE_DIR}/libraries/wabt"
+           "${CMAKE_BINARY_DIR}/libraries/wabt")
 
 if(MSVC)
   set_source_files_properties( db_init.cpp db_block.cpp database.cpp block_database.cpp PROPERTIES COMPILE_FLAGS "/bigobj" )
@@ -148,3 +135,5 @@ INSTALL( TARGETS
    LIBRARY DESTINATION lib
    ARCHIVE DESTINATION lib
 )
+INSTALL( FILES ${HEADERS} DESTINATION "include/graphene/chain" )
+INSTALL( FILES ${PROTOCOL_HEADERS} DESTINATION "include/graphene/chain/protocol" )

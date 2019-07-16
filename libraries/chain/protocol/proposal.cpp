@@ -105,4 +105,3 @@ void proposal_update_operation::get_required_owner_authorities( flat_set<account
 }
 
 } } // graphene::chain
-   

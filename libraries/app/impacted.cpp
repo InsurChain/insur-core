@@ -21,9 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-/*
- *impacted.cpp
- * */
+
 #include <graphene/chain/protocol/authority.hpp>
 #include <graphene/app/impacted.hpp>
 
@@ -32,6 +30,7 @@ namespace graphene { namespace app {
 using namespace fc;
 using namespace graphene::chain;
 
+// TODO:  Review all of these, especially no-ops
 struct get_impacted_account_visitor
 {
    flat_set<account_id_type>& _impacted;
@@ -203,71 +202,47 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account_id );
    }
+   void operator()( const policy_operation& op )
+   {
+      _impacted.insert( op.from );
+   }
+   void operator()( const escrow_transfer_operation& op ) {
+      _impacted.insert( op.from );
+      _impacted.insert( op.to );
+      _impacted.insert( op.agent );
+
+   }
+   void operator()( const escrow_approve_operation& op ) {
+      _impacted.insert( op.from );
+      _impacted.insert( op.to );
+      _impacted.insert( op.agent );
+
+   }
+   void operator()( const escrow_dispute_operation& op ) {
+      _impacted.insert( op.from );
+      _impacted.insert( op.to );
+      _impacted.insert( op.agent );
+   }
+   void operator()( const escrow_release_operation& op ) {
+      _impacted.insert( op.from );
+      _impacted.insert( op.to );
+      _impacted.insert( op.agent );
+   }
+   void operator()( const multisig_operation& op )
+   {
+      _impacted.insert( op.from );
+   }
    void operator()( const pnt_transfer_operation& op )
    {
       _impacted.insert( op.to );
    }
-   void operator()( const data_storage_operation& op )
+   void operator()( const balance_locked_operation& op )
    {
-      _impacted.insert( op.requests_params.from );
-      _impacted.insert( op.requests_params.to );
-      _impacted.insert( op.requests_params.proxy_account );
+      _impacted.insert( op.locked_account );
    }
-   void operator()( const contract_call_operation& op )
+   void operator()( const balance_unlocked_operation& op )
    {
-       _impacted.insert(op.account);
-       _impacted.insert(op.contract_id);
-   }
-   void operator()( const inter_contract_call_operation& op )
-   {
-       _impacted.insert(op.sender_contract);
-       _impacted.insert(op.contract_id);
-   }
-   void operator()( const contract_deploy_operation& op )
-   {
-      _impacted.insert( op.account );
-   }
-   void operator()( const contract_update_operation& op )
-   {
-       _impacted.insert(op.owner);
-   }
-   void operator()( const data_market_create_operation& op )
-   {
-      _impacted.insert( op.account );
-   }
-   void operator()( const data_market_update_operation& op )
-   {
-      _impacted.insert( op.account );
-   }
-   void operator()( const alliance_create_operation& op )
-   {
-      _impacted.insert( op.issuer );
-   }
-   void operator()( const alliance_update_operation& op )
-   {
-   }
-   void operator()( const data_transaction_create_operation& op )
-   {
-      _impacted.insert( op.requester );
-   }
-   void operator()( const data_transaction_update_operation& op )
-   {
-      _impacted.insert( op.new_requester );
-   }
-   void operator()( const data_transaction_datasource_upload_operation& op )
-   {
-      _impacted.insert( op.requester );
-   }
-   void operator()( const data_transaction_datasource_validate_error_operation& op )
-   {
-      _impacted.insert( op.datasource );
-   }
-   void operator()( const datasource_cyptright_clear_operation& op )
-   {
-   }
-   void operator()( const data_transaction_complain_operation& op )
-   {
-      _impacted.insert( op.requester );
+      _impacted.insert( op.unlocked_account );
    }
 
 };
@@ -283,6 +258,5 @@ void transaction_get_impacted_accounts( const transaction& tx, flat_set<account_
    for( const auto& op : tx.operations )
       operation_get_impacted_accounts( op, result );
 }
-
 
 } }

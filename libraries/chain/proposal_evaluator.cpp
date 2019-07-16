@@ -53,7 +53,7 @@ void_result proposal_create_evaluator::do_evaluate(const proposal_create_operati
 
       FC_ASSERT( other.size() == 0 ); // TODO: what about other??? 
 
-      if( auths.find(GRAPHENE_COMMITTEE_ACCOUNT) != auths.end() )
+      if( o.review_period_seconds.valid() && auths.find(GRAPHENE_COMMITTEE_ACCOUNT) != auths.end() )
       {
          GRAPHENE_ASSERT(
             o.review_period_seconds.valid(),
@@ -78,7 +78,7 @@ void_result proposal_create_evaluator::do_evaluate(const proposal_create_operati
    return void_result();
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
-object_id_type proposal_create_evaluator::do_apply(const proposal_create_operation& o)
+object_id_type proposal_create_evaluator::do_apply(const proposal_create_operation& o, int32_t billed_cpu_time_us)
 { try {
    database& d = db();
 
@@ -145,14 +145,14 @@ void_result proposal_update_evaluator::do_evaluate(const proposal_update_operati
    return void_result();
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
-void_result proposal_update_evaluator::do_apply(const proposal_update_operation& o)
+void_result proposal_update_evaluator::do_apply(const proposal_update_operation& o, int32_t billed_cpu_time_us)
 { try {
    database& d = db();
 
    // Potential optimization: if _executed_proposal is true, we can skip the modify step and make push_proposal skip
    // signature checks. This isn't done now because I just wrote all the proposals code, and I'm not yet 100% sure the
    // required approvals are sufficient to authorize the transaction.
-   d.modify(*_proposal, [&o, &d](proposal_object& p) {
+   d.modify(*_proposal, [&o](proposal_object& p) {
       p.available_active_approvals.insert(o.active_approvals_to_add.begin(), o.active_approvals_to_add.end());
       p.available_owner_approvals.insert(o.owner_approvals_to_add.begin(), o.owner_approvals_to_add.end());
       for( account_id_type id : o.active_approvals_to_remove )
@@ -201,7 +201,7 @@ void_result proposal_delete_evaluator::do_evaluate(const proposal_delete_operati
    return void_result();
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
-void_result proposal_delete_evaluator::do_apply(const proposal_delete_operation& o)
+void_result proposal_delete_evaluator::do_apply(const proposal_delete_operation& o, int32_t billed_cpu_time_us)
 { try {
    db().remove(*_proposal);
 
@@ -209,4 +209,3 @@ void_result proposal_delete_evaluator::do_apply(const proposal_delete_operation&
 } FC_CAPTURE_AND_RETHROW( (o) ) }
 
 } } // graphene::chain
-   

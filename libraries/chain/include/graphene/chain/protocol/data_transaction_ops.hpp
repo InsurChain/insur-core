@@ -21,7 +21,7 @@ namespace graphene { namespace chain {
         asset                                       fee;
         account_id_type                             requester;
         time_point_sec                              create_date_time;
-        fc::optional<alliance_id_type>                alliance_id = fc::optional<alliance_id_type>();
+        fc::optional<league_id_type>                league_id = fc::optional<league_id_type>();
         extensions_type                             extensions;
 
         account_id_type fee_payer() const { return requester; }
@@ -128,7 +128,7 @@ FC_REFLECT( graphene::chain::data_transaction_create_operation,
             (fee)
             (requester)
             (create_date_time)
-            (alliance_id)
+            (league_id)
             (extensions)
 )
 FC_REFLECT( graphene::chain::data_transaction_update_operation,

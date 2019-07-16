@@ -53,4 +53,3 @@ inline bool is_authorized_asset(const database& d, const account_object& acct, c
 }
 
 } }
-   

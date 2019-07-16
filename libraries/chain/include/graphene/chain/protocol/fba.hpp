@@ -45,4 +45,3 @@ struct fba_distribute_operation : public base_operation
 FC_REFLECT( graphene::chain::fba_distribute_operation::fee_parameters_type,  )
 
 FC_REFLECT( graphene::chain::fba_distribute_operation, (fee)(account_id)(fba_id)(amount) )
-   

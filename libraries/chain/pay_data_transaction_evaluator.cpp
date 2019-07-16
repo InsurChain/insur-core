@@ -30,30 +30,34 @@ share_type pay_data_transaction_evaluator::cut_fee(share_type a, uint16_t p)
    return r.to_uint64();
 }
 
-void pay_data_transaction_evaluator::update_alliance_pocs(alliance_id_type alliance_id, object_id_type product_id, const pay_data_transaction_operation& op)
+void pay_data_transaction_evaluator::update_league_pocs(league_id_type league_id, object_id_type product_id, const pay_data_transaction_operation& op)
 {
     database& _db = db();
-    alliance_object alliance_obj = _db.get(alliance_id);
-    const auto& products = alliance_obj.data_products;
+    // get pocs_weight
+    league_object league_obj = _db.get(league_id);
+    const auto& products = league_obj.data_products;
     uint16_t idx = std::distance(products.begin(),
             find_if(products.begin(), products.end(), [&](object_id_type p) { return p == product_id; })
             );
-    uint64_t pocs_weight = (idx < alliance_obj.pocs_thresholds.size()) ? alliance_obj.product_pocs_weights[idx] : 1;
+    uint64_t pocs_weight = (idx < league_obj.pocs_thresholds.size()) ? league_obj.product_pocs_weights[idx] : 1;
 
+    // update pocs
     auto& pocs_idx = _db.get_index_type<pocs_index>().indices().get<by_multi_id>();
     auto update_pocs = [&](account_id_type account, bool is_buy) {
-        auto pocs = pocs_idx.find(boost::make_tuple(alliance_id, account));
+        auto pocs = pocs_idx.find(boost::make_tuple(league_id, account));
         if (pocs == pocs_idx.end()) {
+            // create
             _db.create<pocs_object>([&](pocs_object& b) {
                     if (is_buy) {
                         b.total_buy += pocs_weight;
                     } else {
                         b.total_sell += pocs_weight;
                     }
-                    b.alliance_id = alliance_id;
+                    b.league_id = league_id;
                     b.account_id = account;
                     });
         } else {
+            // update
             _db.modify(*pocs, [&](pocs_object& b) {
                     if (is_buy) {
                         b.total_buy += pocs_weight;
@@ -72,13 +76,17 @@ void_result pay_data_transaction_evaluator::do_evaluate( const pay_data_transact
 { try {
    const database& _db = db();
 
+   // check data_transaction_object status by reuqest_id
    const auto& data_transaction_idx = _db.get_index_type<data_transaction_index>().indices().get<by_request_id>();
    auto maybe_found = data_transaction_idx.find(op.request_id);
    if (maybe_found == data_transaction_idx.end()) {
+       // dlog("data_transaction_object not found, request_id: ${request_id}", ("request_id", op.request_id));
        return void_result();
    }
+   // dto status must be "confirmed"
    FC_ASSERT(data_transaction_status_confirmed == maybe_found->status, "dto status must be confirmed");
 
+   // datasource status must be "uploaded"
    const data_transaction_object& dto = *maybe_found;
    auto iter = std::find_if(dto.datasources_status.begin(), dto.datasources_status.end(),
            [&](const data_transaction_datasource_status_object& status_obj) {
@@ -87,24 +95,31 @@ void_result pay_data_transaction_evaluator::do_evaluate( const pay_data_transact
    FC_ASSERT(iter != dto.datasources_status.end(), "datasource ${d} not found or status not uploaded", ("d", op.to));
    FC_ASSERT(_db.find_object(dto.product_id) != nullptr, "product not found, product_id ${p}", ("p", dto.product_id));
 
-   if (dto.alliance_id.valid()) {
-       alliance_object alliance_obj = _db.get(*(dto.alliance_id));
-       const auto& products = alliance_obj.data_products;
+   // pay amount must equal product price;
+   if (dto.league_id.valid()) {
+       // league data product
+       // get product price
+       league_object league_obj = _db.get(*(dto.league_id));
+       const auto& products = league_obj.data_products;
        uint16_t idx = std::distance(begin(products), find_if(begin(products), end(products),
-                   [&](const alliance_data_product_id_type& product_id) {
+                   [&](const league_data_product_id_type& product_id) {
                    return dto.product_id == product_id;
                    }));
        if (idx < products.size()) {
-           FC_ASSERT(op.amount.amount == alliance_obj.prices[idx], "pay amount doesn't match product price");
+           // dlog("league_data_obj price is ${price}", ("price", league_obj.prices[idx]));
+           FC_ASSERT(op.amount.amount == league_obj.prices[idx], "pay amount doesn't match product price");
        } else {
-           FC_THROW("cannot find product price from alliance, product_id ${p}, alliance_id ${l}", ("p", dto.product_id)("l", *dto.alliance_id));
+           elog("cannot find product price from league, product_id ${p}, league_id ${l}", ("p", dto.product_id)("l", *dto.league_id));
+           FC_THROW("cannot find product price from league, product_id ${p}, league_id ${l}", ("p", dto.product_id)("l", *dto.league_id));
        }
    } else {
+       //free data product
        auto product_id = static_cast<free_data_product_id_type>(dto.product_id);
        auto free_data_obj = _db.get(product_id);
        FC_ASSERT(op.amount.amount == free_data_obj.price, "pay amount doesn't match product price");
    }
 
+   // do transfer evaluate
    const account_object& from_account = op.from(_db);
    const account_object& to_account = op.to(_db);
    const asset_object&  asset_type = op.amount.asset_id(_db);
@@ -150,24 +165,31 @@ operation_result pay_data_transaction_evaluator::do_apply(const pay_data_transac
    const auto& data_transaction_idx = _db.get_index_type<data_transaction_index>().indices().get<by_request_id>();
    auto maybe_found = data_transaction_idx.find(op.request_id);
    if (maybe_found == data_transaction_idx.end()) {
+       // dlog("data_transaction_object not found, request_id: ${request_id}", ("request_id", op.request_id));
        return void_result();
    }
    const data_transaction_object& dto = *maybe_found;
 
+   // calculate commission
+   // default commission rate 10%, datasouorce got 90% of product price
    uint16_t commission_percent = GRAPHENE_DEFAULT_COMMISSION_PERCENT;
    if (_db.head_block_time() >= HARDFORK_1001_TIME) {
+       // get commission_percent from gpo
        auto rate_param = _db.get_commission_percent();
-       commission_percent = dto.alliance_id.valid() ? rate_param.alliance_data_market_commission_percent : rate_param.free_data_market_commission_percent;
+       commission_percent = dto.league_id.valid() ? rate_param.league_data_market_commission_percent : rate_param.free_data_market_commission_percent;
    }
    share_type commission_amount = cut_fee(op.amount.amount, commission_percent);
    share_type datasource_amount = op.amount.amount - commission_amount;
 
+    // adjust balance
    _db.adjust_balance(op.from, -op.amount);
    _db.adjust_balance(op.to,  asset(datasource_amount));
 
+   // commission allocation
    uint16_t reserve_percent_of_commission = 0;
    account_id_type commission_account = account_id_type();
    if (_db.head_block_time() >= HARDFORK_1003_TIME) {
+       // %x --> reserve pool, the rest --> commission_account
        auto param = _db.get_commission_percent();
        reserve_percent_of_commission = param.reserve_percent;
 
@@ -176,15 +198,23 @@ operation_result pay_data_transaction_evaluator::do_apply(const pay_data_transac
    }
    share_type reserved_cut = cut_fee(commission_amount, reserve_percent_of_commission);
    _db.adjust_balance(commission_account, asset(commission_amount - reserved_cut));
+   // dlog("commission amount ${c}, reserve_cut ${r}, commission_account ${a}", ("c", commission_amount.value)("r", reserved_cut.value)("a", commission_account));
+
+   // update data_transaction object "payed" status
+   // update data_transaction_object datasource_list
    _db.modify(dto, [&](data_transaction_object& obj) {
            for (auto& status_obj : obj.datasources_status) {
                if (status_obj.datasource == op.to)
                    status_obj.status = data_transaction_datasource_status_payed;
            }
+           // obj.product_pay += op.amount.amount.value;
+           // obj.commission += commission_amount.value;
+           // obj.transaction_fee += transaction_fee;
            });
 
-   if (dto.alliance_id.valid()) {
-       update_alliance_pocs(*dto.alliance_id, dto.product_id, op);
+   // pocs statistics
+   if (dto.league_id.valid()) {
+       update_league_pocs(*dto.league_id, dto.product_id, op);
    }
 
    return asset(transaction_fee);
@@ -197,41 +227,49 @@ void pay_data_transaction_evaluator::prepare_fee(account_id_type account_id, ass
     const auto& data_transaction_idx = _db.get_index_type<data_transaction_index>().indices().get<by_request_id>();
     auto dto = data_transaction_idx.find(pay_op.request_id);
     if (dto == data_transaction_idx.end()) {
+        // if data_transactction object not found, just pay
+        // dlog("data_transaction_object not found, request_id: ${request_id}", ("request_id", pay_op.request_id));
         evaluator::prepare_fee(account_id, fee, o);
         return;
     }
 
-    if (dto->alliance_id.valid() && _db.head_block_time() >= HARDFORK_1001_TIME) {
+    // league data product
+    // calculate data_transaction fee with pocs
+    if (dto->league_id.valid() && _db.head_block_time() >= HARDFORK_1001_TIME) {
 
+        // get pocs_threshold
         uint16_t idx = 0;
         uint64_t pocs_threshold = 0;
-        alliance_object alliance_obj = _db.get(*(dto->alliance_id));
-        for(const auto& product : alliance_obj.data_products) {
+        league_object league_obj = _db.get(*(dto->league_id));
+        for(const auto& product : league_obj.data_products) {
             if (product == dto->product_id) {
-                pocs_threshold = alliance_obj.pocs_thresholds[idx];
+                pocs_threshold = league_obj.pocs_thresholds[idx];
                 break;
             }
             ++idx;
         }
         if (0 == pocs_threshold) {
-            auto product_id = static_cast<alliance_data_product_id_type>(dto->product_id);
-            alliance_data_product_object alliance_data_product_obj = _db.get(product_id);
-            pocs_threshold = alliance_data_product_obj.pocs_threshold;
+            auto product_id = static_cast<league_data_product_id_type>(dto->product_id);
+            league_data_product_object league_data_product_obj = _db.get(product_id);
+            pocs_threshold = league_data_product_obj.pocs_threshold;
         }
 
+        // calculate fee
         auto& index = _db.get_index_type<pocs_index>().indices().get<by_multi_id>();
-        auto pocs = index.find(boost::make_tuple(*(dto->alliance_id), pay_op.from));
+        auto pocs = index.find(boost::make_tuple(*(dto->league_id), pay_op.from));
         if (pocs != index.end()) {
             if (pocs->total_buy + pocs->total_sell >= pocs_threshold) {
+                // trigger the fee contribution mechanism
                 fee.amount = fee.amount - fee.amount * (pocs->total_sell - pocs->total_buy) / (pocs->total_sell + pocs->total_buy);
-                if (pocs->total_buy > pocs->total_sell && idx < alliance_obj.fee_bases.size() &&
-                        alliance_obj.fee_bases[idx] > 1) {
-                    fee.amount = fee.amount * alliance_obj.fee_bases[idx];
+                if (pocs->total_buy > pocs->total_sell && idx < league_obj.fee_bases.size() &&
+                        league_obj.fee_bases[idx] > 1) {
+                    fee.amount = fee.amount * league_obj.fee_bases[idx];
                 }
             }
         }
     }
     transaction_fee = fee.amount.value;
+    // calcurlate core_fee_paid
     evaluator::prepare_fee(account_id, fee, o);
 }
 

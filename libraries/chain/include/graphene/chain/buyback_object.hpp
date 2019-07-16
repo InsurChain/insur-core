@@ -65,4 +65,3 @@ typedef generic_index< buyback_object, buyback_multi_index_type > buyback_index;
 } } // graphene::chain
 
 FC_REFLECT_DERIVED( graphene::chain::buyback_object, (graphene::db::object), (asset_to_buy) )
-   
